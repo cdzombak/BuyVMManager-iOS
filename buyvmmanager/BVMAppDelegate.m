@@ -1,5 +1,6 @@
 #import "BVMAppDelegate.h"
 
+#import "AFNetworkActivityIndicatorManager.h"
 @implementation BVMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -11,6 +12,7 @@
     return YES;
 
 
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
 
 }
 
