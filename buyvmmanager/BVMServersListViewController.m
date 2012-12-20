@@ -1,6 +1,7 @@
 #import "BVMServersListViewController.h"
 #import "BVMServersManager.h"
 #import "BVMServerInfo.h"
+#import "BVMAddServerViewController.h"
 #import "BVMHostViewController.h"
 
 @interface BVMServersListViewController ()
@@ -35,6 +36,11 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     [super setEditing:editing animated:animated];
@@ -48,7 +54,12 @@
 
 - (void)addButtonTouched
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    BVMAddServerViewController *addVc = [[BVMAddServerViewController alloc] init];
+    addVc.afterAddTarget = self;
+    addVc.afterAddAction = @selector(reloadData);
+
+    UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:addVc];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 #pragma mark Data
@@ -65,6 +76,12 @@
                                     }
                                     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@)", ip, hostname];
                                 }];
+}
+
+- (void)reloadData
+{
+    self.serverNames = [BVMServersManager serverNames];
+    [self.tableView reloadData];
 }
 
 #pragma mark UITableViewDataSource methods

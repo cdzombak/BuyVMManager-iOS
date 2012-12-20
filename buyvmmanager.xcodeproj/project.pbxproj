@@ -30,6 +30,8 @@
 		935FEEC61682A0FA00BE3892 /* BVMSizesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEEC51682A0FA00BE3892 /* BVMSizesListViewController.m */; };
 		935FEED11682BC3700BE3892 /* BVMServersManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED01682BC3700BE3892 /* BVMServersManager.m */; };
 		935FEED41682C06900BE3892 /* BVMServersListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED31682C06900BE3892 /* BVMServersListViewController.m */; };
+		935FEED71682C87300BE3892 /* BVMAddServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED61682C87300BE3892 /* BVMAddServerViewController.m */; };
+		935FEEDA1682CC2600BE3892 /* BVMTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED91682CC2500BE3892 /* BVMTextFieldTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +75,10 @@
 		935FEED01682BC3700BE3892 /* BVMServersManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMServersManager.m; sourceTree = "<group>"; };
 		935FEED21682C06900BE3892 /* BVMServersListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMServersListViewController.h; sourceTree = "<group>"; };
 		935FEED31682C06900BE3892 /* BVMServersListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMServersListViewController.m; sourceTree = "<group>"; };
+		935FEED51682C87300BE3892 /* BVMAddServerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMAddServerViewController.h; sourceTree = "<group>"; };
+		935FEED61682C87300BE3892 /* BVMAddServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMAddServerViewController.m; sourceTree = "<group>"; };
+		935FEED81682CC2500BE3892 /* BVMTextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMTextFieldTableViewCell.h; sourceTree = "<group>"; };
+		935FEED91682CC2500BE3892 /* BVMTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMTextFieldTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +133,7 @@
 				932709E616823FA20013DEB5 /* API */,
 				932709FE168269380013DEB5 /* Categories */,
 				93270A0E1682797A0013DEB5 /* Ping */,
+				935FEEDB1682CC2900BE3892 /* Views */,
 				932709F0168244710013DEB5 /* View Controllers */,
 				932709CA1682353E0013DEB5 /* BVMAppDelegate.h */,
 				932709CB1682353E0013DEB5 /* BVMAppDelegate.m */,
@@ -177,6 +184,8 @@
 				935FEED31682C06900BE3892 /* BVMServersListViewController.m */,
 				935FEEC41682A0FA00BE3892 /* BVMSizesListViewController.h */,
 				935FEEC51682A0FA00BE3892 /* BVMSizesListViewController.m */,
+				935FEED51682C87300BE3892 /* BVMAddServerViewController.h */,
+				935FEED61682C87300BE3892 /* BVMAddServerViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -199,6 +208,15 @@
 				93270A1A16827E640013DEB5 /* SimplePing.m */,
 			);
 			name = Ping;
+			sourceTree = "<group>";
+		};
+		935FEEDB1682CC2900BE3892 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				935FEED81682CC2500BE3892 /* BVMTextFieldTableViewCell.h */,
+				935FEED91682CC2500BE3892 /* BVMTextFieldTableViewCell.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,6 +317,8 @@
 				935FEEC61682A0FA00BE3892 /* BVMSizesListViewController.m in Sources */,
 				935FEED11682BC3700BE3892 /* BVMServersManager.m in Sources */,
 				935FEED41682C06900BE3892 /* BVMServersListViewController.m in Sources */,
+				935FEED71682C87300BE3892 /* BVMAddServerViewController.m in Sources */,
+				935FEEDA1682CC2600BE3892 /* BVMTextFieldTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
