@@ -299,18 +299,17 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         _headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _headerView.backgroundColor = [UIColor clearColor];
 
-        self.headerHostnameLabel = [[UILabel alloc] initWithFrame:(CGRect){ {25, 10} , { _headerView.bounds.size.width-50, 35 }}];
+        self.headerHostnameLabel = [[UILabel alloc] initWithFrame:(CGRect){ {18, 10} , { _headerView.bounds.size.width-36, 35 }}];
         self.headerHostnameLabel.font = [UIFont boldSystemFontOfSize:22.0];
         self.headerHostnameLabel.backgroundColor = [UIColor clearColor];
-        self.headerHostnameLabel.text = @"...";
-        self.headerHostnameLabel.shadowColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-        self.headerHostnameLabel.shadowOffset = CGSizeMake(0, -2.0);
+        self.headerHostnameLabel.text = NSLocalizedString(@"Loading...", nil);
+        self.headerHostnameLabel.shadowColor = [UIColor whiteColor];
+        self.headerHostnameLabel.shadowOffset = CGSizeMake(0, 1.0);
         [_headerView addSubview:self.headerHostnameLabel];
 
-        self.headerStatusLabel = [[UILabel alloc] initWithFrame:(CGRect){ {25, 41} , { _headerView.bounds.size.width-50, 20 }}];
+        self.headerStatusLabel = [[UILabel alloc] initWithFrame:(CGRect){ {17, 41} , { self.headerHostnameLabel.bounds.size.width, 20 }}];
         self.headerStatusLabel.font = [UIFont boldSystemFontOfSize:18.0];
         self.headerStatusLabel.backgroundColor = [UIColor clearColor];
-        self.headerStatusLabel.text = @"...";
         self.headerStatusLabel.shadowColor = self.headerHostnameLabel.shadowColor;
         self.headerStatusLabel.shadowOffset = self.headerHostnameLabel.shadowOffset;
         [_headerView addSubview:self.headerStatusLabel];
