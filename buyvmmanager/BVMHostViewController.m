@@ -1,5 +1,6 @@
 #import "BVMHostViewController.h"
 #import "BVMServerInfo.h"
+#import "BVMServerActionPerform.h"
 #import "BVMPinger.h"
 #import "BVMHumanValueTransformer.h"
 #import "BVMIPListViewController.h"
@@ -53,6 +54,9 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UILabel *headerHostnameLabel;
 @property (nonatomic, strong) UILabel *headerStatusLabel;
+
+@property (nonatomic, assign) BVMServerAction selectedAction;
+@property (nonatomic, strong) NSTimer *navBarTintTimer;
 
 @end
 
@@ -293,6 +297,109 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
             }
         }
         if (vc) [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if (indexPath.section == BVMHostTableViewSectionAction) {
+        switch (indexPath.row) {
+            case BVMHostTableViewActionRowBoot:
+                self.selectedAction = BVMServerActionBoot;
+                break;
+            case BVMHostTableViewActionRowReboot:
+                self.selectedAction = BVMServerActionReboot;
+                break;
+            case BVMHostTableViewActionRowShutdown:
+                self.selectedAction = BVMServerActionShutdown;
+                break;
+        }
+        [self displayActionAlertView];
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
+
+#pragma mark Server Actions
+
+- (void)displayActionAlertView
+{
+    NSString *message;
+    switch (self.selectedAction) {
+        case BVMServerActionBoot:
+            message = NSLocalizedString(@"You are attempting to boot a VPS.\nEnter the hostname to confirm:", nil);
+            break;
+        case BVMServerActionReboot:
+            message = NSLocalizedString(@"Attempting to REBOOT a VPS.\nEnter the hostname to confirm:", nil);
+            break;
+        case BVMServerActionShutdown:
+            message = NSLocalizedString(@"Attempting to SHUT DOWN a VPS.\nEnter the hostname to confirm:", nil);
+            break;
+    }
+
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
+                                                        message:message
+                                                       delegate:self
+                                              cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                              otherButtonTitles:@"OK", nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alertView show];
+
+    self.navBarTintTimer = [NSTimer scheduledTimerWithTimeInterval:0.6
+                                                            target:self
+                                                          selector:@selector(toggleNavBarTint)
+                                                          userInfo:nil
+                                                           repeats:YES];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    static NSInteger cancelButtonIndex = 0;
+
+    self.navigationController.navigationBar.tintColor = nil;
+    [self.navBarTintTimer invalidate];
+    self.navBarTintTimer = nil;
+    if (buttonIndex == cancelButtonIndex) return;
+
+    NSString *message;
+    
+    NSString *enteredHostname = [[alertView textFieldAtIndex:0] text];
+    if ([[enteredHostname lowercaseString] isEqualToString:[self.serverInfo.hostname lowercaseString]]) {
+        switch (self.selectedAction) {
+            case BVMServerActionBoot:
+                message = NSLocalizedString(@"Booting %@...\nRefresh in a few moments for an update.", nil);
+                break;
+            case BVMServerActionReboot:
+                message = NSLocalizedString(@"Rebooting %@...\nRefresh in a few moments for an update.", nil);
+                break;
+            case BVMServerActionShutdown:
+                message = NSLocalizedString(@"Shutting down %@...\nRefresh in a few moments for an update.", nil);
+                break;
+        }
+        message = [NSString stringWithFormat:message, self.serverInfo.hostname];
+        [BVMServerActionPerform performAction:self.selectedAction forServer:self.serverName withBlock:^(BVMServerActionStatus status, NSError *error) {
+            if (error) {
+                [[[UIAlertView alloc] initWithTitle:@"Error"
+                                            message:error.localizedDescription
+                                           delegate:nil
+                                  cancelButtonTitle:@":("
+                                  otherButtonTitles:nil]
+                 show];
+            }
+        }];
+    } else {
+        message = NSLocalizedString(@"The hostname entered was incorrect.", nil);
+    }
+    
+    [[[UIAlertView alloc] initWithTitle:@""
+                                message:message
+                               delegate:nil
+                      cancelButtonTitle:@"OK"
+                      otherButtonTitles:nil]
+     show];
+}
+
+- (void)toggleNavBarTint
+{
+    if (self.navigationController.navigationBar.tintColor) {
+        self.navigationController.navigationBar.tintColor = nil;
+    } else {
+        self.navigationController.navigationBar.tintColor = [UIColor redColor];
     }
 }
 
