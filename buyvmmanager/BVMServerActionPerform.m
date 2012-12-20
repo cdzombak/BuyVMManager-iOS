@@ -1,5 +1,6 @@
 #import "BVMServerActionPerform.h"
 #import "BVMAPIClient.h"
+#import "BVMServersManager.h"
 #import "NSArray+BVMArrayExtensions.h"
 #import "DDXML.h"
 
@@ -9,7 +10,10 @@
             forServer:(NSString *)serverName
             withBlock:(void (^)(BVMServerActionStatus status, NSError *error))resultBlock
 {
+    NSDictionary *credentials = [BVMServersManager credentialsForServer:serverName];
     NSDictionary *params = @{
+        @"key": credentials[kBVMServerKeyAPIKey],
+        @"hash": credentials[kBVMServerKeyAPIHash],
         @"action": [BVMServerActionPerform actionStringForAction:action]
     };
     [[BVMAPIClient sharedClient] getPath:kBuyVMAPIPath

@@ -1,5 +1,6 @@
 #import "BVMServerInfo.h"
 #import "BVMAPIClient.h"
+#import "BVMServersManager.h"
 #import "NSArray+BVMArrayExtensions.h"
 
 #import "DDXML.h"
@@ -31,7 +32,10 @@
 + (void)requestInfoForServer:(NSString *)serverName
                    withBlock:(void (^)(BVMServerInfo *, NSError *))resultBlock
 {
+    NSDictionary *credentials = [BVMServersManager credentialsForServer:serverName];
     NSDictionary *params = @{
+        @"key": credentials[kBVMServerKeyAPIKey],
+        @"hash": credentials[kBVMServerKeyAPIHash],
         @"action": @"info",
         @"ipaddr": @"true",
         @"status": @"true",
