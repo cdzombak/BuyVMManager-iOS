@@ -12,7 +12,6 @@
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        self.title = serverName;
         self.ips = ips;
     }
     return self;

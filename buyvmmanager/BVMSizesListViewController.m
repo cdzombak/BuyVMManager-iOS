@@ -22,7 +22,6 @@
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        self.title = serverName;
         self.statisticName = statisticName;
         self.totalBytes = totalBytes;
         self.usedBytes = usedBytes;
