@@ -26,6 +26,7 @@
 		93270A14168279E60013DEB5 /* BVMPinger.m in Sources */ = {isa = PBXBuildFile; fileRef = 93270A13168279E60013DEB5 /* BVMPinger.m */; };
 		93270A1B16827E640013DEB5 /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 93270A1A16827E640013DEB5 /* SimplePing.m */; };
 		93270A1D16827E940013DEB5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93270A1C16827E940013DEB5 /* CFNetwork.framework */; };
+		935FEEC216829B4700BE3892 /* BVMIPListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEEC116829B4700BE3892 /* BVMIPListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,8 @@
 		93270A1916827E640013DEB5 /* SimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePing.h; sourceTree = "<group>"; };
 		93270A1A16827E640013DEB5 /* SimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePing.m; sourceTree = "<group>"; };
 		93270A1C16827E940013DEB5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		935FEEC016829B4700BE3892 /* BVMIPListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMIPListViewController.h; sourceTree = "<group>"; };
+		935FEEC116829B4700BE3892 /* BVMIPListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMIPListViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +160,8 @@
 			children = (
 				932709F1168244E20013DEB5 /* BVMHostViewController.h */,
 				932709F2168244E20013DEB5 /* BVMHostViewController.m */,
+				935FEEC016829B4700BE3892 /* BVMIPListViewController.h */,
+				935FEEC116829B4700BE3892 /* BVMIPListViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -275,6 +280,7 @@
 				93270A051682726F0013DEB5 /* BVMHumanValueTransformer.m in Sources */,
 				93270A14168279E60013DEB5 /* BVMPinger.m in Sources */,
 				93270A1B16827E640013DEB5 /* SimplePing.m in Sources */,
+				935FEEC216829B4700BE3892 /* BVMIPListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

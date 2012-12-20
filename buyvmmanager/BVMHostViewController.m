@@ -2,6 +2,7 @@
 #import "BVMServerInfo.h"
 #import "BVMPinger.h"
 #import "BVMHumanValueTransformer.h"
+#import "BVMIPListViewController.h"
 
 typedef NS_ENUM(NSUInteger, BVMHostTableViewSections) {
     BVMHostTableViewSectionInfo = 0,
@@ -70,6 +71,8 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     [super viewDidLoad];
 
     self.tableView.tableHeaderView = self.headerView;
+
+    self.navigationItem.title = NSLocalizedString(@"Back", nil);
 
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                                                                            target:self
@@ -248,13 +251,16 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    if (indexPath.section == BVMHostTableViewSectionInfo) {
+        switch (indexPath.row) {
+            case BVMHostTableViewInfoRowIP: {
+                UIViewController *vc = [[BVMIPListViewController alloc] initWithServer:self.serverName
+                                                                                   ips:self.serverInfo.ipAddresses];
+                [self.navigationController pushViewController:vc animated:YES];
+                break;
+            }
+        }
+    }
 }
 
 #pragma mark Property overrides
