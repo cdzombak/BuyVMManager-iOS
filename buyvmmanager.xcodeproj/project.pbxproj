@@ -29,6 +29,7 @@
 		935FEEC216829B4700BE3892 /* BVMIPListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEEC116829B4700BE3892 /* BVMIPListViewController.m */; };
 		935FEEC61682A0FA00BE3892 /* BVMSizesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEEC51682A0FA00BE3892 /* BVMSizesListViewController.m */; };
 		935FEED11682BC3700BE3892 /* BVMServersManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED01682BC3700BE3892 /* BVMServersManager.m */; };
+		935FEED41682C06900BE3892 /* BVMServersListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED31682C06900BE3892 /* BVMServersListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,8 @@
 		935FEEC51682A0FA00BE3892 /* BVMSizesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMSizesListViewController.m; sourceTree = "<group>"; };
 		935FEECF1682BC3700BE3892 /* BVMServersManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMServersManager.h; sourceTree = "<group>"; };
 		935FEED01682BC3700BE3892 /* BVMServersManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMServersManager.m; sourceTree = "<group>"; };
+		935FEED21682C06900BE3892 /* BVMServersListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMServersListViewController.h; sourceTree = "<group>"; };
+		935FEED31682C06900BE3892 /* BVMServersListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMServersListViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +173,8 @@
 				932709F2168244E20013DEB5 /* BVMHostViewController.m */,
 				935FEEC016829B4700BE3892 /* BVMIPListViewController.h */,
 				935FEEC116829B4700BE3892 /* BVMIPListViewController.m */,
+				935FEED21682C06900BE3892 /* BVMServersListViewController.h */,
+				935FEED31682C06900BE3892 /* BVMServersListViewController.m */,
 				935FEEC41682A0FA00BE3892 /* BVMSizesListViewController.h */,
 				935FEEC51682A0FA00BE3892 /* BVMSizesListViewController.m */,
 			);
@@ -293,6 +298,7 @@
 				935FEEC216829B4700BE3892 /* BVMIPListViewController.m in Sources */,
 				935FEEC61682A0FA00BE3892 /* BVMSizesListViewController.m in Sources */,
 				935FEED11682BC3700BE3892 /* BVMServersManager.m in Sources */,
+				935FEED41682C06900BE3892 /* BVMServersListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
