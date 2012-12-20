@@ -32,6 +32,7 @@ static NSString * const kBVMUserDefaultsServersKey = @"servers";
     if ([servers objectForKey:serverName] != nil) return NO;
 
     NSMutableDictionary *mutableServers = [servers mutableCopy];
+    if (!mutableServers) mutableServers = [NSMutableDictionary dictionary];
     [mutableServers setObject:@{
         kBVMServerKeyAPIKey: key,
          kBVMServerKeyAPIHash: hash
