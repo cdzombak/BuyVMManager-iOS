@@ -28,6 +28,7 @@
 		93270A1D16827E940013DEB5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93270A1C16827E940013DEB5 /* CFNetwork.framework */; };
 		935FEEC216829B4700BE3892 /* BVMIPListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEEC116829B4700BE3892 /* BVMIPListViewController.m */; };
 		935FEEC61682A0FA00BE3892 /* BVMSizesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEEC51682A0FA00BE3892 /* BVMSizesListViewController.m */; };
+		935FEED11682BC3700BE3892 /* BVMServersManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED01682BC3700BE3892 /* BVMServersManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,8 @@
 		935FEEC116829B4700BE3892 /* BVMIPListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMIPListViewController.m; sourceTree = "<group>"; };
 		935FEEC41682A0FA00BE3892 /* BVMSizesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMSizesListViewController.h; sourceTree = "<group>"; };
 		935FEEC51682A0FA00BE3892 /* BVMSizesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMSizesListViewController.m; sourceTree = "<group>"; };
+		935FEECF1682BC3700BE3892 /* BVMServersManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMServersManager.h; sourceTree = "<group>"; };
+		935FEED01682BC3700BE3892 /* BVMServersManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMServersManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +129,8 @@
 				932709CB1682353E0013DEB5 /* BVMAppDelegate.m */,
 				93270A031682726F0013DEB5 /* BVMHumanValueTransformer.h */,
 				93270A041682726F0013DEB5 /* BVMHumanValueTransformer.m */,
+				935FEECF1682BC3700BE3892 /* BVMServersManager.h */,
+				935FEED01682BC3700BE3892 /* BVMServersManager.m */,
 				932709C21682353E0013DEB5 /* Supporting Files */,
 			);
 			path = buyvmmanager;
@@ -148,12 +153,12 @@
 		932709E616823FA20013DEB5 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				932709EA1682411A0013DEB5 /* BVMAPIClient.h */,
+				932709EB1682411A0013DEB5 /* BVMAPIClient.m */,
 				932709E716823FB80013DEB5 /* BVMServerActionPerform.h */,
 				932709E816823FB80013DEB5 /* BVMServerActionPerform.m */,
 				932709ED168243950013DEB5 /* BVMServerInfo.h */,
 				932709EE168243950013DEB5 /* BVMServerInfo.m */,
-				932709EA1682411A0013DEB5 /* BVMAPIClient.h */,
-				932709EB1682411A0013DEB5 /* BVMAPIClient.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -287,6 +292,7 @@
 				93270A1B16827E640013DEB5 /* SimplePing.m in Sources */,
 				935FEEC216829B4700BE3892 /* BVMIPListViewController.m in Sources */,
 				935FEEC61682A0FA00BE3892 /* BVMSizesListViewController.m in Sources */,
+				935FEED11682BC3700BE3892 /* BVMServersManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
