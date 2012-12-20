@@ -17,7 +17,7 @@
 		932709CE1682353E0013DEB5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 932709CD1682353E0013DEB5 /* Default.png */; };
 		932709D01682353E0013DEB5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 932709CF1682353E0013DEB5 /* Default@2x.png */; };
 		932709D21682353E0013DEB5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 932709D11682353E0013DEB5 /* Default-568h@2x.png */; };
-		932709E916823FB80013DEB5 /* BVMServerAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709E816823FB80013DEB5 /* BVMServerAction.m */; };
+		932709E916823FB80013DEB5 /* BVMServerActionPerform.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709E816823FB80013DEB5 /* BVMServerActionPerform.m */; };
 		932709EC1682411A0013DEB5 /* BVMAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709EB1682411A0013DEB5 /* BVMAPIClient.m */; };
 		932709EF168243950013DEB5 /* BVMServerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709EE168243950013DEB5 /* BVMServerInfo.m */; };
 		932709F3168244E20013DEB5 /* BVMHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709F2168244E20013DEB5 /* BVMHostViewController.m */; };
@@ -46,8 +46,8 @@
 		932709CD1682353E0013DEB5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		932709CF1682353E0013DEB5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		932709D11682353E0013DEB5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		932709E716823FB80013DEB5 /* BVMServerAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMServerAction.h; sourceTree = "<group>"; };
-		932709E816823FB80013DEB5 /* BVMServerAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMServerAction.m; sourceTree = "<group>"; };
+		932709E716823FB80013DEB5 /* BVMServerActionPerform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMServerActionPerform.h; sourceTree = "<group>"; };
+		932709E816823FB80013DEB5 /* BVMServerActionPerform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMServerActionPerform.m; sourceTree = "<group>"; };
 		932709EA1682411A0013DEB5 /* BVMAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMAPIClient.h; sourceTree = "<group>"; };
 		932709EB1682411A0013DEB5 /* BVMAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMAPIClient.m; sourceTree = "<group>"; };
 		932709ED168243950013DEB5 /* BVMServerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMServerInfo.h; sourceTree = "<group>"; };
@@ -148,8 +148,8 @@
 		932709E616823FA20013DEB5 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				932709E716823FB80013DEB5 /* BVMServerAction.h */,
-				932709E816823FB80013DEB5 /* BVMServerAction.m */,
+				932709E716823FB80013DEB5 /* BVMServerActionPerform.h */,
+				932709E816823FB80013DEB5 /* BVMServerActionPerform.m */,
 				932709ED168243950013DEB5 /* BVMServerInfo.h */,
 				932709EE168243950013DEB5 /* BVMServerInfo.m */,
 				932709EA1682411A0013DEB5 /* BVMAPIClient.h */,
@@ -277,7 +277,7 @@
 			files = (
 				932709C81682353E0013DEB5 /* main.m in Sources */,
 				932709CC1682353E0013DEB5 /* BVMAppDelegate.m in Sources */,
-				932709E916823FB80013DEB5 /* BVMServerAction.m in Sources */,
+				932709E916823FB80013DEB5 /* BVMServerActionPerform.m in Sources */,
 				932709EC1682411A0013DEB5 /* BVMAPIClient.m in Sources */,
 				932709EF168243950013DEB5 /* BVMServerInfo.m in Sources */,
 				932709F3168244E20013DEB5 /* BVMHostViewController.m in Sources */,

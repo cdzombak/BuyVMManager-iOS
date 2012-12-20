@@ -3,8 +3,17 @@
 typedef NS_ENUM(NSUInteger, BVMServerActionStatus) {
     BVMServerActionStatusRebooted,
     BVMServerActionStatusBooted,
-    BVMServerActionStatusShutdown
+    BVMServerActionStatusShutdown,
+    BVMServerActionStatusIndeterminate
 };
+
+typedef NS_ENUM(NSUInteger, BVMServerAction) {
+    BVMServerActionReboot,
+    BVMServerActionBoot,
+    BVMServerActionShutdown
+};
+
+@interface BVMServerActionPerform : NSObject
 
 /**
  * Provides an asynchronous interface for performing actions
@@ -13,15 +22,8 @@ typedef NS_ENUM(NSUInteger, BVMServerActionStatus) {
  * For all methods, a nil error when the result block is called
  * means there was no detected error.
  */
-@interface BVMServerAction : NSObject
-
-+ (void)bootServer:(NSString *)serverName
++ (void)performAction:(BVMServerAction)action
+            forServer:(NSString *)serverName
          withBlock:(void (^)(BVMServerActionStatus status, NSError *error))resultBlock;
-
-+ (void)rebootServer:(NSString *)serverName
-           withBlock:(void (^)(BVMServerActionStatus status, NSError *error))resultBlock;
-
-+ (void)shutdownServer:(NSString *)serverName
-             withBlock:(void (^)(BVMServerActionStatus status, NSError *error))resultBlock;
 
 @end
