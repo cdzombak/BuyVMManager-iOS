@@ -22,7 +22,9 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 - (id)init
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
-    if (self) { }
+    if (self) {
+        self.title = NSLocalizedString(@"Add VM", nil);
+    }
     return self;
 }
 
