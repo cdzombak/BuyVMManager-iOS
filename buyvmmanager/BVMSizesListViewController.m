@@ -4,9 +4,9 @@
 @interface BVMSizesListViewController ()
 
 @property (nonatomic, copy) NSString *statisticName;
-@property (nonatomic, assign) NSUInteger totalBytes;
-@property (nonatomic, assign) NSUInteger usedBytes;
-@property (nonatomic, assign) NSUInteger freeBytes;
+@property (nonatomic, assign) long long totalBytes;
+@property (nonatomic, assign) long long usedBytes;
+@property (nonatomic, assign) long long freeBytes;
 @property (nonatomic, assign) NSUInteger percentUsed;
 
 @end
@@ -15,9 +15,9 @@
 
 - (id)initWithServer:(NSString *)serverName
            statistic:(NSString *)statisticName
-               total:(NSUInteger)totalBytes
-                used:(NSUInteger)usedBytes
-                free:(NSUInteger)freeBytes
+               total:(long long)totalBytes
+                used:(long long)usedBytes
+                free:(long long)freeBytes
          percentUsed:(NSUInteger)percentUsed
 {
     self = [super initWithStyle:UITableViewStyleGrouped];

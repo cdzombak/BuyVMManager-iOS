@@ -2,6 +2,6 @@
 
 @interface BVMHumanValueTransformer : NSObject
 
-+ (NSString *)humanSizeValueFromBytes:(NSUInteger)bytes;
++ (NSString *)humanSizeValueFromBytes:(long long)bytes;
 
 @end

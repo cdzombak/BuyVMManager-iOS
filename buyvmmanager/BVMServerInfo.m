@@ -12,17 +12,17 @@
 @property (nonatomic, readwrite, strong) NSString *hostname;
 @property (nonatomic, readwrite, strong) NSString *mainIpAddress;
 @property (nonatomic, readwrite, strong) NSArray *ipAddresses;
-@property (nonatomic, readwrite, assign) NSUInteger hddTotal;
-@property (nonatomic, readwrite, assign) NSUInteger hddUsed;
-@property (nonatomic, readwrite, assign) NSUInteger hddFree;
+@property (nonatomic, readwrite, assign) long long hddTotal;
+@property (nonatomic, readwrite, assign) long long hddUsed;
+@property (nonatomic, readwrite, assign) long long hddFree;
 @property (nonatomic, readwrite, assign) NSUInteger hddPercentUsed;
-@property (nonatomic, readwrite, assign) NSUInteger memTotal;
-@property (nonatomic, readwrite, assign) NSUInteger memUsed;
-@property (nonatomic, readwrite, assign) NSUInteger memFree;
+@property (nonatomic, readwrite, assign) long long memTotal;
+@property (nonatomic, readwrite, assign) long long memUsed;
+@property (nonatomic, readwrite, assign) long long memFree;
 @property (nonatomic, readwrite, assign) NSUInteger memPercentUsed;
-@property (nonatomic, readwrite, assign) NSUInteger bwTotal;
-@property (nonatomic, readwrite, assign) NSUInteger bwUsed;
-@property (nonatomic, readwrite, assign) NSUInteger bwFree;
+@property (nonatomic, readwrite, assign) long long bwTotal;
+@property (nonatomic, readwrite, assign) long long bwUsed;
+@property (nonatomic, readwrite, assign) long long bwFree;
 @property (nonatomic, readwrite, assign) NSUInteger bwPercentUsed;
 
 @end
@@ -109,25 +109,25 @@
     // total,used,free,percentused
     NSArray *hddInfo = [[BVMServerInfo _parseStringForNode:@"hdd" fromXml:doc] componentsSeparatedByString:@","];
     if (hddInfo.count == 4) {
-        info.hddTotal = [hddInfo[0] intValue];
-        info.hddUsed  = [hddInfo[1] intValue];
-        info.hddFree  = [hddInfo[2] intValue];
+        info.hddTotal = [hddInfo[0] longLongValue];
+        info.hddUsed  = [hddInfo[1] longLongValue];
+        info.hddFree  = [hddInfo[2] longLongValue];
         info.hddPercentUsed = [hddInfo[3] intValue];
     }
 
     NSArray *memInfo = [[BVMServerInfo _parseStringForNode:@"mem" fromXml:doc] componentsSeparatedByString:@","];
     if (memInfo.count == 4) {
-        info.memTotal = [memInfo[0] intValue];
-        info.memUsed  = [memInfo[1] intValue];
-        info.memFree  = [memInfo[2] intValue];
+        info.memTotal = [memInfo[0] longLongValue];
+        info.memUsed  = [memInfo[1] longLongValue];
+        info.memFree  = [memInfo[2] longLongValue];
         info.memPercentUsed = [memInfo[3] intValue];
     }
 
     NSArray *bwInfo = [[BVMServerInfo _parseStringForNode:@"bw" fromXml:doc] componentsSeparatedByString:@","];
     if (bwInfo.count == 4) {
-        info.bwTotal = [bwInfo[0] intValue];
-        info.bwUsed  = [bwInfo[1] intValue];
-        info.bwFree  = [bwInfo[2] intValue];
+        info.bwTotal = [bwInfo[0] longLongValue];
+        info.bwUsed  = [bwInfo[1] longLongValue];
+        info.bwFree  = [bwInfo[2] longLongValue];
         info.bwPercentUsed = [bwInfo[3] intValue];
     }
 

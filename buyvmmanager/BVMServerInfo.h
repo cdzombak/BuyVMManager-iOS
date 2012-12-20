@@ -64,17 +64,17 @@ typedef NS_ENUM(NSUInteger, BVMServerStatus) {
 /**
  * Total HDD capacity, in bytes
  */
-@property (nonatomic, readonly, assign) NSUInteger hddTotal;
+@property (nonatomic, readonly, assign) long long hddTotal;
 
 /**
  * HDD used, in bytes
  */
-@property (nonatomic, readonly, assign) NSUInteger hddUsed;
+@property (nonatomic, readonly, assign) long long hddUsed;
 
 /**
  * HDD free, in bytes
  */
-@property (nonatomic, readonly, assign) NSUInteger hddFree;
+@property (nonatomic, readonly, assign) long long hddFree;
 
 /**
  * HDD percent used
@@ -84,17 +84,17 @@ typedef NS_ENUM(NSUInteger, BVMServerStatus) {
 /**
  * Total memory, in bytes
  */
-@property (nonatomic, readonly, assign) NSUInteger memTotal;
+@property (nonatomic, readonly, assign) long long memTotal;
 
 /**
  * Memory used, in bytes
  */
-@property (nonatomic, readonly, assign) NSUInteger memUsed;
+@property (nonatomic, readonly, assign) long long memUsed;
 
 /**
  * Memory free, in bytes
  */
-@property (nonatomic, readonly, assign) NSUInteger memFree;
+@property (nonatomic, readonly, assign) long long memFree;
 
 /**
  * Memory percent used
@@ -104,17 +104,17 @@ typedef NS_ENUM(NSUInteger, BVMServerStatus) {
 /**
  * Total bandwidth available, in bytes
  */
-@property (nonatomic, readonly, assign) NSUInteger bwTotal;
+@property (nonatomic, readonly, assign) long long bwTotal;
 
 /**
  * Bandwidth used, in bytes
  */
-@property (nonatomic, readonly, assign) NSUInteger bwUsed;
+@property (nonatomic, readonly, assign) long long bwUsed;
 
 /**
  * Bandwidth free, in bytes
  */
-@property (nonatomic, readonly, assign) NSUInteger bwFree;
+@property (nonatomic, readonly, assign) long long bwFree;
 
 /**
  * Bandwidth percent used

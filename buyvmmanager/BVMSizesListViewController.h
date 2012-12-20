@@ -9,9 +9,9 @@
 
 - (id)initWithServer:(NSString *)serverName
            statistic:(NSString *)statisticName
-               total:(NSUInteger)totalBytes
-                used:(NSUInteger)usedBytes
-                free:(NSUInteger)freeBytes
+               total:(long long)totalBytes
+                used:(long long)usedBytes
+                free:(long long)freeBytes
          percentUsed:(NSUInteger)percentUsed;
 
 @end
