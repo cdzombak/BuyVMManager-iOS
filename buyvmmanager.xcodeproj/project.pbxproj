@@ -88,7 +88,6 @@
 		932709AC1682353E0013DEB5 = {
 			isa = PBXGroup;
 			children = (
-				93270A1C16827E940013DEB5 /* CFNetwork.framework */,
 				932709C11682353E0013DEB5 /* buyvmmanager */,
 				932709BA1682353E0013DEB5 /* Frameworks */,
 				932709B81682353E0013DEB5 /* Products */,
@@ -107,6 +106,7 @@
 		932709BA1682353E0013DEB5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				93270A1C16827E940013DEB5 /* CFNetwork.framework */,
 				932709BB1682353E0013DEB5 /* UIKit.framework */,
 				932709BD1682353E0013DEB5 /* Foundation.framework */,
 				932709BF1682353E0013DEB5 /* CoreGraphics.framework */,
