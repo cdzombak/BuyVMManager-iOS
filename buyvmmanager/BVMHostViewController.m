@@ -322,13 +322,13 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     NSString *message;
     switch (self.selectedAction) {
         case BVMServerActionBoot:
-            message = NSLocalizedString(@"You are attempting to boot a VPS.\nEnter the hostname to confirm:", nil);
+            message = NSLocalizedString(@"You are attempting to boot a VM.\nEnter the hostname to confirm:", nil);
             break;
         case BVMServerActionReboot:
-            message = NSLocalizedString(@"Attempting to REBOOT a VPS.\nEnter the hostname to confirm:", nil);
+            message = NSLocalizedString(@"Attempting to REBOOT a VM.\nEnter the hostname to confirm:", nil);
             break;
         case BVMServerActionShutdown:
-            message = NSLocalizedString(@"Attempting to SHUT DOWN a VPS.\nEnter the hostname to confirm:", nil);
+            message = NSLocalizedString(@"Attempting to SHUT DOWN a VM.\nEnter the hostname to confirm:", nil);
             break;
     }
 
