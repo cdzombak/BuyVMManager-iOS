@@ -1,11 +1,14 @@
 
 PODS:
 - AFNetworking (1.0.1)
+- KissXML (5.0)
 
 DEPENDENCIES:
 - AFNetworking
+- KissXML
 
 SPEC CHECKSUMS:
   AFNetworking: 4c11f857c9a18d65f4257c90a1e74ac49f0ac422
+  KissXML: 8dfe0fb6d4e987fec63656ff07d5e697f49976f8
 
 COCOAPODS: 0.16.0
