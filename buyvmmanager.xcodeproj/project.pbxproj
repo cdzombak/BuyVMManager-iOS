@@ -27,6 +27,7 @@
 		93270A1B16827E640013DEB5 /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 93270A1A16827E640013DEB5 /* SimplePing.m */; };
 		93270A1D16827E940013DEB5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93270A1C16827E940013DEB5 /* CFNetwork.framework */; };
 		935FEEC216829B4700BE3892 /* BVMIPListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEEC116829B4700BE3892 /* BVMIPListViewController.m */; };
+		935FEEC61682A0FA00BE3892 /* BVMSizesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEEC51682A0FA00BE3892 /* BVMSizesListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,8 @@
 		93270A1C16827E940013DEB5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		935FEEC016829B4700BE3892 /* BVMIPListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMIPListViewController.h; sourceTree = "<group>"; };
 		935FEEC116829B4700BE3892 /* BVMIPListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMIPListViewController.m; sourceTree = "<group>"; };
+		935FEEC41682A0FA00BE3892 /* BVMSizesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMSizesListViewController.h; sourceTree = "<group>"; };
+		935FEEC51682A0FA00BE3892 /* BVMSizesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMSizesListViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +165,8 @@
 				932709F2168244E20013DEB5 /* BVMHostViewController.m */,
 				935FEEC016829B4700BE3892 /* BVMIPListViewController.h */,
 				935FEEC116829B4700BE3892 /* BVMIPListViewController.m */,
+				935FEEC41682A0FA00BE3892 /* BVMSizesListViewController.h */,
+				935FEEC51682A0FA00BE3892 /* BVMSizesListViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -281,6 +286,7 @@
 				93270A14168279E60013DEB5 /* BVMPinger.m in Sources */,
 				93270A1B16827E640013DEB5 /* SimplePing.m in Sources */,
 				935FEEC216829B4700BE3892 /* BVMIPListViewController.m in Sources */,
+				935FEEC61682A0FA00BE3892 /* BVMSizesListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -3,6 +3,7 @@
 #import "BVMPinger.h"
 #import "BVMHumanValueTransformer.h"
 #import "BVMIPListViewController.h"
+#import "BVMSizesListViewController.h"
 
 typedef NS_ENUM(NSUInteger, BVMHostTableViewSections) {
     BVMHostTableViewSectionInfo = 0,
@@ -252,14 +253,42 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == BVMHostTableViewSectionInfo) {
+        UIViewController *vc = nil;
         switch (indexPath.row) {
             case BVMHostTableViewInfoRowIP: {
-                UIViewController *vc = [[BVMIPListViewController alloc] initWithServer:self.serverName
-                                                                                   ips:self.serverInfo.ipAddresses];
-                [self.navigationController pushViewController:vc animated:YES];
+                vc = [[BVMIPListViewController alloc] initWithServer:self.serverName
+                                                                 ips:self.serverInfo.ipAddresses];
+                break;
+            }
+            case BVMHostTableViewInfoRowBandwidth: {
+                vc = [[BVMSizesListViewController alloc] initWithServer:self.serverName
+                                                              statistic:NSLocalizedString(@"Bandwidth", nil)
+                                                                  total:self.serverInfo.bwTotal
+                                                                   used:self.serverInfo.bwUsed
+                                                                   free:self.serverInfo.bwFree
+                                                            percentUsed:self.serverInfo.bwPercentUsed];
+                break;
+            }
+            case BVMHostTableViewInfoRowHDD: {
+                vc = [[BVMSizesListViewController alloc] initWithServer:self.serverName
+                                                              statistic:NSLocalizedString(@"HDD", nil)
+                                                                  total:self.serverInfo.hddTotal
+                                                                   used:self.serverInfo.hddUsed
+                                                                   free:self.serverInfo.hddFree
+                                                            percentUsed:self.serverInfo.hddPercentUsed];
+                break;
+            }
+            case BVMHostTableViewInfoRowMemory: {
+                vc = [[BVMSizesListViewController alloc] initWithServer:self.serverName
+                                                              statistic:NSLocalizedString(@"Memory", nil)
+                                                                  total:self.serverInfo.memTotal
+                                                                   used:self.serverInfo.memUsed
+                                                                   free:self.serverInfo.memFree
+                                                            percentUsed:self.serverInfo.memPercentUsed];
                 break;
             }
         }
+        if (vc) [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
