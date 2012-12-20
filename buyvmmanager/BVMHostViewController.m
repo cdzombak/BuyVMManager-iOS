@@ -4,6 +4,7 @@
 #import "BVMHumanValueTransformer.h"
 #import "BVMIPListViewController.h"
 #import "BVMSizesListViewController.h"
+#import "MBProgressHUD.h"
 
 typedef NS_ENUM(NSUInteger, BVMHostTableViewSections) {
     BVMHostTableViewSectionInfo = 0,
@@ -89,7 +90,12 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     //       async requests should tell the table view to refresh the appropriate row later.
     //       cellForRowAtIndexPath: adds appropriate data if available.
 
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+
     [BVMServerInfo requestInfoForServer:self.serverName withBlock:^(BVMServerInfo *info, NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         if (error) {
             [[[UIAlertView alloc] initWithTitle:@"Error"
                                         message:error.localizedDescription
