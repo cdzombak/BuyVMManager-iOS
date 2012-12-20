@@ -2,7 +2,7 @@
 
 #import "AFXMLRequestOperation.h"
 
-static NSString * const kBuyVMAPIBaseURLString = @"https://manage.buyvm.net/api/client/command.php";
+static NSString * const kBuyVMAPIBaseURLString = @"https://manage.buyvm.net/api/client";
 
 @implementation BVMAPIClient
 
@@ -23,7 +23,8 @@ static NSString * const kBuyVMAPIBaseURLString = @"https://manage.buyvm.net/api/
         return nil;
     }
 
-    [self registerHTTPOperationClass:[AFXMLRequestOperation class]];
+    // todo: possibly make my own request class which munges the reply appropriately (see BVMServerInfo.m)
+    [self registerHTTPOperationClass:[AFHTTPRequestOperation class]];
 
     // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
     // commented for now as BuyVM API seems to respond with text/html. le sigh.

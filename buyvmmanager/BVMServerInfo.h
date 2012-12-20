@@ -37,7 +37,7 @@ typedef NS_ENUM(NSUInteger, BVMServerStatus) {
  *            if `error` is nil.
  */
 + (void)requestStatusForServer:(NSString *)serverName
-                     withBlock:(void (^)(BVMServerStatus status, NSError *error))resultBlock;
+                     withBlock:(void (^)(BVMServerStatus status, NSString *hostname, NSString *ip, NSError *error))resultBlock;
 
 #pragma mark Server Info
 
@@ -120,5 +120,9 @@ typedef NS_ENUM(NSUInteger, BVMServerStatus) {
  * Bandwidth percent used
  */
 @property (nonatomic, readonly, assign) NSUInteger bwPercentUsed;
+
+#pragma mark Helpers
+
++ (BVMServerStatus)statusFromApiString:(NSString *)statusString;
 
 @end
