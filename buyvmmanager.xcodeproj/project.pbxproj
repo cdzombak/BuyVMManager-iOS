@@ -32,6 +32,7 @@
 		935FEED41682C06900BE3892 /* BVMServersListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED31682C06900BE3892 /* BVMServersListViewController.m */; };
 		935FEED71682C87300BE3892 /* BVMAddServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED61682C87300BE3892 /* BVMAddServerViewController.m */; };
 		935FEEDA1682CC2600BE3892 /* BVMTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED91682CC2500BE3892 /* BVMTextFieldTableViewCell.m */; };
+		93BADD411683C19900B0CD6F /* UIColor+BVMColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADD401683C19900B0CD6F /* UIColor+BVMColors.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +80,8 @@
 		935FEED61682C87300BE3892 /* BVMAddServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMAddServerViewController.m; sourceTree = "<group>"; };
 		935FEED81682CC2500BE3892 /* BVMTextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMTextFieldTableViewCell.h; sourceTree = "<group>"; };
 		935FEED91682CC2500BE3892 /* BVMTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMTextFieldTableViewCell.m; sourceTree = "<group>"; };
+		93BADD3F1683C19900B0CD6F /* UIColor+BVMColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+BVMColors.h"; sourceTree = "<group>"; };
+		93BADD401683C19900B0CD6F /* UIColor+BVMColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+BVMColors.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +198,8 @@
 			children = (
 				93270A00168269740013DEB5 /* NSArray+BVMArrayExtensions.h */,
 				93270A01168269740013DEB5 /* NSArray+BVMArrayExtensions.m */,
+				93BADD3F1683C19900B0CD6F /* UIColor+BVMColors.h */,
+				93BADD401683C19900B0CD6F /* UIColor+BVMColors.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -319,6 +324,7 @@
 				935FEED41682C06900BE3892 /* BVMServersListViewController.m in Sources */,
 				935FEED71682C87300BE3892 /* BVMAddServerViewController.m in Sources */,
 				935FEEDA1682CC2600BE3892 /* BVMTextFieldTableViewCell.m in Sources */,
+				93BADD411683C19900B0CD6F /* UIColor+BVMColors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

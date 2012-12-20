@@ -5,6 +5,7 @@
 #import "BVMHumanValueTransformer.h"
 #import "BVMIPListViewController.h"
 #import "BVMSizesListViewController.h"
+#import "UIColor+BVMColors.h"
 #import "MBProgressHUD.h"
 
 typedef NS_ENUM(NSUInteger, BVMHostTableViewSections) {
@@ -138,7 +139,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     self.headerHostnameLabel.text = self.serverInfo.hostname;
     if (self.serverInfo.status == BVMServerStatusOnline) {
         self.headerStatusLabel.text = NSLocalizedString(@"Online", nil);
-        self.headerStatusLabel.textColor = [UIColor colorWithRed:80.0/255.0 green:136.0/255.0 blue:80.0/255.0 alpha:1.0];
+        self.headerStatusLabel.textColor = [UIColor bvm_onlineTextColor];
     } else {
         self.headerStatusLabel.text = NSLocalizedString(@"Offline", nil);
         self.headerStatusLabel.textColor = [UIColor redColor];

@@ -1,6 +1,7 @@
 #import "BVMAddServerViewController.h"
 #import "BVMTextFieldTableViewCell.h"
 #import "BVMServersManager.h"
+#import "UIColor+BVMColors.h"
 
 typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     BVMAddServerTableViewRowName = 0,
@@ -62,7 +63,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     BOOL valid = YES;
     for (UITextField *field in fields) {
         if (!field.text || [field.text isEqualToString:@""]) {
-            field.superview.superview.backgroundColor = [UIColor colorWithRed:1.0 green:0.9 blue:0.9 alpha:1.0];
+            field.superview.superview.backgroundColor = [UIColor bvm_fieldErrorBackgroundColor];
             valid = NO;
         } else {
             field.superview.superview.backgroundColor = [UIColor whiteColor];
@@ -72,7 +73,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     NSArray *serverNames = [BVMServersManager serverNames];
     for (NSString *name in serverNames) {
         if ([name isEqualToString:self.serverNameField.text]) {
-            self.serverNameField.superview.superview.backgroundColor = [UIColor colorWithRed:1.0 green:0.9 blue:0.9 alpha:1.0];
+            self.serverNameField.superview.superview.backgroundColor = [UIColor bvm_fieldErrorBackgroundColor];
             valid = NO;
         } else {
             self.serverNameField.superview.superview.backgroundColor = [UIColor whiteColor];
