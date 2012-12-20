@@ -63,8 +63,35 @@
 + (void) requestStatusForServer:(NSString *)serverName
                       withBlock:(void (^)(BVMServerStatus, NSString *hostname, NSString *ip, NSError *))resultBlock
 {
-    #warning TODO CDZ
-    // this will just be a call with the key, hash, and action=status
+    NSDictionary *credentials = [BVMServersManager credentialsForServer:serverName];
+    NSDictionary *params = @{
+        @"key": credentials[kBVMServerKeyAPIKey],
+        @"hash": credentials[kBVMServerKeyAPIHash],
+        @"action": @"status"
+    };
+    [[BVMAPIClient sharedClient] getPath:kBuyVMAPIPath
+                              parameters:params
+                                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                     // todo refactor the fuck out of this!!! maybe extract this munging and parsing into my own operation subclass.
+                                     NSString *resp = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+                                     resp = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><root>%@</root>", resp]; // fuck this api
+
+                                     NSError *xmlerror = nil;
+                                     DDXMLDocument *doc = [[DDXMLDocument alloc] initWithXMLString:resp options:0 error:&xmlerror];
+                                     // todo: check and deal with error
+
+                                     BVMServerStatus status = [BVMServerInfo statusFromApiString:[BVMServerInfo _parseStringForNode:@"vmstat" fromXml:doc]];
+                                     NSString *hostname = [BVMServerInfo _parseStringForNode:@"hostname" fromXml:doc];
+                                     NSString *ip = [BVMServerInfo _parseStringForNode:@"ipaddress" fromXml:doc];
+
+                                     if (resultBlock) resultBlock(status, hostname, ip, nil);
+                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                     if (!error) error = [NSError errorWithDomain:@"com.cdz.buyvmmanager"
+                                                                             code:1
+                                                                         userInfo:@{NSLocalizedDescriptionKey: @"The API request failed without additional information."}
+                                                          ];
+                                     if (resultBlock) resultBlock(BVMServerStatusOffline, nil, nil, error);
+                                 }];
 }
 
 + (BVMServerInfo *)infoFromXml:(NSString *)apiResponse
