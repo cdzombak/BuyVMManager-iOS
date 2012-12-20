@@ -21,6 +21,7 @@
 		932709EC1682411A0013DEB5 /* BVMAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709EB1682411A0013DEB5 /* BVMAPIClient.m */; };
 		932709EF168243950013DEB5 /* BVMServerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709EE168243950013DEB5 /* BVMServerInfo.m */; };
 		93270A02168269740013DEB5 /* NSArray+BVMArrayExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 93270A01168269740013DEB5 /* NSArray+BVMArrayExtensions.m */; };
+		93270A051682726F0013DEB5 /* BVMHumanValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 93270A041682726F0013DEB5 /* BVMHumanValueTransformer.m */; };
 		93270A14168279E60013DEB5 /* BVMPinger.m in Sources */ = {isa = PBXBuildFile; fileRef = 93270A13168279E60013DEB5 /* BVMPinger.m */; };
 		93270A1B16827E640013DEB5 /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 93270A1A16827E640013DEB5 /* SimplePing.m */; };
 		93270A1D16827E940013DEB5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93270A1C16827E940013DEB5 /* CFNetwork.framework */; };
@@ -50,6 +51,8 @@
 		932709EE168243950013DEB5 /* BVMServerInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMServerInfo.m; sourceTree = "<group>"; };
 		93270A00168269740013DEB5 /* NSArray+BVMArrayExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+BVMArrayExtensions.h"; sourceTree = "<group>"; };
 		93270A01168269740013DEB5 /* NSArray+BVMArrayExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+BVMArrayExtensions.m"; sourceTree = "<group>"; };
+		93270A031682726F0013DEB5 /* BVMHumanValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMHumanValueTransformer.h; sourceTree = "<group>"; };
+		93270A041682726F0013DEB5 /* BVMHumanValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMHumanValueTransformer.m; sourceTree = "<group>"; };
 		93270A12168279E60013DEB5 /* BVMPinger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMPinger.h; sourceTree = "<group>"; };
 		93270A13168279E60013DEB5 /* BVMPinger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMPinger.m; sourceTree = "<group>"; };
 		93270A1916827E640013DEB5 /* SimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePing.h; sourceTree = "<group>"; };
@@ -111,6 +114,8 @@
 				93270A0E1682797A0013DEB5 /* Ping */,
 				932709CA1682353E0013DEB5 /* BVMAppDelegate.h */,
 				932709CB1682353E0013DEB5 /* BVMAppDelegate.m */,
+				93270A031682726F0013DEB5 /* BVMHumanValueTransformer.h */,
+				93270A041682726F0013DEB5 /* BVMHumanValueTransformer.m */,
 				932709C21682353E0013DEB5 /* Supporting Files */,
 			);
 			path = buyvmmanager;
@@ -253,6 +258,7 @@
 				932709EC1682411A0013DEB5 /* BVMAPIClient.m in Sources */,
 				932709EF168243950013DEB5 /* BVMServerInfo.m in Sources */,
 				93270A02168269740013DEB5 /* NSArray+BVMArrayExtensions.m in Sources */,
+				93270A051682726F0013DEB5 /* BVMHumanValueTransformer.m in Sources */,
 				93270A14168279E60013DEB5 /* BVMPinger.m in Sources */,
 				93270A1B16827E640013DEB5 /* SimplePing.m in Sources */,
 			);
