@@ -69,12 +69,14 @@
     NSString *serverName = self.serverNames[indexPath.row];
     cell.textLabel.text = serverName;
     cell.textLabel.textColor = [UIColor blackColor];
+    cell.detailTextLabel.text = @"";
     [BVMServerInfo requestStatusForServer:serverName
                                 withBlock:^(BVMServerStatus status, NSString *hostname, NSString *ip, NSError *error) {
                                     if (status == BVMServerStatusOffline) {
                                         cell.textLabel.textColor = [UIColor redColor];
                                     }
                                     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@)", ip, hostname];
+                                    [cell setNeedsLayout];
                                 }];
 }
 
