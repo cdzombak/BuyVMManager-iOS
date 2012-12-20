@@ -20,6 +20,7 @@
 		932709E916823FB80013DEB5 /* BVMServerAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709E816823FB80013DEB5 /* BVMServerAction.m */; };
 		932709EC1682411A0013DEB5 /* BVMAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709EB1682411A0013DEB5 /* BVMAPIClient.m */; };
 		932709EF168243950013DEB5 /* BVMServerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709EE168243950013DEB5 /* BVMServerInfo.m */; };
+		93270A02168269740013DEB5 /* NSArray+BVMArrayExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 93270A01168269740013DEB5 /* NSArray+BVMArrayExtensions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,8 @@
 		932709EB1682411A0013DEB5 /* BVMAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMAPIClient.m; sourceTree = "<group>"; };
 		932709ED168243950013DEB5 /* BVMServerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMServerInfo.h; sourceTree = "<group>"; };
 		932709EE168243950013DEB5 /* BVMServerInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMServerInfo.m; sourceTree = "<group>"; };
+		93270A00168269740013DEB5 /* NSArray+BVMArrayExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+BVMArrayExtensions.h"; sourceTree = "<group>"; };
+		93270A01168269740013DEB5 /* NSArray+BVMArrayExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+BVMArrayExtensions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				932709E616823FA20013DEB5 /* API */,
+				932709FE168269380013DEB5 /* Categories */,
 				932709CA1682353E0013DEB5 /* BVMAppDelegate.h */,
 				932709CB1682353E0013DEB5 /* BVMAppDelegate.m */,
 				932709C21682353E0013DEB5 /* Supporting Files */,
@@ -126,6 +130,15 @@
 				932709EB1682411A0013DEB5 /* BVMAPIClient.m */,
 			);
 			name = API;
+			sourceTree = "<group>";
+		};
+		932709FE168269380013DEB5 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				93270A00168269740013DEB5 /* NSArray+BVMArrayExtensions.h */,
+				93270A01168269740013DEB5 /* NSArray+BVMArrayExtensions.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,6 +230,7 @@
 				932709E916823FB80013DEB5 /* BVMServerAction.m in Sources */,
 				932709EC1682411A0013DEB5 /* BVMAPIClient.m in Sources */,
 				932709EF168243950013DEB5 /* BVMServerInfo.m in Sources */,
+				93270A02168269740013DEB5 /* NSArray+BVMArrayExtensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
