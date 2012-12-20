@@ -73,8 +73,6 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 
     self.tableView.tableHeaderView = self.headerView;
 
-    self.navigationItem.title = NSLocalizedString(@"Back", nil);
-
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                                                                            target:self
                                                                                            action:@selector(reloadData)];
