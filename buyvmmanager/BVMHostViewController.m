@@ -415,6 +415,34 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     }
 }
 
+#pragma mark Pasteboard Copying
+
+-(void)tableView:(UITableView*)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath*)indexPath withSender:(id)sender
+{
+    if (action == @selector(copy:)) {
+        UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+        pasteboard.string = [tableView cellForRowAtIndexPath:indexPath].detailTextLabel.text;
+    }
+}
+
+-(BOOL)tableView:(UITableView*)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath*)indexPath withSender:(id)sender
+{
+    if (indexPath.section == BVMHostTableViewSectionInfo || indexPath.section == BVMHostTableViewSectionPing) {
+        if (action == @selector(copy:)) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+-(BOOL)tableView:(UITableView*)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    if (indexPath.section == BVMHostTableViewSectionInfo || indexPath.section == BVMHostTableViewSectionPing) {
+        return YES;
+    }
+    return NO;
+}
+
 #pragma mark Property overrides
 
 - (UIView *)headerView {
