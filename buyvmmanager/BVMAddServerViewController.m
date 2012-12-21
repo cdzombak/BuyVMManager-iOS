@@ -10,7 +10,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     BVMAddServerTableViewNumRows
 };
 
-@interface BVMAddServerViewController ()
+@interface BVMAddServerViewController () <UITextViewDelegate>
 
 @property (nonatomic, weak) UITextField *serverNameField;
 @property (nonatomic, weak) UITextField *apiKeyField;
@@ -59,6 +59,11 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 
 - (void)doneButtonTouched
 {
+    [self saveData];
+}
+
+- (void)saveData
+{
     NSArray *fields = @[self.serverNameField, self.apiKeyField, self.apiHashField];
     BOOL valid = YES;
     for (UITextField *field in fields) {
@@ -69,6 +74,8 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
             field.superview.superview.backgroundColor = [UIColor whiteColor];
         }
     }
+
+    if (!valid) return;
 
     NSArray *serverNames = [BVMServersManager serverNames];
     for (NSString *name in serverNames) {
@@ -92,7 +99,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
-#pragma mark UITableViewDataSource
+#pragma mark UITableViewDataSource methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -112,25 +119,48 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     // set delegates to save
     if (indexPath.row == BVMAddServerTableViewRowName) {
         tf.placeholder = NSLocalizedString(@"Server Name", nil);
+        tf.returnKeyType = UIReturnKeyNext;
         self.serverNameField = tf;
     }
     else if (indexPath.row == BVMAddServerTableViewRowAPIKey) {
         tf.placeholder = NSLocalizedString(@"API Key", nil);
+        tf.returnKeyType = UIReturnKeyNext;
         self.apiKeyField = tf;
     }
     else if (indexPath.row == BVMAddServerTableViewRowAPIHash) {
         tf.placeholder = NSLocalizedString(@"API Hash", nil);
+        tf.returnKeyType = UIReturnKeyDone;
         self.apiHashField = tf;
     }
 
     tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
     tf.autocorrectionType = UITextAutocorrectionTypeNo;
+    tf.delegate = self;
 
     return cell;
 }
 
-#pragma mark - Table view delegate
+#pragma mark UITableViewDelegate methods
 
 // n/a
+
+#pragma mark UITextFieldDelegate methods
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.serverNameField) {
+        [self.apiKeyField becomeFirstResponder];
+        return NO;
+    }
+    if (textField == self.apiKeyField) {
+        [self.apiHashField becomeFirstResponder];
+        return NO;
+    }
+    if (textField == self.apiHashField) {
+        [self.apiHashField resignFirstResponder];
+        [self saveData];
+        return NO;
+    }
+    return YES;
+}
 
 @end
