@@ -60,6 +60,9 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 @property (nonatomic, assign) BVMServerAction selectedAction;
 @property (nonatomic, strong) NSTimer *navBarTintTimer;
 
+@property (nonatomic, strong) UIAlertView *actionAlertView;
+@property (nonatomic, strong) UIAlertView *loadErrorAlertView;
+
 @end
 
 @implementation BVMHostViewController
@@ -103,12 +106,12 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         if (error) {
-            [[[UIAlertView alloc] initWithTitle:@"Error"
-                                        message:[BVMHumanValueTransformer shortErrorFromError:error]
-                                       delegate:nil
-                              cancelButtonTitle:@":("
-                              otherButtonTitles:nil]
-             show];
+            self.loadErrorAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                             message:[BVMHumanValueTransformer shortErrorFromError:error]
+                                                            delegate:self
+                                                   cancelButtonTitle:@":("
+                                                   otherButtonTitles:nil];
+            [self.loadErrorAlertView show];
             return;
         }
         self.serverInfo = info;
@@ -327,6 +330,20 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     }
 }
 
+#pragma mark UIAlertViewDelegate methods
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (alertView == self.actionAlertView) {
+        NSString *hostname = [[alertView textFieldAtIndex:0] text];
+        [self actionAlertViewDidDismissWithButtonIndex:buttonIndex enteredHostname:hostname];
+    }
+
+    if (alertView == self.loadErrorAlertView) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
 #pragma mark Server Actions
 
 - (void)displayActionAlertView
@@ -344,13 +361,13 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
             break;
     }
 
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
-                                                        message:message
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                              otherButtonTitles:@"OK", nil];
-    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alertView show];
+    self.actionAlertView = [[UIAlertView alloc] initWithTitle:@""
+                                                      message:message
+                                                     delegate:self
+                                            cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                            otherButtonTitles:@"OK", nil];
+    self.actionAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [self.actionAlertView show];
 
     self.navBarTintTimer = [NSTimer scheduledTimerWithTimeInterval:0.6
                                                             target:self
@@ -359,7 +376,16 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
                                                            repeats:YES];
 }
 
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)toggleNavBarTint
+{
+    if (self.navigationController.navigationBar.tintColor) {
+        self.navigationController.navigationBar.tintColor = nil;
+    } else {
+        self.navigationController.navigationBar.tintColor = [UIColor redColor];
+    }
+}
+
+- (void)actionAlertViewDidDismissWithButtonIndex:(NSInteger)buttonIndex enteredHostname:(NSString *)hostname
 {
     static NSInteger cancelButtonIndex = 0;
 
@@ -369,9 +395,8 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     if (buttonIndex == cancelButtonIndex) return;
 
     NSString *message;
-    
-    NSString *enteredHostname = [[alertView textFieldAtIndex:0] text];
-    if ([[enteredHostname lowercaseString] isEqualToString:[self.serverInfo.hostname lowercaseString]]) {
+
+    if ([[hostname lowercaseString] isEqualToString:[self.serverInfo.hostname lowercaseString]]) {
         switch (self.selectedAction) {
             case BVMServerActionBoot:
                 message = NSLocalizedString(@"Booting %@...\nRefresh in a few moments for an update.", nil);
@@ -385,7 +410,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         }
         message = [NSString stringWithFormat:message, self.serverInfo.hostname];
         [BVMServerActionPerform performAction:self.selectedAction forServer:self.serverName withBlock:^(BVMServerActionStatus status, NSError *error) {
-            if (error) {
+            if (error || status == BVMServerActionStatusIndeterminate) {
                 [[[UIAlertView alloc] initWithTitle:@"Error"
                                             message:[BVMHumanValueTransformer shortErrorFromError:error]
                                            delegate:nil
@@ -397,22 +422,13 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     } else {
         message = NSLocalizedString(@"The hostname entered was incorrect.", nil);
     }
-    
+
     [[[UIAlertView alloc] initWithTitle:@""
                                 message:message
                                delegate:nil
                       cancelButtonTitle:@"OK"
                       otherButtonTitles:nil]
      show];
-}
-
-- (void)toggleNavBarTint
-{
-    if (self.navigationController.navigationBar.tintColor) {
-        self.navigationController.navigationBar.tintColor = nil;
-    } else {
-        self.navigationController.navigationBar.tintColor = [UIColor redColor];
-    }
 }
 
 #pragma mark Pasteboard Copying
