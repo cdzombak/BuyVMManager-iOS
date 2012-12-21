@@ -1,9 +1,8 @@
 #import "BVMServerInfo.h"
 #import "BVMAPIClient.h"
+#import "BVMAPIResponseParser.h"
 #import "BVMServersManager.h"
-#import "NSArray+BVMArrayExtensions.h"
-
-#import "DDXML.h"
+#import "NSError+BVMErrors.h"
 
 @interface BVMServerInfo ()
 
@@ -43,20 +42,29 @@
         @"mem": @"true",
         @"bw": @"true",
     };
+
+    void (^ failureBlock)(NSError *) = ^(NSError *error) {
+        if (!error) error = [NSError bvm_indeterminateAPIError];
+        if (resultBlock) resultBlock(nil, error);
+    };
+
     [[BVMAPIClient sharedClient] getPath:kBuyVMAPIPath
                               parameters:params
                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                     // todo refactor the fuck out of this!!! maybe extract this munging and parsing into my own operation subclass.
-                                     NSString *resp = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-                                     resp = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><root>%@</root>", resp]; // fuck this api
-                                     BVMServerInfo *info = [BVMServerInfo infoFromXml:resp];
+                                     NSError *error = nil;
+                                     BVMAPIResponseParser *parser = [[BVMAPIResponseParser alloc] initWithAPIResponseString:responseObject error:&error];
+                                     if (!parser) {
+                                         failureBlock(error); return;
+                                     }
+                                     error = [parser apiError];
+                                     if (error) {
+                                         failureBlock(error); return;
+                                     }
+
+                                     BVMServerInfo *info = [BVMServerInfo infoFromParser:parser];
                                      if (resultBlock) resultBlock(info, nil);
                                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                     if (!error) error = [NSError errorWithDomain:@"com.cdz.buyvmmanager"
-                                                                             code:1
-                                                                         userInfo:@{NSLocalizedDescriptionKey: @"The API request failed without additional information."}
-                                                          ];
-                                     if (resultBlock) resultBlock(nil, error);
+                                     failureBlock(error);
                                  }];
 }
 
@@ -69,45 +77,56 @@
         @"hash": credentials[kBVMServerKeyAPIHash],
         @"action": @"status"
     };
+
+    void (^ failureBlock)(NSError *) = ^(NSError *error) {
+        if (!error) error = [NSError bvm_indeterminateAPIError];
+        if (resultBlock) resultBlock(BVMServerStatusIndeterminate, nil, nil, error);
+    };
+    
     [[BVMAPIClient sharedClient] getPath:kBuyVMAPIPath
                               parameters:params
                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                     // todo refactor the fuck out of this!!! maybe extract this munging and parsing into my own operation subclass.
-                                     NSString *resp = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-                                     resp = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><root>%@</root>", resp]; // fuck this api
+                                     NSError *error = nil;
+                                     BVMAPIResponseParser *parser = [[BVMAPIResponseParser alloc] initWithAPIResponseString:responseObject error:&error];
+                                     if (!parser) {
+                                         failureBlock(error); return;
+                                     }
+                                     error = [parser apiError];
+                                     if (error) {
+                                         failureBlock(error); return;
+                                     }
 
-                                     NSError *xmlerror = nil;
-                                     DDXMLDocument *doc = [[DDXMLDocument alloc] initWithXMLString:resp options:0 error:&xmlerror];
-                                     // todo: check and deal with error
-
-                                     BVMServerStatus status = [BVMServerInfo statusFromApiString:[BVMServerInfo _parseStringForNode:@"vmstat" fromXml:doc]];
-                                     NSString *hostname = [BVMServerInfo _parseStringForNode:@"hostname" fromXml:doc];
-                                     NSString *ip = [BVMServerInfo _parseStringForNode:@"ipaddress" fromXml:doc];
-
+                                     BVMServerStatus status = [BVMAPIResponseParser serverStatusFromApiString:[parser stringForNode:@"vmstat"]];
+                                     NSString *hostname = [parser stringForNode:@"hostname"];
+                                     NSString *ip = [parser stringForNode:@"ipaddress"];
                                      if (resultBlock) resultBlock(status, hostname, ip, nil);
                                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                     if (!error) error = [NSError errorWithDomain:@"com.cdz.buyvmmanager"
-                                                                             code:1
-                                                                         userInfo:@{NSLocalizedDescriptionKey: @"The API request failed without additional information."}
-                                                          ];
-                                     if (resultBlock) resultBlock(BVMServerStatusOffline, nil, nil, error);
+                                     failureBlock(error);
                                  }];
 }
 
-+ (BVMServerInfo *)infoFromXml:(NSString *)apiResponse
++ (BVMServerInfo *)infoFromParser:(BVMAPIResponseParser *)parser
 {
     BVMServerInfo *info = [[BVMServerInfo alloc] init];
-    NSError *error = nil;
-    DDXMLDocument *doc = [[DDXMLDocument alloc] initWithXMLString:apiResponse options:0 error:&error];
-    // todo: check and deal with error
+    
+    info.status = [BVMAPIResponseParser serverStatusFromApiString:[parser stringForNode:@"vmstat"]];
 
-    info.status = [BVMServerInfo statusFromApiString:[BVMServerInfo _parseStringForNode:@"vmstat" fromXml:doc]];
-    info.hostname = [BVMServerInfo _parseStringForNode:@"hostname" fromXml:doc];
-    info.mainIpAddress = [BVMServerInfo _parseStringForNode:@"ipaddress" fromXml:doc];
-    info.ipAddresses = [[BVMServerInfo _parseStringForNode:@"ipaddr" fromXml:doc] componentsSeparatedByString:@","];
+    if (info.status == BVMServerStatusIndeterminate) {
+        return info;
+    }
 
-    // total,used,free,percentused
-    NSArray *hddInfo = [[BVMServerInfo _parseStringForNode:@"hdd" fromXml:doc] componentsSeparatedByString:@","];
+    info.hostname = [parser stringForNode:@"hostname"];
+    info.mainIpAddress = [parser stringForNode:@"ipaddress"];
+
+    if (info.status == BVMServerStatusOffline) {
+        return info;
+    }
+
+    info.ipAddresses = [[parser stringForNode:@"ipaddr"] componentsSeparatedByString:@","];
+
+    // format for remaining fields: total,used,free,percentused
+    
+    NSArray *hddInfo = [[parser stringForNode:@"hdd"] componentsSeparatedByString:@","];
     if (hddInfo.count == 4) {
         info.hddTotal = [hddInfo[0] longLongValue];
         info.hddUsed  = [hddInfo[1] longLongValue];
@@ -115,7 +134,7 @@
         info.hddPercentUsed = [hddInfo[3] intValue];
     }
 
-    NSArray *memInfo = [[BVMServerInfo _parseStringForNode:@"mem" fromXml:doc] componentsSeparatedByString:@","];
+    NSArray *memInfo = [[parser stringForNode:@"mem"] componentsSeparatedByString:@","];
     if (memInfo.count == 4) {
         info.memTotal = [memInfo[0] longLongValue];
         info.memUsed  = [memInfo[1] longLongValue];
@@ -123,7 +142,7 @@
         info.memPercentUsed = [memInfo[3] intValue];
     }
 
-    NSArray *bwInfo = [[BVMServerInfo _parseStringForNode:@"bw" fromXml:doc] componentsSeparatedByString:@","];
+    NSArray *bwInfo = [[parser stringForNode:@"bw"] componentsSeparatedByString:@","];
     if (bwInfo.count == 4) {
         info.bwTotal = [bwInfo[0] longLongValue];
         info.bwUsed  = [bwInfo[1] longLongValue];
@@ -134,23 +153,14 @@
     return info;
 }
 
-+ (NSString *)_parseStringForNode:(NSString *)nodeName fromXml:(DDXMLDocument *)xmlDoc
-{
-    NSError *error = nil;
-    NSString *xpathQuery = [NSString stringWithFormat:@"//%@", nodeName];
-    NSArray *nodes = [xmlDoc nodesForXPath:xpathQuery error:&error];
-    // todo: check and deal with error
-    DDXMLNode *textNode = [nodes bvm_firstObject];
-    return [[textNode childAtIndex:0] stringValue];
-}
+#pragma mark Property Overrides
 
-+ (BVMServerStatus)statusFromApiString:(NSString *)statusString
+- (NSArray *)ipAddresses
 {
-    BVMServerStatus status = BVMServerStatusOffline;
-    if ([statusString isEqualToString:@"online"]) {
-        status = BVMServerStatusOnline;
+    if (!_ipAddresses) {
+        _ipAddresses = [NSArray array];
     }
-    return status;
+    return _ipAddresses;
 }
 
 @end

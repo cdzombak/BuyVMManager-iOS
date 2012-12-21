@@ -1,8 +1,8 @@
 #import "BVMServerActionPerform.h"
 #import "BVMAPIClient.h"
+#import "BVMAPIResponseParser.h"
 #import "BVMServersManager.h"
-#import "NSArray+BVMArrayExtensions.h"
-#import "DDXML.h"
+#import "NSError+BVMErrors.h"
 
 @implementation BVMServerActionPerform
 
@@ -16,20 +16,29 @@
         @"hash": credentials[kBVMServerKeyAPIHash],
         @"action": [BVMServerActionPerform actionStringForAction:action]
     };
+
+    void (^ failureBlock)(NSError *) = ^(NSError *error) {
+        if (!error) error = [NSError bvm_indeterminateAPIError];
+        if (resultBlock) resultBlock(BVMServerActionStatusIndeterminate, error);
+    };
+
     [[BVMAPIClient sharedClient] getPath:kBuyVMAPIPath
                               parameters:params
                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                     // todo: extract this munging and parsing into my own operation subclass.
-                                     NSString *resp = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-                                     resp = [NSString stringWithFormat:@"<?xml version=\"1.0\"?><root>%@</root>", resp]; // fuck this api
-                                     BVMServerActionStatus status = [BVMServerActionPerform statusFromXml:resp];
+                                     NSError *error = nil;
+                                     BVMAPIResponseParser *parser = [[BVMAPIResponseParser alloc] initWithAPIResponseString:responseObject error:&error];
+                                     if (!parser) {
+                                         failureBlock(error); return;
+                                     }
+                                     error = [parser apiError];
+                                     if (error) {
+                                         failureBlock(error); return;
+                                     }
+                                     
+                                     BVMServerActionStatus status = [BVMServerActionPerform statusFromParser:parser];
                                      if (resultBlock) resultBlock(status, nil);
                                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                     if (!error) error = [NSError errorWithDomain:@"com.cdz.buyvmmanager"
-                                                                             code:1
-                                                                         userInfo:@{NSLocalizedDescriptionKey: @"The API request failed without additional information."}
-                                                          ];
-                                     if (resultBlock) resultBlock(BVMServerActionStatusIndeterminate, error);
+                                     failureBlock(error);
                                  }];
 }
 
@@ -46,32 +55,10 @@
     return nil;
 }
 
-+ (BVMServerActionStatus)statusFromApiString:(NSString *)string
++ (BVMServerActionStatus)statusFromParser:(BVMAPIResponseParser *)parser
 {
-    if ([string isEqualToString:@"rebooted"]) return BVMServerActionStatusRebooted;
-    if ([string isEqualToString:@"booted"])   return BVMServerActionStatusBooted;
-    if ([string isEqualToString:@"shutdown"]) return BVMServerActionStatusShutdown;
-    return BVMServerActionStatusIndeterminate;
-}
-
-+ (BVMServerActionStatus)statusFromXml:(NSString*)apiXml
-{
-    NSError *error = nil;
-    DDXMLDocument *doc = [[DDXMLDocument alloc] initWithXMLString:apiXml options:0 error:&error];
-    // todo: check and deal with error
-
-    NSString *statusString = [BVMServerActionPerform _parseStringForNode:@"statusmsg" fromXml:doc];
-    return [BVMServerActionPerform statusFromApiString:statusString];
-}
-
-+ (NSString *)_parseStringForNode:(NSString *)nodeName fromXml:(DDXMLDocument *)xmlDoc
-{
-    NSError *error = nil;
-    NSString *xpathQuery = [NSString stringWithFormat:@"//%@", nodeName];
-    NSArray *nodes = [xmlDoc nodesForXPath:xpathQuery error:&error];
-    // todo: check and deal with error
-    DDXMLNode *textNode = [nodes bvm_firstObject];
-    return [[textNode childAtIndex:0] stringValue];
+    NSString *statusString = [parser stringForNode:@"statusmsg"];
+    return [BVMAPIResponseParser serverActionStatusFromApiString:statusString];
 }
 
 @end

@@ -23,7 +23,6 @@ static NSString * const kBuyVMAPIBaseURLString = @"https://manage.buyvm.net/api/
         return nil;
     }
 
-    // todo: possibly make my own request class which munges the reply appropriately (see BVMServerInfo.m)
     [self registerHTTPOperationClass:[AFHTTPRequestOperation class]];
 
     // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1

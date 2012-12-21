@@ -32,7 +32,11 @@
 		935FEED41682C06900BE3892 /* BVMServersListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED31682C06900BE3892 /* BVMServersListViewController.m */; };
 		935FEED71682C87300BE3892 /* BVMAddServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED61682C87300BE3892 /* BVMAddServerViewController.m */; };
 		935FEEDA1682CC2600BE3892 /* BVMTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED91682CC2500BE3892 /* BVMTextFieldTableViewCell.m */; };
+		937CCC431684F4500075BD01 /* NSError+BVMErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADD4A1684E47A00B0CD6F /* NSError+BVMErrors.m */; };
+		937CCC451684F5B70075BD01 /* BVMErrorDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = 937CCC441684F5B70075BD01 /* BVMErrorDomain.m */; };
+		9382EEAB1684F0200032E864 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9382EEAA1684F0200032E864 /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		93BADD411683C19900B0CD6F /* UIColor+BVMColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADD401683C19900B0CD6F /* UIColor+BVMColors.m */; };
+		93BADD481684DE9D00B0CD6F /* BVMAPIResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADD471684DE9D00B0CD6F /* BVMAPIResponseParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,8 +84,15 @@
 		935FEED61682C87300BE3892 /* BVMAddServerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMAddServerViewController.m; sourceTree = "<group>"; };
 		935FEED81682CC2500BE3892 /* BVMTextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMTextFieldTableViewCell.h; sourceTree = "<group>"; };
 		935FEED91682CC2500BE3892 /* BVMTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMTextFieldTableViewCell.m; sourceTree = "<group>"; };
+		937CCC441684F5B70075BD01 /* BVMErrorDomain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMErrorDomain.m; sourceTree = "<group>"; };
+		9382EEAA1684F0200032E864 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		93BADD3F1683C19900B0CD6F /* UIColor+BVMColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+BVMColors.h"; sourceTree = "<group>"; };
 		93BADD401683C19900B0CD6F /* UIColor+BVMColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+BVMColors.m"; sourceTree = "<group>"; };
+		93BADD461684DE9D00B0CD6F /* BVMAPIResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMAPIResponseParser.h; sourceTree = "<group>"; };
+		93BADD471684DE9D00B0CD6F /* BVMAPIResponseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMAPIResponseParser.m; sourceTree = "<group>"; };
+		93BADD491684E47A00B0CD6F /* NSError+BVMErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+BVMErrors.h"; sourceTree = "<group>"; };
+		93BADD4A1684E47A00B0CD6F /* NSError+BVMErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+BVMErrors.m"; sourceTree = "<group>"; };
+		93BADD4C1684E60A00B0CD6F /* BVMErrorDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMErrorDomain.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9382EEAB1684F0200032E864 /* SystemConfiguration.framework in Frameworks */,
 				93270A1D16827E940013DEB5 /* CFNetwork.framework in Frameworks */,
 				932709BC1682353E0013DEB5 /* UIKit.framework in Frameworks */,
 				932709BE1682353E0013DEB5 /* Foundation.framework in Frameworks */,
@@ -121,6 +133,7 @@
 		932709BA1682353E0013DEB5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9382EEAA1684F0200032E864 /* SystemConfiguration.framework */,
 				93270A1C16827E940013DEB5 /* CFNetwork.framework */,
 				932709BB1682353E0013DEB5 /* UIKit.framework */,
 				932709BD1682353E0013DEB5 /* Foundation.framework */,
@@ -140,6 +153,8 @@
 				932709F0168244710013DEB5 /* View Controllers */,
 				932709CA1682353E0013DEB5 /* BVMAppDelegate.h */,
 				932709CB1682353E0013DEB5 /* BVMAppDelegate.m */,
+				93BADD4C1684E60A00B0CD6F /* BVMErrorDomain.h */,
+				937CCC441684F5B70075BD01 /* BVMErrorDomain.m */,
 				93270A031682726F0013DEB5 /* BVMHumanValueTransformer.h */,
 				93270A041682726F0013DEB5 /* BVMHumanValueTransformer.m */,
 				935FEECF1682BC3700BE3892 /* BVMServersManager.h */,
@@ -168,6 +183,8 @@
 			children = (
 				932709EA1682411A0013DEB5 /* BVMAPIClient.h */,
 				932709EB1682411A0013DEB5 /* BVMAPIClient.m */,
+				93BADD461684DE9D00B0CD6F /* BVMAPIResponseParser.h */,
+				93BADD471684DE9D00B0CD6F /* BVMAPIResponseParser.m */,
 				932709E716823FB80013DEB5 /* BVMServerActionPerform.h */,
 				932709E816823FB80013DEB5 /* BVMServerActionPerform.m */,
 				932709ED168243950013DEB5 /* BVMServerInfo.h */,
@@ -200,6 +217,8 @@
 				93270A01168269740013DEB5 /* NSArray+BVMArrayExtensions.m */,
 				93BADD3F1683C19900B0CD6F /* UIColor+BVMColors.h */,
 				93BADD401683C19900B0CD6F /* UIColor+BVMColors.m */,
+				93BADD491684E47A00B0CD6F /* NSError+BVMErrors.h */,
+				93BADD4A1684E47A00B0CD6F /* NSError+BVMErrors.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -308,6 +327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				937CCC431684F4500075BD01 /* NSError+BVMErrors.m in Sources */,
 				932709C81682353E0013DEB5 /* main.m in Sources */,
 				932709CC1682353E0013DEB5 /* BVMAppDelegate.m in Sources */,
 				932709E916823FB80013DEB5 /* BVMServerActionPerform.m in Sources */,
@@ -325,6 +345,8 @@
 				935FEED71682C87300BE3892 /* BVMAddServerViewController.m in Sources */,
 				935FEEDA1682CC2600BE3892 /* BVMTextFieldTableViewCell.m in Sources */,
 				93BADD411683C19900B0CD6F /* UIColor+BVMColors.m in Sources */,
+				93BADD481684DE9D00B0CD6F /* BVMAPIResponseParser.m in Sources */,
+				937CCC451684F5B70075BD01 /* BVMErrorDomain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

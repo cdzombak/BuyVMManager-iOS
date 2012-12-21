@@ -1,14 +1,14 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSUInteger, BVMServerActionStatus) {
-    BVMServerActionStatusRebooted,
+    BVMServerActionStatusRebooted = 0,
     BVMServerActionStatusBooted,
     BVMServerActionStatusShutdown,
     BVMServerActionStatusIndeterminate
 };
 
 typedef NS_ENUM(NSUInteger, BVMServerAction) {
-    BVMServerActionReboot,
+    BVMServerActionReboot = 0,
     BVMServerActionBoot,
     BVMServerActionShutdown
 };

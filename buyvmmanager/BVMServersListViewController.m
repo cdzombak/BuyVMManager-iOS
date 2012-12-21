@@ -3,6 +3,7 @@
 #import "BVMServerInfo.h"
 #import "BVMAddServerViewController.h"
 #import "BVMHostViewController.h"
+#import "NSError+BVMErrors.h"
 
 @interface BVMServersListViewController ()
 
@@ -34,11 +35,6 @@
 
     self.title = NSLocalizedString(@"My VMs", nil);
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated

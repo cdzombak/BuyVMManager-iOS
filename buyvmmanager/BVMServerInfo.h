@@ -2,7 +2,8 @@
 
 typedef NS_ENUM(NSUInteger, BVMServerStatus) {
     BVMServerStatusOffline = 0,
-    BVMServerStatusOnline
+    BVMServerStatusOnline,
+    BVMServerStatusIndeterminate
 };
 
 /**
