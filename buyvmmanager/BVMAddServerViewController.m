@@ -160,7 +160,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 - (UIView *)footerView
 {
     if (!_footerView) {
-        NSString *notes = NSLocalizedString(@"API Key and API Hash must be entered exactly as they appear in the VPS Control Panel at https://manage.buyvm.net/ clientapi.php.\nCopying these from elsewhere - an email, for example - is easiest.\nServer name may be anything you like.", nil);
+        NSString *notes = NSLocalizedString(@"Server name may be anything you like.\nAPI Key and API Hash must be entered exactly as they appear in the VPS Control Panel at https://manage.buyvm.net/ clientapi.php.\nCopying these from elsewhere - an email, for example - is easiest.", nil);
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(18, 0, self.view.bounds.size.width-36, 130)];
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor bvm_darkTableViewTextColor];
