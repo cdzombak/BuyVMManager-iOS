@@ -2,7 +2,7 @@
 #import "SimplePing.h"
 
 // http://www.youtube.com/watch?v=jr0JaXfKj68
-static const NSUInteger kBVMPingerNumPings = 10;
+static const NSUInteger kBVMPingerNumPings = 20;
 
 @interface BVMPinger () <SimplePingDelegate>
 
