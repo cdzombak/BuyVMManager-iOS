@@ -123,6 +123,9 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
         self.apiHashField = tf;
     }
 
+    tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    tf.autocorrectionType = UITextAutocorrectionTypeNo;
+
     return cell;
 }
 
