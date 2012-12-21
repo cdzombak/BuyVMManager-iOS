@@ -70,8 +70,18 @@
                                 withBlock:^(BVMServerStatus status, NSString *hostname, NSString *ip, NSError *error) {
                                     if (status == BVMServerStatusOffline) {
                                         cell.textLabel.textColor = [UIColor redColor];
+                                        cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ [offline]", nil), cell.textLabel.text];
+                                    } else if (status == BVMServerStatusIndeterminate) {
+                                        cell.textLabel.textColor = [UIColor blueColor];
+                                        cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ [unknown]", nil), cell.textLabel.text];
                                     }
-                                    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@)", ip, hostname];
+                                    if (ip && hostname) {
+                                        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@)", ip, hostname];
+                                    } else if (ip) {
+                                        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", ip];
+                                    } else if (hostname) {
+                                        cell.detailTextLabel.text = [NSString stringWithFormat:@"(%@)", hostname];
+                                    }
                                     [cell setNeedsLayout];
                                 }];
 }
