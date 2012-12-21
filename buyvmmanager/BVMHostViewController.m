@@ -116,6 +116,14 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         }
         self.serverInfo = info;
 
+        if (self.serverInfo.status == BVMServerStatusOnline) {
+            [self.pinger startPinging];
+            self.pingString = nil;
+        } else {
+            self.pingString = @"";
+            self.pinger = nil;
+        }
+
         [self.tableView beginUpdates];
         [self.tableView reloadRowsAtIndexPaths:@[
             [NSIndexPath indexPathForRow:BVMHostTableViewInfoRowBandwidth inSection:BVMHostTableViewSectionInfo],
@@ -127,8 +135,6 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         [self.tableView endUpdates];
 
         [self refreshHeaderView];
-
-        [self.pinger startPinging];
     }];
 }
 
@@ -205,7 +211,12 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     
     switch(indexPath.section) {
         case BVMHostTableViewSectionInfo:
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            if (self.serverInfo && self.serverInfo.status == BVMServerStatusOnline) {
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+
             switch(indexPath.row) {
                 case BVMHostTableViewInfoRowBandwidth:
                     cell.textLabel.text = NSLocalizedString(@"Bandwidth", nil);
@@ -328,6 +339,18 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
     }
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!self.serverInfo || self.serverInfo.status != BVMServerStatusOnline) {
+        if (indexPath.section == BVMHostTableViewSectionInfo
+            || indexPath.section == BVMHostTableViewSectionPing) {
+            return nil;
+        }
+    }
+
+    return indexPath;
 }
 
 #pragma mark UIAlertViewDelegate methods

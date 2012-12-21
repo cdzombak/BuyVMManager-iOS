@@ -122,6 +122,14 @@ static const NSTimeInterval kBVMInfoTimeoutInterval = 15.0;
     info.hostname = [parser stringForNode:@"hostname"];
     info.mainIpAddress = [parser stringForNode:@"ipaddress"];
 
+    NSArray *bwInfo = [[parser stringForNode:@"bw"] componentsSeparatedByString:@","];
+    if (bwInfo.count == 4) {
+        info.bwTotal = [bwInfo[0] longLongValue];
+        info.bwUsed  = [bwInfo[1] longLongValue];
+        info.bwFree  = [bwInfo[2] longLongValue];
+        info.bwPercentUsed = [bwInfo[3] intValue];
+    }
+
     if (info.status == BVMServerStatusOffline) {
         return info;
     }
@@ -144,14 +152,6 @@ static const NSTimeInterval kBVMInfoTimeoutInterval = 15.0;
         info.memUsed  = [memInfo[1] longLongValue];
         info.memFree  = [memInfo[2] longLongValue];
         info.memPercentUsed = [memInfo[3] intValue];
-    }
-
-    NSArray *bwInfo = [[parser stringForNode:@"bw"] componentsSeparatedByString:@","];
-    if (bwInfo.count == 4) {
-        info.bwTotal = [bwInfo[0] longLongValue];
-        info.bwUsed  = [bwInfo[1] longLongValue];
-        info.bwFree  = [bwInfo[2] longLongValue];
-        info.bwPercentUsed = [bwInfo[3] intValue];
     }
 
     return info;
