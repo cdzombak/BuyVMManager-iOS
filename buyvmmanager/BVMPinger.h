@@ -1,10 +1,10 @@
 #import <Foundation/Foundation.h>
 
-@protocol BVMPingerTimingDelegate;
+@protocol BVMPingerDelegate;
 
 @interface BVMPinger : NSObject
 
-@property (nonatomic, weak) id<BVMPingerTimingDelegate> timingDelegate;
+@property (nonatomic, weak) id<BVMPingerDelegate> delegate;
 
 - (id)initWithHost:(NSString *)domainOrIp;
 
@@ -13,8 +13,11 @@
 
 @end
 
-@protocol BVMPingerTimingDelegate <NSObject>
+@protocol BVMPingerDelegate <NSObject>
 
 - (void)pinger:(BVMPinger *)pinger didUpdateWithTime:(double)seconds;
+
+@optional
+- (void)pinger:(BVMPinger *)pinger didEncounterError:(NSError *)error;
 
 @end

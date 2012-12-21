@@ -45,10 +45,11 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     }
 }
 
-@interface BVMHostViewController () <BVMPingerTimingDelegate>
+@interface BVMHostViewController () <BVMPingerDelegate>
 
 @property (nonatomic, copy) NSString *serverName;
 @property (nonatomic, strong) BVMServerInfo *serverInfo;
+
 @property (nonatomic, copy) NSString *pingString;
 @property (nonatomic, strong) BVMPinger *pinger;
 
@@ -103,7 +104,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         if (error) {
             [[[UIAlertView alloc] initWithTitle:@"Error"
-                                        message:error.localizedDescription
+                                        message:[BVMHumanValueTransformer shortErrorFromError:error]
                                        delegate:nil
                               cancelButtonTitle:@":("
                               otherButtonTitles:nil]
@@ -118,20 +119,14 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
             [NSIndexPath indexPathForRow:BVMHostTableViewInfoRowHDD inSection:BVMHostTableViewSectionInfo],
             [NSIndexPath indexPathForRow:BVMHostTableViewInfoRowIP inSection:BVMHostTableViewSectionInfo],
             [NSIndexPath indexPathForRow:BVMHostTableViewInfoRowMemory inSection:BVMHostTableViewSectionInfo],
+            [NSIndexPath indexPathForRow:BVMHostTableViewPingRow inSection:BVMHostTableViewSectionPing]
          ] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
 
         [self refreshHeaderView];
 
-        self.pinger = [[BVMPinger alloc] initWithHost:self.serverInfo.mainIpAddress];
-        self.pinger.timingDelegate = self;
         [self.pinger startPinging];
     }];
-
-    if (self.pinger) {
-        [self.pinger stopPinging];
-        self.pinger = nil;
-    }
 }
 
 - (void)refreshHeaderView
@@ -146,16 +141,29 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     }
 }
 
-#pragma mark BVMPingerTimingDelegate methods
+#pragma mark BVMPingerDelegate methods
 
 - (void)pinger:(BVMPinger *)pinger didUpdateWithTime :(double)seconds
 {
-    self.pingString = [NSString stringWithFormat:@"%.f ms", rint(seconds*1000)];
+    self.pingString = [NSString stringWithFormat:@"%.f ms", seconds*1000];
 
     [self.tableView beginUpdates];
     [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:BVMHostTableViewSectionPing]]
                           withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
+}
+
+- (void)pinger:(BVMPinger *)pinger didEncounterError:(NSError *)error
+{
+    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Ping Error", nil)
+                                message:[BVMHumanValueTransformer shortErrorFromError:error]
+                               delegate:nil
+                      cancelButtonTitle:@":("
+                      otherButtonTitles:nil]
+     show];
+    [self.pinger stopPinging];
+    self.pinger = nil;
+    self.pingString = @"";
 }
 
 #pragma mark UITableViewDataSource methods
@@ -226,19 +234,20 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         case BVMHostTableViewSectionPing:
             NSParameterAssert(indexPath.row == 0);
             cell.textLabel.text = NSLocalizedString(@"Ping", nil);
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             if (self.pingString) {
                 cell.detailTextLabel.text = self.pingString;
             }
             else {
                 cell.detailTextLabel.text = nil;
-                UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-                [indicator startAnimating];
-                CGRect indicatorFrame = indicator.frame;
-                indicatorFrame.origin.x = 85;
-                indicatorFrame.origin.y = cell.bounds.size.height/2 - indicator.bounds.size.height/2;
-                indicator.frame = indicatorFrame;
-                [cell.contentView addSubview:indicator];
+                if (self.serverInfo) {
+                    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                    [indicator startAnimating];
+                    CGRect indicatorFrame = indicator.frame;
+                    indicatorFrame.origin.x = 85;
+                    indicatorFrame.origin.y = cell.bounds.size.height/2 - indicator.bounds.size.height/2 - 1;
+                    indicator.frame = indicatorFrame;
+                    [cell.contentView addSubview:indicator];
+                }
             }
             break;
         case BVMHostTableViewSectionAction:
@@ -251,13 +260,6 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 }
 
 #pragma mark UITableViewDelegate methods
-
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSParameterAssert(tableView == self.tableView);
-    if (indexPath.section == BVMHostTableViewSectionPing) return nil;
-    return indexPath;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -313,6 +315,15 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         }
         [self displayActionAlertView];
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+    else if (indexPath.section == BVMHostTableViewSectionPing) {
+        // this section only contains the Ping row, so let's just assume that row was selected
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        self.pingString = nil;
+        [self.pinger startPinging];
+        [self.tableView beginUpdates];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
     }
 }
 
@@ -376,7 +387,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         [BVMServerActionPerform performAction:self.selectedAction forServer:self.serverName withBlock:^(BVMServerActionStatus status, NSError *error) {
             if (error) {
                 [[[UIAlertView alloc] initWithTitle:@"Error"
-                                            message:error.localizedDescription
+                                            message:[BVMHumanValueTransformer shortErrorFromError:error]
                                            delegate:nil
                                   cancelButtonTitle:@":("
                                   otherButtonTitles:nil]
@@ -429,6 +440,15 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         [_headerView addSubview:self.headerStatusLabel];
     }
     return _headerView;
+}
+
+- (BVMPinger *)pinger
+{
+    if (!_pinger) {
+        _pinger = [[BVMPinger alloc] initWithHost:self.serverInfo.mainIpAddress];
+        _pinger.delegate = self;
+    }
+    return _pinger;
 }
 
 @end
