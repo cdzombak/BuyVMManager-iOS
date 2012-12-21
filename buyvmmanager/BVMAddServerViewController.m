@@ -85,7 +85,10 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 
     id afterAddTarget = self.afterAddTarget;
     if (afterAddTarget && self.afterAddAction && [afterAddTarget respondsToSelector:self.afterAddAction]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [afterAddTarget performSelector:self.afterAddAction];
+#pragma clang diagnostic pop
     }
 
     [self.navigationController dismissModalViewControllerAnimated:YES];
