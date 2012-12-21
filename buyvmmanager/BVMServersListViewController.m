@@ -4,6 +4,7 @@
 #import "BVMAddServerViewController.h"
 #import "BVMHostViewController.h"
 #import "NSError+BVMErrors.h"
+#import "ODRefreshControl.h"
 
 @interface BVMServersListViewController ()
 
@@ -11,6 +12,8 @@
 
 @property (nonatomic, strong, readonly) UIBarButtonItem *addItem;
 @property (nonatomic, strong, readonly) UIBarButtonItem *settingsItem;
+
+@property (nonatomic, strong) ODRefreshControl *thirdPartyRefreshControl;
 
 @end
 
@@ -35,6 +38,10 @@
 
     self.title = NSLocalizedString(@"My VMs", nil);
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+    self.thirdPartyRefreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
+    self.thirdPartyRefreshControl.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    [self.thirdPartyRefreshControl addTarget:self action:@selector(refreshControlActivated:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
@@ -56,6 +63,12 @@
 
     UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:addVc];
     [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)refreshControlActivated:(id)sender
+{
+    [self.tableView reloadData];
+    [self.thirdPartyRefreshControl endRefreshing];
 }
 
 #pragma mark Data

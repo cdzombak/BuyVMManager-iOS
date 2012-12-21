@@ -3,15 +3,18 @@ PODS:
 - AFNetworking (1.0.1)
 - KissXML (5.0)
 - MBProgressHUD (0.5)
+- ODRefreshControl (1.1.0)
 
 DEPENDENCIES:
 - AFNetworking
 - KissXML
 - MBProgressHUD
+- ODRefreshControl
 
 SPEC CHECKSUMS:
   AFNetworking: 4c11f857c9a18d65f4257c90a1e74ac49f0ac422
   KissXML: 8dfe0fb6d4e987fec63656ff07d5e697f49976f8
   MBProgressHUD: b23ee11c42253d6d804e8e0bfabdc334e8b2571f
+  ODRefreshControl: 886e323a7c25114b9e5c397a9eefbebc034224a9
 
 COCOAPODS: 0.16.0
