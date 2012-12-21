@@ -6,4 +6,10 @@ static NSString * const kBuyVMAPIPath = @"command.php";
 
 + (BVMAPIClient *)sharedClient;
 
+- (void)getPath:(NSString *)path
+     parameters:(NSDictionary *)parameters
+timeoutInterval:(NSTimeInterval)timeout
+        success:(void ( ^ ) ( AFHTTPRequestOperation *operation , id responseObject ))success
+        failure:(void ( ^ ) ( AFHTTPRequestOperation *operation , NSError *error ))failure;
+
 @end

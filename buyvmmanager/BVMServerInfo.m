@@ -4,6 +4,8 @@
 #import "BVMServersManager.h"
 #import "NSError+BVMErrors.h"
 
+static const NSTimeInterval kBVMInfoTimeoutInterval = 15.0;
+
 @interface BVMServerInfo ()
 
 // Redefine properties internally as readwrite
@@ -50,6 +52,7 @@
 
     [[BVMAPIClient sharedClient] getPath:kBuyVMAPIPath
                               parameters:params
+                         timeoutInterval:kBVMInfoTimeoutInterval
                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                      NSError *error = nil;
                                      BVMAPIResponseParser *parser = [[BVMAPIResponseParser alloc] initWithAPIResponseString:responseObject error:&error];
@@ -85,6 +88,7 @@
     
     [[BVMAPIClient sharedClient] getPath:kBuyVMAPIPath
                               parameters:params
+                         timeoutInterval:kBVMInfoTimeoutInterval
                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                      NSError *error = nil;
                                      BVMAPIResponseParser *parser = [[BVMAPIResponseParser alloc] initWithAPIResponseString:responseObject error:&error];

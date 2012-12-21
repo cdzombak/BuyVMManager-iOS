@@ -32,4 +32,17 @@ static NSString * const kBuyVMAPIBaseURLString = @"https://manage.buyvm.net/api/
     return self;
 }
 
+- (void)getPath:(NSString *)path
+     parameters:(NSDictionary *)parameters
+timeoutInterval:(NSTimeInterval)timeout
+        success:(void ( ^ ) ( AFHTTPRequestOperation *operation , id responseObject ))success
+        failure:(void ( ^ ) ( AFHTTPRequestOperation *operation , NSError *error ))failure
+{
+    NSMutableURLRequest *request = [[BVMAPIClient sharedClient] requestWithMethod:@"GET" path:path parameters:parameters];
+    request.timeoutInterval = timeout;
+
+    AFHTTPRequestOperation *operation = [[BVMAPIClient sharedClient] HTTPRequestOperationWithRequest:request success:success failure:failure];
+    [self enqueueHTTPRequestOperation:operation];
+}
+
 @end
