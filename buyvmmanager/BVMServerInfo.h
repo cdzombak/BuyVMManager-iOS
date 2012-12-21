@@ -121,8 +121,4 @@ typedef NS_ENUM(NSUInteger, BVMServerStatus) {
  */
 @property (nonatomic, readonly, assign) NSUInteger bwPercentUsed;
 
-#pragma mark Helpers
-
-+ (BVMServerStatus)statusFromApiString:(NSString *)statusString;
-
 @end
