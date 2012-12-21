@@ -10,15 +10,19 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     BVMAddServerTableViewNumRows
 };
 
-@interface BVMAddServerViewController () <UITextViewDelegate>
+@interface BVMAddServerViewController () <UITextFieldDelegate>
 
 @property (nonatomic, weak) UITextField *serverNameField;
 @property (nonatomic, weak) UITextField *apiKeyField;
 @property (nonatomic, weak) UITextField *apiHashField;
 
+@property (nonatomic, strong, readonly) UIView *footerView;
+
 @end
 
 @implementation BVMAddServerViewController
+
+@synthesize footerView = _footerView;
 
 - (id)init
 {
@@ -34,22 +38,10 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     [super viewDidLoad];
 
     self.tableView.allowsSelection = NO;
+    self.tableView.tableFooterView = self.footerView;
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTouched)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTouched)];
-
-    NSString *notes = NSLocalizedString(@"API Key and API Hash must be entered exactly as they appear in the VPS Control Panel. Copying these from elsewhere, an email for example, is easiest.\nServer name may be anything you like.", nil);
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width, 90)];
-    self.tableView.tableFooterView = label;
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor darkTextColor];
-    label.shadowColor = [UIColor whiteColor];
-    label.shadowOffset = CGSizeMake(0, 1.0);
-    label.text = notes;
-    label.lineBreakMode = UILineBreakModeWordWrap;
-    label.numberOfLines = 0;
-    label.font = [UIFont systemFontOfSize:14.0];
-    label.backgroundColor = [UIColor clearColor];
 }
 
 - (void)cancelButtonTouched
@@ -161,6 +153,33 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
         return NO;
     }
     return YES;
+}
+
+#pragma mark Property Overrides
+
+- (UIView *)footerView
+{
+    if (!_footerView) {
+        NSString *notes = NSLocalizedString(@"API Key and API Hash must be entered exactly as they appear in the VPS Control Panel at https://manage.buyvm.net/ clientapi.php.\nCopying these from elsewhere - an email, for example - is easiest.\nServer name may be anything you like.", nil);
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(18, 0, self.view.bounds.size.width-36, 130)];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor bvm_darkTableViewTextColor];
+        label.shadowColor = [UIColor whiteColor];
+        label.shadowOffset = CGSizeMake(0, 1.0);
+        label.text = notes;
+        label.lineBreakMode = UILineBreakModeWordWrap;
+        label.numberOfLines = 0;
+        label.font = [UIFont systemFontOfSize:15.0];
+        label.backgroundColor = [UIColor clearColor];
+        label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+
+        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, label.bounds.size.height)];
+        _footerView.backgroundColor = [UIColor clearColor];
+        _footerView.autoresizesSubviews = YES;
+        _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [_footerView addSubview:label];
+    }
+    return _footerView;
 }
 
 @end

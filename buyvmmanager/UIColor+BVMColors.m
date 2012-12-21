@@ -18,4 +18,12 @@
                            alpha:1.0];
 }
 
++ (UIColor *)bvm_darkTableViewTextColor
+{
+    return [UIColor colorWithRed:76.0/255.0
+                           green:86.0/255.0
+                            blue:108.0/255.0
+                           alpha:1.0];
+}
+
 @end
