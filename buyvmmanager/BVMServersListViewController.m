@@ -44,6 +44,10 @@
     self.thirdPartyRefreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
     self.thirdPartyRefreshControl.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     [self.thirdPartyRefreshControl addTarget:self action:@selector(refreshControlActivated:) forControlEvents:UIControlEventValueChanged];
+
+    if (self.serverNames.count == 0) {
+        [self addButtonTouched];
+    }
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
