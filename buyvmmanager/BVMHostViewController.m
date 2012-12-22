@@ -63,9 +63,13 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 @property (nonatomic, strong) UIAlertView *actionAlertView;
 @property (nonatomic, strong) UIAlertView *loadErrorAlertView;
 
+@property (nonatomic, strong, readonly) UIBarButtonItem *reloadButtonItem;
+
 @end
 
 @implementation BVMHostViewController
+
+@synthesize reloadButtonItem = _reloadButtonItem;
 
 - (id)initWithServer:(NSString *)serverName
 {
@@ -82,10 +86,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     [super viewDidLoad];
 
     self.tableView.tableHeaderView = self.headerView;
-
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-                                                                                           target:self
-                                                                                           action:@selector(reloadData)];
+    self.navigationItem.rightBarButtonItem = self.reloadButtonItem;
 
     [self reloadData];
 }
@@ -100,11 +101,12 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     //       cellForRowAtIndexPath: adds appropriate data if available.
 
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    self.navigationItem.rightBarButtonItem = nil;
 
     [BVMServerInfo requestInfoForServer:self.serverName withBlock:^(BVMServerInfo *info, NSError *error) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+        self.navigationItem.rightBarButtonItem = self.reloadButtonItem;
+
         if (error) {
             self.loadErrorAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
                                                              message:[BVMHumanValueTransformer shortErrorFromError:error]
@@ -516,6 +518,14 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         _pinger.delegate = self;
     }
     return _pinger;
+}
+
+- (UIBarButtonItem *)reloadButtonItem
+{
+    if (!_reloadButtonItem) {
+        _reloadButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadData)];
+    }
+    return _reloadButtonItem;
 }
 
 @end
