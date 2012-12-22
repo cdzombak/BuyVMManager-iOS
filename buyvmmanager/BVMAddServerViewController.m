@@ -71,6 +71,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 - (void)scanQRForField:(UITextField *)field
 {
     self.currentReadingTextField = field;
+    [field becomeFirstResponder];
     [self presentViewController:self.readerVc animated:YES completion:nil];
 }
 
