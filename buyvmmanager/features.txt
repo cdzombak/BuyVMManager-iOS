@@ -1,0 +1,8 @@
+* Add VMs, using QR code to scan API info on iPhone
+* Shows status of all your VMs
+* View detailed info about your bandwidth, memory, and HDD usage
+* Tap the "Ping" area to re-ping the server and display the average ping time
+* View and copy all IPs assigned to your VM
+* Requires you to enter the VM's hostname before reboot/boot/shutdown, to ensure you reboot the correct VM
+* iPhone and iPad compatible
+* iCloud syncs your VM list between your iOS devices
