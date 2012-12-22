@@ -24,13 +24,14 @@
 
     self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.view.autoresizesSubviews = YES;
+#ifdef DEBUG
+    self.view.backgroundColor = [UIColor yellowColor];
+#endif
 
-    CGSize tableViewSize = self.view.bounds.size;
-    if (self.navigationController.navigationBar) tableViewSize.height -= self.navigationController.navigationBar.frame.size.height;
-
-    self.tableView = [[UITableView alloc] initWithFrame:(CGRect){CGPointZero, tableViewSize} style:self.tableViewStyle];
+    self.tableView = [[UITableView alloc] initWithFrame:(CGRect){CGPointZero, self.view.bounds.size} style:self.tableViewStyle];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.tableView];
 
     [self.tableView reloadData];
