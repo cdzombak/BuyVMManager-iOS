@@ -4,17 +4,20 @@ PODS:
 - KissXML (5.0)
 - MBProgressHUD (0.5)
 - ODRefreshControl (1.1.0)
+- ZBarSDK (1.3.1)
 
 DEPENDENCIES:
 - AFNetworking
 - KissXML
 - MBProgressHUD
 - ODRefreshControl
+- ZBarSDK
 
 SPEC CHECKSUMS:
   AFNetworking: 4c11f857c9a18d65f4257c90a1e74ac49f0ac422
   KissXML: 8dfe0fb6d4e987fec63656ff07d5e697f49976f8
   MBProgressHUD: b23ee11c42253d6d804e8e0bfabdc334e8b2571f
   ODRefreshControl: 886e323a7c25114b9e5c397a9eefbebc034224a9
+  ZBarSDK: 441fd3d89922df23bc3c51d491bf9d3fe365a19c
 
 COCOAPODS: 0.16.0

@@ -34,6 +34,8 @@
 		935FEEDA1682CC2600BE3892 /* BVMTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED91682CC2500BE3892 /* BVMTextFieldTableViewCell.m */; };
 		937CCC431684F4500075BD01 /* NSError+BVMErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADD4A1684E47A00B0CD6F /* NSError+BVMErrors.m */; };
 		937CCC451684F5B70075BD01 /* BVMErrorDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = 937CCC441684F5B70075BD01 /* BVMErrorDomain.m */; };
+		937CCC6C168528100075BD01 /* 119-Camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 937CCC6B168528100075BD01 /* 119-Camera.png */; };
+		937CCC6E168528240075BD01 /* 119-Camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 937CCC6D168528240075BD01 /* 119-Camera@2x.png */; };
 		9382EEAB1684F0200032E864 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9382EEAA1684F0200032E864 /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		93BADD411683C19900B0CD6F /* UIColor+BVMColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADD401683C19900B0CD6F /* UIColor+BVMColors.m */; };
 		93BADD481684DE9D00B0CD6F /* BVMAPIResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADD471684DE9D00B0CD6F /* BVMAPIResponseParser.m */; };
@@ -85,6 +87,8 @@
 		935FEED81682CC2500BE3892 /* BVMTextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMTextFieldTableViewCell.h; sourceTree = "<group>"; };
 		935FEED91682CC2500BE3892 /* BVMTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMTextFieldTableViewCell.m; sourceTree = "<group>"; };
 		937CCC441684F5B70075BD01 /* BVMErrorDomain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMErrorDomain.m; sourceTree = "<group>"; };
+		937CCC6B168528100075BD01 /* 119-Camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "119-Camera.png"; sourceTree = "<group>"; };
+		937CCC6D168528240075BD01 /* 119-Camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "119-Camera@2x.png"; sourceTree = "<group>"; };
 		9382EEAA1684F0200032E864 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		93BADD3F1683C19900B0CD6F /* UIColor+BVMColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+BVMColors.h"; sourceTree = "<group>"; };
 		93BADD401683C19900B0CD6F /* UIColor+BVMColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+BVMColors.m"; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 				93270A041682726F0013DEB5 /* BVMHumanValueTransformer.m */,
 				935FEECF1682BC3700BE3892 /* BVMServersManager.h */,
 				935FEED01682BC3700BE3892 /* BVMServersManager.m */,
+				937CCC69168527FA0075BD01 /* Images */,
 				932709C21682353E0013DEB5 /* Supporting Files */,
 			);
 			path = buyvmmanager;
@@ -243,6 +248,15 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		937CCC69168527FA0075BD01 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				937CCC6B168528100075BD01 /* 119-Camera.png */,
+				937CCC6D168528240075BD01 /* 119-Camera@2x.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -300,6 +314,8 @@
 				932709CE1682353E0013DEB5 /* Default.png in Resources */,
 				932709D01682353E0013DEB5 /* Default@2x.png in Resources */,
 				932709D21682353E0013DEB5 /* Default-568h@2x.png in Resources */,
+				937CCC6C168528100075BD01 /* 119-Camera.png in Resources */,
+				937CCC6E168528240075BD01 /* 119-Camera@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

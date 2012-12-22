@@ -2,6 +2,7 @@
 #import "BVMTextFieldTableViewCell.h"
 #import "BVMServersManager.h"
 #import "UIColor+BVMColors.h"
+#import "ZBarSDK.h"
 
 typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     BVMAddServerTableViewRowName = 0,
@@ -10,13 +11,16 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     BVMAddServerTableViewNumRows
 };
 
-@interface BVMAddServerViewController () <UITextFieldDelegate>
+@interface BVMAddServerViewController () <UITextFieldDelegate, ZBarReaderDelegate>
 
 @property (nonatomic, weak) UITextField *serverNameField;
 @property (nonatomic, weak) UITextField *apiKeyField;
 @property (nonatomic, weak) UITextField *apiHashField;
 
 @property (nonatomic, strong, readonly) UIView *footerView;
+
+@property (nonatomic, strong) ZBarReaderViewController *readerVc;
+@property (nonatomic, weak) UITextField *currentReadingTextField;
 
 @end
 
@@ -44,6 +48,24 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTouched)];
 }
 
+#pragma mark Interface Actions
+
+- (void)scanQRForApiKey
+{
+    [self scanQRForField:self.apiKeyField];
+}
+
+- (void)scanQRForApiHash
+{
+    [self scanQRForField:self.apiHashField];
+}
+
+- (void)scanQRForField:(UITextField *)field
+{
+    self.currentReadingTextField = field;
+    [self presentViewController:self.readerVc animated:YES completion:nil];
+}
+
 - (void)cancelButtonTouched
 {
     [self.navigationController dismissModalViewControllerAnimated:YES];
@@ -53,6 +75,8 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 {
     [self saveData];
 }
+
+#pragma mark Data
 
 - (void)saveData
 {
@@ -94,6 +118,22 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
+#pragma mark ZBarReaderDelegate methods
+
+- (void)imagePickerController:(UIImagePickerController*)reader didFinishPickingMediaWithInfo:(NSDictionary*)info
+{
+    [self.readerVc dismissModalViewControllerAnimated:YES];
+
+    id<NSFastEnumeration> results = [info objectForKey:ZBarReaderControllerResults];
+    ZBarSymbol *bestResult = nil;
+    for (ZBarSymbol *result in results) {
+        if (result.quality > bestResult.quality) bestResult = result;
+    }
+
+    self.readerVc = nil;
+    self.currentReadingTextField.text = bestResult.data;
+}
+
 #pragma mark UITableViewDataSource methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -111,7 +151,6 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     BVMTextFieldTableViewCell *cell = [[BVMTextFieldTableViewCell alloc] initWithReuseIdentifier:@"Cell"];
     UITextField *tf = cell.textField;
 
-    // set delegates to save
     if (indexPath.row == BVMAddServerTableViewRowName) {
         tf.placeholder = NSLocalizedString(@"Server Name", nil);
         tf.returnKeyType = UIReturnKeyNext;
@@ -120,11 +159,19 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     else if (indexPath.row == BVMAddServerTableViewRowAPIKey) {
         tf.placeholder = NSLocalizedString(@"API Key", nil);
         tf.returnKeyType = UIReturnKeyNext;
+        CGFloat height = [tableView.delegate tableView:tableView heightForRowAtIndexPath:indexPath];
+        tf.rightView = [self buildCameraViewWithHeight:/*44*/height
+                                                tapSelector:@selector(scanQRForApiKey)];
+        tf.rightViewMode = UITextFieldViewModeUnlessEditing;
         self.apiKeyField = tf;
     }
     else if (indexPath.row == BVMAddServerTableViewRowAPIHash) {
         tf.placeholder = NSLocalizedString(@"API Hash", nil);
         tf.returnKeyType = UIReturnKeyDone;
+        CGFloat height = [tableView.delegate tableView:tableView heightForRowAtIndexPath:indexPath];
+        tf.rightView = [self buildCameraViewWithHeight:/*44*/height
+                                                tapSelector:@selector(scanQRForApiHash)];
+        tf.rightViewMode = UITextFieldViewModeUnlessEditing;
         self.apiHashField = tf;
     }
 
@@ -158,6 +205,25 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     return YES;
 }
 
+#pragma mark UI Help
+
+- (UIView *)buildCameraViewWithHeight:(CGFloat)height tapSelector:(SEL)aSelector
+{
+    UIImage *cameraImage = [UIImage imageNamed:@"119-Camera"];
+    UIView *view = [[UIView alloc] initWithFrame:(CGRect){ CGPointZero, { cameraImage.size.width * 1.6 , height } }];
+
+    view.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:aSelector];
+    tapRecognizer.numberOfTapsRequired = 1;
+    [view addGestureRecognizer:tapRecognizer];
+
+    UIImageView *iv = [[UIImageView alloc] initWithImage:cameraImage];
+    iv.center = view.center;
+    [view addSubview:iv];
+
+    return view;
+}
+
 #pragma mark Property Overrides
 
 - (UIView *)footerView
@@ -183,6 +249,21 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
         [_footerView addSubview:label];
     }
     return _footerView;
+}
+
+- (ZBarReaderViewController *)readerVc
+{
+    if (!_readerVc) {
+        _readerVc = [ZBarReaderViewController new];
+        _readerVc.readerDelegate = self;
+        _readerVc.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
+
+        [_readerVc.scanner setSymbology:0 config:ZBAR_CFG_ENABLE to:0];
+        [_readerVc.scanner setSymbology:ZBAR_QRCODE config:ZBAR_CFG_ENABLE to:1];
+
+        _readerVc.readerView.zoom = 1.0;
+    }
+    return _readerVc;
 }
 
 @end
