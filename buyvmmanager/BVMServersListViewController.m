@@ -3,6 +3,7 @@
 #import "BVMServerInfo.h"
 #import "BVMAddServerViewController.h"
 #import "BVMHostViewController.h"
+#import "BVMAboutSettingsViewController.h"
 #import "NSError+BVMErrors.h"
 #import "ODRefreshControl.h"
 
@@ -37,6 +38,7 @@
     [super viewDidLoad];
 
     self.title = NSLocalizedString(@"My VMs", nil);
+    self.navigationItem.leftBarButtonItem = self.settingsItem;
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
     self.thirdPartyRefreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
@@ -62,6 +64,13 @@
     addVc.afterAddAction = @selector(reloadData);
 
     UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:addVc];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)settingsButtonTouched
+{
+    BVMAboutSettingsViewController *settingsVc = [[BVMAboutSettingsViewController alloc] init];
+    UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:settingsVc];
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -162,6 +171,14 @@
         _addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonTouched)];
     }
     return _addItem;
+}
+
+- (UIBarButtonItem *)settingsItem
+{
+    if (!_settingsItem) {
+        _settingsItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"247-InfoCircle"] style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonTouched)];
+    }
+    return _settingsItem;
 }
 
 @end
