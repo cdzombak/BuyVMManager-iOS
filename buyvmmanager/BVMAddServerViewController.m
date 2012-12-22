@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 @property (nonatomic, weak) UITextField *apiHashField;
 
 @property (nonatomic, strong, readonly) UIView *footerView;
+@property (nonatomic, weak, readonly) UILabel *footerLabel;
 
 @property (nonatomic, strong) ZBarReaderViewController *readerVc;
 @property (nonatomic, weak) UITextField *currentReadingTextField;
@@ -26,7 +27,9 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 
 @implementation BVMAddServerViewController
 
-@synthesize footerView = _footerView;
+@synthesize footerView = _footerView,
+            footerLabel = _footerLabel
+            ;
 
 - (id)init
 {
@@ -46,6 +49,11 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTouched)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTouched)];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self.footerLabel sizeToFit];
 }
 
 #pragma mark Interface Actions
@@ -229,8 +237,8 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 - (UIView *)footerView
 {
     if (!_footerView) {
-        NSString *notes = NSLocalizedString(@"Server name may be anything you like.\nAPI Key and API Hash must be entered exactly as they appear in the VPS Control Panel at https://manage.buyvm.net/ clientapi.php.\nCopying these from elsewhere - an email, for example - is easiest.", nil);
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(18, 0, self.view.bounds.size.width-36, 130)];
+        NSString *notes = NSLocalizedString(@"Server name may be anything you like.\nAPI Key and API Hash must be entered exactly as they appear in the VPS Control Panel at https://manage.buyvm.net/ clientapi.php.\nCopying these from elsewhere - an email, for example - is easiest.\nYou may scan QR codes for these fields by tapping the camera icon.", nil);
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(18, 0, self.view.bounds.size.width-36, 170)];
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor bvm_darkTableViewTextColor];
         label.shadowColor = [UIColor whiteColor];
@@ -241,6 +249,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
         label.font = [UIFont systemFontOfSize:15.0];
         label.backgroundColor = [UIColor clearColor];
         label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _footerLabel = label;
 
         _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, label.bounds.size.height)];
         _footerView.backgroundColor = [UIColor clearColor];
