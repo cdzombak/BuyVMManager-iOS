@@ -68,7 +68,8 @@
 - (void)refreshControlActivated:(id)sender
 {
     [self.tableView reloadData];
-    [self.thirdPartyRefreshControl endRefreshing];
+
+    [self.thirdPartyRefreshControl performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.2];
 }
 
 #pragma mark Data
