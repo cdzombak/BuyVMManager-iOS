@@ -45,7 +45,7 @@ typedef NS_ENUM(NSUInteger, BVMServerStatus) {
 /**
  * Server status
  */
-@property (nonatomic, readonly, assign) BVMServerStatus status;
+@property (nonatomic, assign) BVMServerStatus status;
 
 /**
  * Server hostname

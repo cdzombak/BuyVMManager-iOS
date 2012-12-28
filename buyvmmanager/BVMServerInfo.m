@@ -9,7 +9,6 @@ static const NSTimeInterval kBVMInfoTimeoutInterval = 20.0;
 @interface BVMServerInfo ()
 
 // Redefine properties internally as readwrite
-@property (nonatomic, readwrite, assign) BVMServerStatus status;
 @property (nonatomic, readwrite, strong) NSString *hostname;
 @property (nonatomic, readwrite, strong) NSString *mainIpAddress;
 @property (nonatomic, readwrite, strong) NSArray *ipAddresses;

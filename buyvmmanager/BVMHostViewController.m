@@ -65,11 +65,15 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 
 @property (nonatomic, strong, readonly) UIBarButtonItem *reloadButtonItem;
 
+@property (nonatomic, strong, readonly) MBProgressHUD *progressHUD;
+
 @end
 
 @implementation BVMHostViewController
 
-@synthesize reloadButtonItem = _reloadButtonItem;
+@synthesize reloadButtonItem = _reloadButtonItem,
+            progressHUD = _progressHUD
+            ;
 
 - (id)initWithServer:(NSString *)serverName
 {
@@ -100,11 +104,11 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     //       async requests should tell the table view to refresh the appropriate row later.
     //       cellForRowAtIndexPath: adds appropriate data if available.
 
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self.progressHUD show:YES];
     self.navigationItem.rightBarButtonItem = nil;
 
     [BVMServerInfo requestInfoForServer:self.serverName withBlock:^(BVMServerInfo *info, NSError *error) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [self.progressHUD hide:YES];
         self.navigationItem.rightBarButtonItem = self.reloadButtonItem;
 
         if (error) {
@@ -222,14 +226,14 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
             switch(indexPath.row) {
                 case BVMHostTableViewInfoRowBandwidth:
                     cell.textLabel.text = NSLocalizedString(@"Bandwidth", nil);
-                    if (self.serverInfo.bwTotal == 0) cell.detailTextLabel.text = nil;
+                    if (!self.serverInfo) cell.detailTextLabel.text = nil;
                     else cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ used (%d%%)",
                                                       [BVMHumanValueTransformer humanSizeValueFromBytes:self.serverInfo.bwUsed],
                                                       self.serverInfo.bwPercentUsed];
                     break;
                 case BVMHostTableViewInfoRowHDD:
                     cell.textLabel.text = NSLocalizedString(@"HDD", nil);
-                    if (self.serverInfo.hddTotal == 0) cell.detailTextLabel.text = nil;
+                    if (self.serverInfo.status != BVMServerStatusOnline) cell.detailTextLabel.text = nil;
                     else cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ used (%d%%)",
                                                       [BVMHumanValueTransformer humanSizeValueFromBytes:self.serverInfo.hddUsed],
                                                       self.serverInfo.hddPercentUsed];
@@ -240,7 +244,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
                     break;
                 case BVMHostTableViewInfoRowMemory:
                     cell.textLabel.text = NSLocalizedString(@"Memory", nil);
-                    if (self.serverInfo.memTotal == 0) cell.detailTextLabel.text = nil;
+                    if (self.serverInfo.status != BVMServerStatusOnline) cell.detailTextLabel.text = nil;
                     else cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ used (%d%%)",
                                                       [BVMHumanValueTransformer humanSizeValueFromBytes:self.serverInfo.memUsed],
                                                       self.serverInfo.memPercentUsed];
@@ -419,21 +423,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     self.navBarTintTimer = nil;
     if (buttonIndex == cancelButtonIndex) return;
 
-    NSString *message;
-
     if ([[hostname lowercaseString] isEqualToString:[self.serverInfo.hostname lowercaseString]]) {
-        switch (self.selectedAction) {
-            case BVMServerActionBoot:
-                message = NSLocalizedString(@"Booting %@...\nRefresh in a few moments for an update.", nil);
-                break;
-            case BVMServerActionReboot:
-                message = NSLocalizedString(@"Rebooting %@...\nRefresh in a few moments for an update.", nil);
-                break;
-            case BVMServerActionShutdown:
-                message = NSLocalizedString(@"Shutting down %@...\nRefresh in a few moments for an update.", nil);
-                break;
-        }
-        message = [NSString stringWithFormat:message, self.serverInfo.hostname];
         [BVMServerActionPerform performAction:self.selectedAction forServer:self.serverName withBlock:^(BVMServerActionStatus status, NSError *error) {
             if (error || status == BVMServerActionStatusIndeterminate) {
                 [[[UIAlertView alloc] initWithTitle:@"Error"
@@ -442,18 +432,44 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
                                   cancelButtonTitle:@":("
                                   otherButtonTitles:nil]
                  show];
+            } else {
+                [self reportServerActionStatus:status];
             }
         }];
     } else {
-        message = NSLocalizedString(@"The hostname entered was incorrect.", nil);
+        [[[UIAlertView alloc] initWithTitle:@""
+                                    message:NSLocalizedString(@"The hostname entered was incorrect.", nil)
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil]
+         show];
+    }
+}
+
+- (void)reportServerActionStatus:(BVMServerActionStatus)status
+{
+    switch (status) {
+        case BVMServerActionStatusBooted:
+            self.headerStatusLabel.text = NSLocalizedString(@"Booting...", nil);
+            break;
+        case BVMServerActionStatusRebooted:
+            self.headerStatusLabel.text = NSLocalizedString(@"Rebooting...", nil);
+            break;
+        case BVMServerActionStatusShutdown:
+            self.headerStatusLabel.text = NSLocalizedString(@"Shutting down...", nil);
+            break;
+        default: break;
     }
 
-    [[[UIAlertView alloc] initWithTitle:@""
-                                message:message
-                               delegate:nil
-                      cancelButtonTitle:@"OK"
-                      otherButtonTitles:nil]
-     show];
+    self.headerStatusLabel.textColor = [UIColor blackColor];
+    self.pinger = nil;
+    self.pingString = @"";
+    self.serverInfo.status = BVMServerStatusIndeterminate;
+    [self.tableView reloadData];
+    [self.tableView scrollRectToVisible:self.headerView.frame animated:YES];
+    [self.progressHUD show:YES];
+
+    [self performSelector:@selector(reloadData) withObject:nil afterDelay:6.0];
 }
 
 #pragma mark Pasteboard Copying
@@ -526,6 +542,15 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         _reloadButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadData)];
     }
     return _reloadButtonItem;
+}
+
+- (MBProgressHUD *)progressHUD
+{
+    if (!_progressHUD) {
+        _progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:_progressHUD];
+    }
+    return _progressHUD;
 }
 
 @end
