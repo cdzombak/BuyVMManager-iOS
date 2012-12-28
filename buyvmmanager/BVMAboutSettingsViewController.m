@@ -32,7 +32,6 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
 {
     [super viewDidLoad];
 
-    self.title = NSLocalizedString(@"BuyVM Manager", nil);
     self.tableView.tableFooterView = self.footerView;
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
@@ -109,7 +108,7 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
 - (UIView *)footerView
 {
     if (!_footerView) {
-        NSString *notes = [NSString stringWithFormat:NSLocalizedString(@"BuyVM Manager v%@\nby Chris Dzombak", nil), [self appVersion]];
+        NSString *notes = [NSString stringWithFormat:NSLocalizedString(@"BuyVM Manager v%@", nil), [self appVersion]];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(18, 0, self.view.bounds.size.width-36, 40)];
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor bvm_darkTableViewTextColor];
