@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) ODRefreshControl *thirdPartyRefreshControl;
 
+@property (nonatomic, assign) BOOL showedFirstLaunchAddScreen;
+
 @property (nonatomic, strong, readonly) BVMAddServerViewController *addVC;
 @property (nonatomic, strong, readonly) UIPopoverController *addVCPopoverController;
 
@@ -37,6 +39,7 @@
     if (self) {
         self.serverNames = [BVMServersManager serverNames];
         self.detailNavigationVC = navigationController;
+        self.showedFirstLaunchAddScreen = NO;
     }
     return self;
 }
@@ -52,10 +55,14 @@
     self.thirdPartyRefreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
     self.thirdPartyRefreshControl.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     [self.thirdPartyRefreshControl addTarget:self action:@selector(refreshControlActivated:) forControlEvents:UIControlEventValueChanged];
+}
 
-    if (self.serverNames.count == 0) {
-        // TODO clean presentation on first launch
-//        [self addButtonTouched];
+-(void)viewDidAppear:(BOOL)animated
+{
+    if (self.serverNames.count == 0 && !self.showedFirstLaunchAddScreen) {
+        self.showedFirstLaunchAddScreen = YES;
+        self.editing = YES;
+        [self addButtonTouched];
     }
 }
 
