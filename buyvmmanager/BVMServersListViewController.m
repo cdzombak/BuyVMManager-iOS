@@ -181,7 +181,7 @@
 {
     UIViewController *hostVC = [[BVMHostViewController alloc] initWithServer:self.serverNames[indexPath.row]];
 
-    if (self.detailNavigationVC == self.navigationController) {
+    if (!self.detailNavigationVC || self.detailNavigationVC == self.navigationController) {
         [self.navigationController pushViewController:hostVC animated:YES];
     } else {
         [self.detailNavigationVC setViewControllers:@[hostVC] animated:NO];
