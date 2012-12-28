@@ -32,6 +32,8 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
 {
     [super viewDidLoad];
 
+    self.title = NSLocalizedString(@"BuyVM Manager", nil);
+
     self.tableView.tableFooterView = self.footerView;
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
