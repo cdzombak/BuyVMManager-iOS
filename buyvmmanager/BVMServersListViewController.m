@@ -177,7 +177,7 @@
     if (self.detailNavigationVC == self.navigationController) {
         [self.navigationController pushViewController:hostVC animated:YES];
     } else {
-        [self.detailNavigationVC setViewControllers:@[hostVC] animated:YES];
+        [self.detailNavigationVC setViewControllers:@[hostVC] animated:NO];
     }
 }
 
