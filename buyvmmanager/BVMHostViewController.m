@@ -67,12 +67,15 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 
 @property (nonatomic, strong, readonly) MBProgressHUD *progressHUD;
 
+@property (nonatomic, assign, readonly) CGFloat headerViewSidePadding;
+
 @end
 
 @implementation BVMHostViewController
 
 @synthesize reloadButtonItem = _reloadButtonItem,
-            progressHUD = _progressHUD
+            progressHUD = _progressHUD,
+            headerViewSidePadding = _headerViewSidePadding
             ;
 
 - (id)initWithServer:(NSString *)serverName
@@ -512,7 +515,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         _headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _headerView.backgroundColor = [UIColor clearColor];
 
-        self.headerHostnameLabel = [[UILabel alloc] initWithFrame:(CGRect){ {18, 10} , { _headerView.bounds.size.width-36, 35 }}];
+        self.headerHostnameLabel = [[UILabel alloc] initWithFrame:(CGRect){ {self.headerViewSidePadding, 10} , { _headerView.bounds.size.width-2*self.headerViewSidePadding, 35 }}];
         self.headerHostnameLabel.font = [UIFont boldSystemFontOfSize:22.0];
         self.headerHostnameLabel.backgroundColor = [UIColor clearColor];
         self.headerHostnameLabel.text = NSLocalizedString(@"Loading...", nil);
@@ -520,7 +523,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         self.headerHostnameLabel.shadowOffset = CGSizeMake(0, 1.0);
         [_headerView addSubview:self.headerHostnameLabel];
 
-        self.headerStatusLabel = [[UILabel alloc] initWithFrame:(CGRect){ {17, 41} , { self.headerHostnameLabel.bounds.size.width, 20 }}];
+        self.headerStatusLabel = [[UILabel alloc] initWithFrame:(CGRect){ {self.headerViewSidePadding, 41} , { self.headerHostnameLabel.bounds.size.width, 20 }}];
         self.headerStatusLabel.font = [UIFont boldSystemFontOfSize:18.0];
         self.headerStatusLabel.backgroundColor = [UIColor clearColor];
         self.headerStatusLabel.shadowColor = self.headerHostnameLabel.shadowColor;
@@ -554,6 +557,18 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         [self.view addSubview:_progressHUD];
     }
     return _progressHUD;
+}
+
+- (CGFloat)headerViewSidePadding
+{
+    if (!_headerViewSidePadding) {
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            _headerViewSidePadding = 36;
+        } else {
+            _headerViewSidePadding = 18;
+        }
+    }
+    return _headerViewSidePadding;
 }
 
 @end
