@@ -4,7 +4,7 @@
 #import "BVMServersManager.h"
 #import "NSError+BVMErrors.h"
 
-static const NSTimeInterval kBVMInfoTimeoutInterval = 15.0;
+static const NSTimeInterval kBVMInfoTimeoutInterval = 20.0;
 
 @interface BVMServerInfo ()
 
