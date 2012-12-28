@@ -5,6 +5,6 @@
 /**
  * Designated initializer
  */
-- (id)init;
+- (id)initWithDetailNavigationController:(UINavigationController *)navigationController;
 
 @end

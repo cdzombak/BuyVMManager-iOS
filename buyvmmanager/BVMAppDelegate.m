@@ -10,15 +10,18 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
 
-    id rootVC = [[UINavigationController alloc] initWithRootViewController:[[BVMServersListViewController alloc] init]];
+    UIViewController *rootVC;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UISplitViewController *vc = [[UISplitViewController alloc] init];
         vc.delegate = self;
+        UINavigationController *detailNavigationVC = [[UINavigationController alloc] initWithRootViewController:[[UITableViewController alloc] initWithStyle:UITableViewStyleGrouped]];
         vc.viewControllers = @[
-            [[UINavigationController alloc] initWithRootViewController:[[BVMServersListViewController alloc] init]],
-            [[UINavigationController alloc] initWithRootViewController:[[UITableViewController alloc] initWithStyle:UITableViewStyleGrouped]]
+            [[UINavigationController alloc] initWithRootViewController:[[BVMServersListViewController alloc] initWithDetailNavigationController:detailNavigationVC]],
+            detailNavigationVC
         ];
         rootVC = vc;
+    } else {
+        rootVC = [[UINavigationController alloc] initWithRootViewController:[[BVMServersListViewController alloc] initWithDetailNavigationController:nil]];
     }
 
     self.window.rootViewController = rootVC;

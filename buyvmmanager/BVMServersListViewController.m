@@ -11,6 +11,8 @@
 
 @property (nonatomic, strong) NSArray *serverNames;
 
+@property (nonatomic, weak) UINavigationController *detailNavigationVC;
+
 @property (nonatomic, strong, readonly) UIBarButtonItem *addItem;
 @property (nonatomic, strong, readonly) UIBarButtonItem *settingsItem;
 
@@ -29,11 +31,12 @@
             addVCPopoverController = _addVCPopoverController
             ;
 
-- (id)init
+- (id)initWithDetailNavigationController:(UINavigationController *)navigationController
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
         self.serverNames = [BVMServersManager serverNames];
+        self.detailNavigationVC = navigationController;
     }
     return self;
 }
@@ -169,8 +172,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIViewController *vc = [[BVMHostViewController alloc] initWithServer:self.serverNames[indexPath.row]];
-    [self.navigationController pushViewController:vc animated:YES];
+    UIViewController *hostVC = [[BVMHostViewController alloc] initWithServer:self.serverNames[indexPath.row]];
+
+    if (self.detailNavigationVC == self.navigationController) {
+        [self.navigationController pushViewController:hostVC animated:YES];
+    } else {
+        [self.detailNavigationVC setViewControllers:@[hostVC] animated:YES];
+    }
 }
 
 #pragma mark Property Overrides
