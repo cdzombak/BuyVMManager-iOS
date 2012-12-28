@@ -118,6 +118,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
                                                    cancelButtonTitle:@":("
                                                    otherButtonTitles:nil];
             [self.loadErrorAlertView show];
+            if (!self.serverInfo) self.headerHostnameLabel.text = @"";
             return;
         }
         self.serverInfo = info;
@@ -369,7 +370,9 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     }
 
     if (alertView == self.loadErrorAlertView) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
     }
 }
 
