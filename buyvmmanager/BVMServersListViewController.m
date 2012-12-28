@@ -16,12 +16,17 @@
 
 @property (nonatomic, strong) ODRefreshControl *thirdPartyRefreshControl;
 
+@property (nonatomic, strong, readonly) BVMAddServerViewController *addVC;
+@property (nonatomic, strong, readonly) UIPopoverController *addVCPopoverController;
+
 @end
 
 @implementation BVMServersListViewController
 
 @synthesize addItem = _addItem,
-            settingsItem = _settingsItem
+            settingsItem = _settingsItem,
+            addVC = _addVC,
+            addVCPopoverController = _addVCPopoverController
             ;
 
 - (id)init
@@ -46,7 +51,8 @@
     [self.thirdPartyRefreshControl addTarget:self action:@selector(refreshControlActivated:) forControlEvents:UIControlEventValueChanged];
 
     if (self.serverNames.count == 0) {
-        [self addButtonTouched];
+        // TODO clean presentation on first launch
+//        [self addButtonTouched];
     }
 }
 
@@ -63,12 +69,12 @@
 
 - (void)addButtonTouched
 {
-    BVMAddServerViewController *addVc = [[BVMAddServerViewController alloc] init];
-    addVc.afterAddTarget = self;
-    addVc.afterAddAction = @selector(reloadData);
-
-    UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:addVc];
-    [self presentViewController:vc animated:YES completion:nil];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [self.addVCPopoverController presentPopoverFromBarButtonItem:self.addItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    } else {
+        UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:self.addVC];
+        [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 
 - (void)settingsButtonTouched
@@ -183,6 +189,26 @@
         _settingsItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"247-InfoCircle"] style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonTouched)];
     }
     return _settingsItem;
+}
+
+- (UIPopoverController *)addVCPopoverController
+{
+    if (!_addVCPopoverController) {
+        UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:self.addVC];
+        _addVCPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
+        _addVC.myPopoverController = _addVCPopoverController;
+    }
+    return _addVCPopoverController;
+}
+
+- (BVMAddServerViewController *)addVC
+{
+    if (!_addVC) {
+        _addVC = [[BVMAddServerViewController alloc] init];
+        _addVC.afterAddTarget = self;
+        _addVC.afterAddAction = @selector(reloadData);
+    }
+    return _addVC;
 }
 
 @end
