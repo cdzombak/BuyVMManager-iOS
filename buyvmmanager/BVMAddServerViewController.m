@@ -145,6 +145,10 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 #pragma clang diagnostic pop
     }
 
+    for (UITextField *field in fields) {
+        field.text = nil;
+    }
+
     [self dismiss];
 }
 
