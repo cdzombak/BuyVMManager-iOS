@@ -101,7 +101,6 @@
 		937CCC6D168528240075BD01 /* 119-Camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "119-Camera@2x.png"; sourceTree = "<group>"; };
 		937CCC6F168533700075BD01 /* BVMAboutSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMAboutSettingsViewController.h; sourceTree = "<group>"; };
 		937CCC70168533700075BD01 /* BVMAboutSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMAboutSettingsViewController.m; sourceTree = "<group>"; };
-		937CCC721685382E0075BD01 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		937CCC7416853B100075BD01 /* 247-InfoCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "247-InfoCircle.png"; sourceTree = "<group>"; };
 		937CCC7516853B100075BD01 /* 247-InfoCircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "247-InfoCircle@2x.png"; sourceTree = "<group>"; };
 		937CCC87168626780075BD01 /* CDZSubTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDZSubTableViewController.h; sourceTree = "<group>"; };
@@ -142,7 +141,6 @@
 		932709AC1682353E0013DEB5 = {
 			isa = PBXGroup;
 			children = (
-				937CCC721685382E0075BD01 /* MessageUI.framework */,
 				932709C11682353E0013DEB5 /* buyvmmanager */,
 				932709BA1682353E0013DEB5 /* Frameworks */,
 				932709B81682353E0013DEB5 /* Products */,
