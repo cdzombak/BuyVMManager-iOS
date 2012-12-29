@@ -47,6 +47,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 
 @interface BVMHostViewController () <BVMPingerDelegate>
 
+@property (nonatomic, copy) NSString *serverId;
 @property (nonatomic, copy) NSString *serverName;
 @property (nonatomic, strong) BVMServerInfo *serverInfo;
 
@@ -78,10 +79,11 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
             headerViewSidePadding = _headerViewSidePadding
             ;
 
-- (id)initWithServer:(NSString *)serverName
+- (id)initWithServerId:(NSString *)serverId name:(NSString *)serverName
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
+        self.serverId = serverId;
         self.serverName = serverName;
         self.title = serverName;
     }
@@ -110,7 +112,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     [self.progressHUD show:YES];
     self.navigationItem.rightBarButtonItem = nil;
 
-    [BVMServerInfo requestInfoForServer:self.serverName withBlock:^(BVMServerInfo *info, NSError *error) {
+    [BVMServerInfo requestInfoForServerId:self.serverId withBlock:^(BVMServerInfo *info, NSError *error) {
         [self.progressHUD hide:YES];
         self.navigationItem.rightBarButtonItem = self.reloadButtonItem;
 
@@ -430,7 +432,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     if (buttonIndex == cancelButtonIndex) return;
 
     if ([[hostname lowercaseString] isEqualToString:[self.serverInfo.hostname lowercaseString]]) {
-        [BVMServerActionPerform performAction:self.selectedAction forServer:self.serverName withBlock:^(BVMServerActionStatus status, NSError *error) {
+        [BVMServerActionPerform performAction:self.selectedAction forServerId:self.serverId withBlock:^(BVMServerActionStatus status, NSError *error) {
             if (error || status == BVMServerActionStatusIndeterminate) {
                 [[[UIAlertView alloc] initWithTitle:@"Error"
                                             message:[BVMHumanValueTransformer shortErrorFromError:error]

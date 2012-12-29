@@ -123,7 +123,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 
     if (!valid) return;
 
-    [BVMServersManager saveServerName:self.serverNameField.text key:self.apiKeyField.text hash:self.apiHashField.text];
+    [BVMServersManager saveServerId:nil name:self.serverNameField.text key:self.apiKeyField.text hash:self.apiHashField.text];
 
     id afterAddTarget = self.afterAddTarget;
     if (afterAddTarget && self.afterAddAction && [afterAddTarget respondsToSelector:self.afterAddAction]) {

@@ -9,7 +9,8 @@
 
 @interface BVMServersListViewController ()
 
-@property (nonatomic, strong) NSArray *serverNames;
+@property (nonatomic, copy) NSDictionary *servers;
+@property (nonatomic, strong) NSArray *orderedServerIds;
 
 @property (nonatomic, weak) UINavigationController *detailNavigationVC;
 
@@ -45,7 +46,6 @@
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        self.serverNames = [BVMServersManager serverNames];
         self.detailNavigationVC = navigationController;
         self.showedFirstLaunchAddScreen = NO;
     }
@@ -65,6 +65,8 @@
 
     [self.view addSubview:self.bottomToolbar];
     self.view.autoresizesSubviews = YES;
+
+    [self reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -78,7 +80,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    if (self.serverNames.count == 0 && !self.showedFirstLaunchAddScreen) {
+    if (self.servers.count == 0 && !self.showedFirstLaunchAddScreen) {
         self.showedFirstLaunchAddScreen = YES;
         self.editing = YES;
         [self addButtonTouched];
@@ -122,7 +124,7 @@
 
 - (void)refreshControlActivated:(id)sender
 {
-    [self.tableView reloadData];
+    [self reloadData];
 
     [self.thirdPartyRefreshControl performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.2];
 }
@@ -131,34 +133,50 @@
 
 - (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *serverName = self.serverNames[indexPath.row];
+    NSString *serverId = [self serverIdForIndexPath:indexPath];
+    NSString *serverName = [self serverNameForIndexPath:indexPath];
+
     cell.textLabel.text = serverName;
     cell.textLabel.textColor = [UIColor blackColor];
     cell.detailTextLabel.text = @"";
-    [BVMServerInfo requestStatusForServer:serverName
-                                withBlock:^(BVMServerStatus status, NSString *hostname, NSString *ip, NSError *error) {
-                                    if (status == BVMServerStatusOffline) {
-                                        cell.textLabel.textColor = [UIColor redColor];
-                                        cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ [offline]", nil), cell.textLabel.text];
-                                    } else if (status == BVMServerStatusIndeterminate) {
-                                        cell.textLabel.textColor = [UIColor blueColor];
-                                        cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ [unknown]", nil), cell.textLabel.text];
-                                    }
-                                    if (ip && hostname) {
-                                        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@)", ip, hostname];
-                                    } else if (ip) {
-                                        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", ip];
-                                    } else if (hostname) {
-                                        cell.detailTextLabel.text = [NSString stringWithFormat:@"(%@)", hostname];
-                                    }
-                                    [cell setNeedsLayout];
-                                }];
+
+    [BVMServerInfo requestStatusForServerId:serverId
+                                  withBlock:^(BVMServerStatus status, NSString *hostname, NSString *ip, NSError *error) {
+                                      if (status == BVMServerStatusOffline) {
+                                          cell.textLabel.textColor = [UIColor redColor];
+                                          cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ [offline]", nil), cell.textLabel.text];
+                                      } else if (status == BVMServerStatusIndeterminate) {
+                                          cell.textLabel.textColor = [UIColor blueColor];
+                                          cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ [unknown]", nil), cell.textLabel.text];
+                                      }
+                                      if (ip && hostname) {
+                                          cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@)", ip, hostname];
+                                      } else if (ip) {
+                                          cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", ip];
+                                      } else if (hostname) {
+                                          cell.detailTextLabel.text = [NSString stringWithFormat:@"(%@)", hostname];
+                                      }
+                                      [cell setNeedsLayout];
+                                  }];
 }
 
 - (void)reloadData
 {
-    self.serverNames = [BVMServersManager serverNames];
+    self.servers = [BVMServersManager servers];
+
     [self.tableView reloadData];
+}
+
+- (NSString *)serverIdForIndexPath:(NSIndexPath *)indexPath
+{
+    NSParameterAssert(indexPath.section == 0);
+    return self.orderedServerIds[indexPath.row];
+}
+
+- (NSString *)serverNameForIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *serverId = [self serverIdForIndexPath:indexPath];
+    return self.servers[serverId];
 }
 
 #pragma mark UITableViewDataSource methods
@@ -170,7 +188,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.serverNames.count;
+    return self.servers.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -195,8 +213,9 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [BVMServersManager removeServerNamed:self.serverNames[indexPath.row]];
-        self.serverNames = [BVMServersManager serverNames];
+        NSString *serverId = [self serverIdForIndexPath:indexPath];
+        [BVMServersManager removeServerId:serverId];
+        self.servers = [BVMServersManager servers];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
@@ -205,7 +224,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIViewController *hostVC = [[BVMHostViewController alloc] initWithServer:self.serverNames[indexPath.row]];
+    NSString *serverId = [self serverIdForIndexPath:indexPath];
+    NSString *serverName = [self serverNameForIndexPath:indexPath];
+
+    UIViewController *hostVC = [[BVMHostViewController alloc] initWithServerId:serverId name:serverName];
 
     if (!self.detailNavigationVC || self.detailNavigationVC == self.navigationController) {
         [self.navigationController pushViewController:hostVC animated:YES];
@@ -216,6 +238,12 @@
 }
 
 #pragma mark Property Overrides
+
+- (void)setServers:(NSDictionary *)servers
+{
+    _servers = [servers copy];
+    self.orderedServerIds = [_servers allKeys];
+}
 
 - (UIBarButtonItem *)addItem
 {

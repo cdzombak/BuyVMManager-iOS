@@ -23,7 +23,7 @@ typedef NS_ENUM(NSUInteger, BVMServerAction) {
  * means there was no detected error.
  */
 + (void)performAction:(BVMServerAction)action
-            forServer:(NSString *)serverName
-         withBlock:(void (^)(BVMServerActionStatus status, NSError *error))resultBlock;
+          forServerId:(NSString *)serverId
+            withBlock:(void (^)(BVMServerActionStatus status, NSError *error))resultBlock;
 
 @end

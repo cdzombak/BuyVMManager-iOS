@@ -29,10 +29,10 @@ static const NSTimeInterval kBVMInfoTimeoutInterval = 20.0;
 
 @implementation BVMServerInfo
 
-+ (void)requestInfoForServer:(NSString *)serverName
-                   withBlock:(void (^)(BVMServerInfo *, NSError *))resultBlock
++ (void)requestInfoForServerId:(NSString *)serverId
+                     withBlock:(void (^)(BVMServerInfo *, NSError *))resultBlock
 {
-    NSDictionary *credentials = [BVMServersManager credentialsForServer:serverName];
+    NSDictionary *credentials = [BVMServersManager credentialsForServerId:serverId];
     NSDictionary *params = @{
         @"key": credentials[kBVMServerKeyAPIKey],
         @"hash": credentials[kBVMServerKeyAPIHash],
@@ -70,10 +70,10 @@ static const NSTimeInterval kBVMInfoTimeoutInterval = 20.0;
                                  }];
 }
 
-+ (void) requestStatusForServer:(NSString *)serverName
-                      withBlock:(void (^)(BVMServerStatus, NSString *hostname, NSString *ip, NSError *))resultBlock
++ (void)requestStatusForServerId:(NSString *)serverId
+                       withBlock:(void (^)(BVMServerStatus, NSString *hostname, NSString *ip, NSError *))resultBlock
 {
-    NSDictionary *credentials = [BVMServersManager credentialsForServer:serverName];
+    NSDictionary *credentials = [BVMServersManager credentialsForServerId:serverId];
     NSDictionary *params = @{
         @"key": credentials[kBVMServerKeyAPIKey],
         @"hash": credentials[kBVMServerKeyAPIHash],

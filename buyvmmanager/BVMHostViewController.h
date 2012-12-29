@@ -6,6 +6,6 @@
 /**
  * Designated initializer
  */
-- (id)initWithServer:(NSString *)serverName;
+- (id)initWithServerId:(NSString *)serverId name:(NSString *)serverName;
 
 @end

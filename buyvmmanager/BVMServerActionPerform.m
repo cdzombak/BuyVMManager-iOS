@@ -7,10 +7,10 @@
 @implementation BVMServerActionPerform
 
 + (void)performAction:(BVMServerAction)action
-            forServer:(NSString *)serverName
+          forServerId:(NSString *)serverId
             withBlock:(void (^)(BVMServerActionStatus status, NSError *error))resultBlock
 {
-    NSDictionary *credentials = [BVMServersManager credentialsForServer:serverName];
+    NSDictionary *credentials = [BVMServersManager credentialsForServerId:serverId];
     NSDictionary *params = @{
         @"key": credentials[kBVMServerKeyAPIKey],
         @"hash": credentials[kBVMServerKeyAPIHash],

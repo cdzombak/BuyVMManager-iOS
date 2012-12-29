@@ -1,62 +1,76 @@
 #import "BVMServersManager.h"
-#include "NSArray+BVMArrayExtensions.h"
 #import "KCMutableDictionary.h"
 
-static NSString * const kBVMUserDefaultsServerNamesKey = @"serverNames";
+static NSString * const kBVMUserDefaultsServersKey = @"servers";
 
 @implementation BVMServersManager
 
-+ (NSArray *)serverNames
++ (NSDictionary *)servers
 {
-    NSArray *serverNames = [[NSUserDefaults standardUserDefaults] arrayForKey:kBVMUserDefaultsServerNamesKey];
-    if (!serverNames) serverNames = [NSArray array];
+    NSDictionary *servers = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kBVMUserDefaultsServersKey];
+    if (!servers) servers = [NSDictionary dictionary];
 
-    return serverNames;
+    return servers;
 }
 
-+ (NSDictionary *)credentialsForServer:(NSString *)serverName
++ (NSDictionary *)credentialsForServerId:(NSString *)serverId
 {
-    NSString *credentialKey = [BVMServersManager keychainDictionaryNameForServer:serverName];
+    NSString *credentialKey = [BVMServersManager keychainDictionaryNameForServerId:serverId];
     NSDictionary *credentials = [KCMutableDictionary dictionaryWithName:credentialKey];
 
     return credentials;
 }
 
-+ (BOOL)saveServerName:(NSString *)serverName key:(NSString *)key hash:(NSString *)hash
++ (BOOL)saveServerId:(NSString *)serverId name:(NSString *)serverName key:(NSString *)key hash:(NSString *)hash
 {
-    NSArray *serverNames = [[NSUserDefaults standardUserDefaults] arrayForKey:kBVMUserDefaultsServerNamesKey];
-    if (serverNames && [serverNames bvm_indexOfString:serverName] != NSNotFound) return NO;
+    NSDictionary *servers = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kBVMUserDefaultsServersKey];
 
-    NSMutableArray *mutableServerNames = [serverNames mutableCopy];
-    if (!mutableServerNames) mutableServerNames = [NSMutableArray array];
-    [mutableServerNames addObject:serverName];
+    NSMutableDictionary *mutableServers = [servers mutableCopy];
+    if (!mutableServers) mutableServers = [NSMutableDictionary dictionary];
 
-    NSString *credentialKey = [BVMServersManager keychainDictionaryNameForServer:serverName];
+    if (!serverId) {
+        serverId = [BVMServersManager generateUUID];
+    }
+
+    if ([mutableServers objectForKey:serverId]) {
+        [mutableServers removeObjectForKey:serverId];
+    }
+
+    [mutableServers setObject:serverName forKey:serverId];
+
+    NSString *credentialKey = [BVMServersManager keychainDictionaryNameForServerId:serverId];
     KCMutableDictionary *credentials = [KCMutableDictionary dictionaryWithName:credentialKey];
     [credentials setObject:key forKey:kBVMServerKeyAPIKey];
     [credentials setObject:hash forKey:kBVMServerKeyAPIHash];
 
-    [[NSUserDefaults standardUserDefaults] setObject:mutableServerNames forKey:kBVMUserDefaultsServerNamesKey];
+    [[NSUserDefaults standardUserDefaults] setObject:mutableServers forKey:kBVMUserDefaultsServersKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
     return YES;
 }
 
-+ (void)removeServerNamed:(NSString *)serverName
++ (void)removeServerId:(NSString *)serverId
 {
-    NSArray *serverNames = [[NSUserDefaults standardUserDefaults] arrayForKey:kBVMUserDefaultsServerNamesKey];
-    NSUInteger serverNameIndex = [serverNames bvm_indexOfString:serverName];
-    if (serverNameIndex == NSNotFound) return;
+    NSDictionary *servers = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kBVMUserDefaultsServersKey];
+    if (![servers objectForKey:serverId]) return;
 
-    NSMutableArray *mutableServerNames = [serverNames mutableCopy];
-    [mutableServerNames removeObjectAtIndex:serverNameIndex];
+    NSMutableDictionary *mutableServers = [servers mutableCopy];
+    [mutableServers removeObjectForKey:serverId];
 
-    [[NSUserDefaults standardUserDefaults] setObject:mutableServerNames forKey:kBVMUserDefaultsServerNamesKey];
+    [[NSUserDefaults standardUserDefaults] setObject:mutableServers forKey:kBVMUserDefaultsServersKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+ (NSString *)keychainDictionaryNameForServer:(NSString *)server
++ (NSString *)keychainDictionaryNameForServerId:(NSString *)serverId
 {
-    return [NSString stringWithFormat:@"server_%@", server];
+    return [NSString stringWithFormat:@"server_%@", serverId];
+}
+
++(NSString *)generateUUID
+{
+    CFUUIDRef newUniqueId = CFUUIDCreate(kCFAllocatorDefault);
+    NSString * uuidString = (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, newUniqueId);
+    CFRelease(newUniqueId);
+    return uuidString;
 }
 
 @end
