@@ -274,7 +274,7 @@
 - (BVMAddEditServerViewController *)addEditVC
 {
     if (!_addEditVC) {
-        _addEditVC = [[BVMAddEditServerViewController alloc] init];
+        _addEditVC = [[BVMAddEditServerViewController alloc] initForServerId:nil];
         _addEditVC.afterAddTarget = self;
         _addEditVC.afterAddAction = @selector(reloadData);
     }

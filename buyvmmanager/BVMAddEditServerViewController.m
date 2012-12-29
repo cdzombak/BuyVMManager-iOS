@@ -13,6 +13,11 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 
 @interface BVMAddEditServerViewController () <UITextFieldDelegate, ZBarReaderDelegate>
 
+@property (nonatomic, copy) NSString *editingServerId;
+@property (nonatomic, assign) BOOL didLoadEditingContent;
+@property (nonatomic, copy) NSString *savedApiKey;
+@property (nonatomic, copy) NSString *savedApiHash;
+
 @property (nonatomic, weak) UITextField *serverNameField;
 @property (nonatomic, weak) UITextField *apiKeyField;
 @property (nonatomic, weak) UITextField *apiHashField;
@@ -23,6 +28,9 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 @property (nonatomic, strong) ZBarReaderViewController *readerVc;
 @property (nonatomic, weak) UITextField *currentReadingTextField;
 
+@property (nonatomic, readonly) NSString *apiKeyHiddenText;
+@property (nonatomic, readonly) NSString *apiHashHiddenText;
+
 @end
 
 @implementation BVMAddEditServerViewController
@@ -31,11 +39,18 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
             footerLabel = _footerLabel
             ;
 
-- (id)init
+- (id)initForServerId:(NSString *)serverId
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        self.title = NSLocalizedString(@"Add VM", nil);
+        self.editingServerId = serverId;
+        self.didLoadEditingContent = NO;
+
+        if (self.editingServerId) {
+            self.title = NSLocalizedString(@"Edit VM", nil);
+        } else {
+            self.title = NSLocalizedString(@"Add VM", nil);
+        }
     }
     return self;
 }
@@ -57,9 +72,30 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     [super viewWillAppear:animated];
 
     if (!self.myPopoverController) {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonTouched)];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                              target:self
+                                                                                              action:@selector(cancelButtonTouched)];
     } else {
         self.navigationItem.leftBarButtonItem = nil;
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    if (self.editingServerId && !self.didLoadEditingContent) {
+        NSString *serverName = [BVMServersManager servers][self.editingServerId];
+        self.serverNameField.text = serverName;
+
+        NSDictionary *credentials = [BVMServersManager credentialsForServerId:self.editingServerId];
+        self.savedApiHash = credentials[kBVMServerKeyAPIHash];
+        self.savedApiKey = credentials[kBVMServerKeyAPIKey];
+
+        self.apiKeyField.text = self.apiKeyHiddenText;
+        self.apiHashField.text = self.apiHashHiddenText;
+
+        self.didLoadEditingContent = YES;
     }
 }
 
@@ -123,7 +159,21 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 
     if (!valid) return;
 
-    [BVMServersManager saveServerId:nil name:self.serverNameField.text key:self.apiKeyField.text hash:self.apiHashField.text];
+    NSString *apiKeyToSave = self.apiKeyField.text;
+    NSString *apiHashToSave = self.apiHashField.text;
+    if (self.editingServerId) {
+        if ([self.apiKeyField.text isEqualToString:self.apiKeyHiddenText]) {
+            apiKeyToSave = self.savedApiKey;
+        }
+        if ([self.apiHashField.text isEqualToString:self.apiHashHiddenText]) {
+            apiHashToSave = self.savedApiHash;
+        }
+    }
+
+    [BVMServersManager saveServerId:self.editingServerId
+                               name:self.serverNameField.text
+                                key:apiKeyToSave
+                               hash:apiHashToSave];
 
     id afterAddTarget = self.afterAddTarget;
     if (afterAddTarget && self.afterAddAction && [afterAddTarget respondsToSelector:self.afterAddAction]) {
@@ -287,6 +337,16 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
         _readerVc.readerView.zoom = 1.0;
     }
     return _readerVc;
+}
+
+- (NSString *)apiKeyHiddenText
+{
+    return NSLocalizedString(@"API Key Hidden", nil);
+}
+
+- (NSString *)apiHashHiddenText
+{
+    return NSLocalizedString(@"API Hash Hidden", nil);
 }
 
 @end

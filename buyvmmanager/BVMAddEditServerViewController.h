@@ -7,6 +7,6 @@
 
 @property (nonatomic, weak) UIPopoverController *myPopoverController;
 
-- (id)init;
+- (id)initForServerId:(NSString *)serverId;
 
 @end
