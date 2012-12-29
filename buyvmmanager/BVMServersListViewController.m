@@ -23,8 +23,11 @@
 @property (nonatomic, strong, readonly) BVMAddServerViewController *addVC;
 @property (nonatomic, strong, readonly) UIPopoverController *addVCPopoverController;
 
+@property (nonatomic, strong, readonly) BVMAboutSettingsViewController *settingsVC;
+@property (nonatomic, strong, readonly) UIPopoverController *settingsVCPopoverController;
 
 @property (nonatomic, strong, readonly) UIToolbar *bottomToolbar;
+
 @end
 
 @implementation BVMServersListViewController
@@ -32,7 +35,9 @@
 @synthesize addItem = _addItem,
             settingsItem = _settingsItem,
             addVC = _addVC,
-            addVCPopoverController = _addVCPopoverController
+            addVCPopoverController = _addVCPopoverController,
+            settingsVC = _settingsVC,
+            settingsVCPopoverController = _settingsVCPopoverController,
             bottomToolbar = _bottomToolbar
             ;
 
@@ -103,9 +108,14 @@
 
 - (void)settingsButtonTouched
 {
-    BVMAboutSettingsViewController *settingsVc = [[BVMAboutSettingsViewController alloc] init];
-    UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:settingsVc];
-    [self presentViewController:vc animated:YES completion:nil];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [self.settingsVCPopoverController presentPopoverFromBarButtonItem:self.settingsItem
+                                                 permittedArrowDirections:UIPopoverArrowDirectionAny
+                                                                 animated:YES];
+    } else {
+        UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:self.settingsVC];
+        [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 
 - (void)refreshControlActivated:(id)sender
@@ -239,6 +249,22 @@
         _addVC.afterAddAction = @selector(reloadData);
     }
     return _addVC;
+}
+
+- (UIPopoverController *)settingsVCPopoverController
+{
+    if (!_settingsVCPopoverController) {
+        _settingsVCPopoverController = [[UIPopoverController alloc] initWithContentViewController:self.settingsVC];
+    }
+    return _settingsVCPopoverController;
+}
+
+- (BVMAboutSettingsViewController *)settingsVC
+{
+    if (!_settingsVC) {
+        _settingsVC = [[BVMAboutSettingsViewController alloc] init];
+    }
+    return _settingsVC;
 }
 
 - (UIToolbar *)bottomToolbar

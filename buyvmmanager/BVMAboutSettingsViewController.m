@@ -39,6 +39,8 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                           target:self
                                                                                           action:@selector(doneButtonTapped)];
+
+    self.contentSizeForViewInPopover = CGSizeMake(320, self.footerView.frame.origin.y + self.footerView.frame.size.height);
 }
 
 #pragma mark Interface actions
