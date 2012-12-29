@@ -274,7 +274,7 @@
 - (void)setServers:(NSDictionary *)servers
 {
     _servers = [servers copy];
-    self.orderedServerIds = [_servers allKeys];
+    self.orderedServerIds = [_servers keysSortedByValueUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
 }
 
 - (UIBarButtonItem *)addItem
