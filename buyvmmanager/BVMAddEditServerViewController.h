@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@interface BVMAddServerViewController : UITableViewController
+@interface BVMAddEditServerViewController : UITableViewController
 
 @property (nonatomic, weak) id afterAddTarget;
 @property (nonatomic, assign) SEL afterAddAction;

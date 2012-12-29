@@ -1,4 +1,4 @@
-#import "BVMAddServerViewController.h"
+#import "BVMAddEditServerViewController.h"
 #import "BVMTextFieldTableViewCell.h"
 #import "BVMServersManager.h"
 #import "UIColor+BVMColors.h"
@@ -11,7 +11,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     BVMAddServerTableViewNumRows
 };
 
-@interface BVMAddServerViewController () <UITextFieldDelegate, ZBarReaderDelegate>
+@interface BVMAddEditServerViewController () <UITextFieldDelegate, ZBarReaderDelegate>
 
 @property (nonatomic, weak) UITextField *serverNameField;
 @property (nonatomic, weak) UITextField *apiKeyField;
@@ -25,7 +25,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 
 @end
 
-@implementation BVMAddServerViewController
+@implementation BVMAddEditServerViewController
 
 @synthesize footerView = _footerView,
             footerLabel = _footerLabel

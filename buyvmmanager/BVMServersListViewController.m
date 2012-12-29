@@ -1,7 +1,7 @@
 #import "BVMServersListViewController.h"
 #import "BVMServersManager.h"
 #import "BVMServerInfo.h"
-#import "BVMAddServerViewController.h"
+#import "BVMAddEditServerViewController.h"
 #import "BVMHostViewController.h"
 #import "BVMAboutSettingsViewController.h"
 #import "NSError+BVMErrors.h"
@@ -21,8 +21,8 @@
 
 @property (nonatomic, assign) BOOL showedFirstLaunchAddScreen;
 
-@property (nonatomic, strong, readonly) BVMAddServerViewController *addVC;
-@property (nonatomic, strong, readonly) UIPopoverController *addVCPopoverController;
+@property (nonatomic, strong, readonly) BVMAddEditServerViewController *addEditVC;
+@property (nonatomic, strong, readonly) UIPopoverController *addEditVCPopoverController;
 
 @property (nonatomic, strong, readonly) BVMAboutSettingsViewController *settingsVC;
 @property (nonatomic, strong, readonly) UIPopoverController *settingsVCPopoverController;
@@ -35,8 +35,8 @@
 
 @synthesize addItem = _addItem,
             settingsItem = _settingsItem,
-            addVC = _addVC,
-            addVCPopoverController = _addVCPopoverController,
+            addEditVC = _addEditVC,
+            addEditVCPopoverController = _addEditVCPopoverController,
             settingsVC = _settingsVC,
             settingsVCPopoverController = _settingsVCPopoverController,
             bottomToolbar = _bottomToolbar
@@ -101,11 +101,11 @@
 - (void)addButtonTouched
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [self.addVCPopoverController presentPopoverFromBarButtonItem:self.addItem
-                                            permittedArrowDirections:UIPopoverArrowDirectionAny
-                                                            animated:YES];
+        [self.addEditVCPopoverController presentPopoverFromBarButtonItem:self.addItem
+                                                permittedArrowDirections:UIPopoverArrowDirectionAny
+                                                                animated:YES];
     } else {
-        UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:self.addVC];
+        UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:self.addEditVC];
         [self presentViewController:vc animated:YES completion:nil];
     }
 }
@@ -261,24 +261,24 @@
     return _settingsItem;
 }
 
-- (UIPopoverController *)addVCPopoverController
+- (UIPopoverController *)addEditVCPopoverController
 {
-    if (!_addVCPopoverController) {
-        UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:self.addVC];
-        _addVCPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
-        _addVC.myPopoverController = _addVCPopoverController;
+    if (!_addEditVCPopoverController) {
+        UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:self.addEditVC];
+        _addEditVCPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
+        _addEditVC.myPopoverController = _addEditVCPopoverController;
     }
-    return _addVCPopoverController;
+    return _addEditVCPopoverController;
 }
 
-- (BVMAddServerViewController *)addVC
+- (BVMAddEditServerViewController *)addEditVC
 {
-    if (!_addVC) {
-        _addVC = [[BVMAddServerViewController alloc] init];
-        _addVC.afterAddTarget = self;
-        _addVC.afterAddAction = @selector(reloadData);
+    if (!_addEditVC) {
+        _addEditVC = [[BVMAddEditServerViewController alloc] init];
+        _addEditVC.afterAddTarget = self;
+        _addEditVC.afterAddAction = @selector(reloadData);
     }
-    return _addVC;
+    return _addEditVC;
 }
 
 - (UIPopoverController *)settingsVCPopoverController
