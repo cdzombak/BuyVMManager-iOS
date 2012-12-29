@@ -51,6 +51,8 @@
 		93ADFEC5168E6F5600F8256C /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93ADFEC1168E6F5600F8256C /* Default-Landscape@2x.png */; };
 		93ADFEC6168E6F5600F8256C /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 93ADFEC2168E6F5600F8256C /* Default-Portrait.png */; };
 		93ADFEC7168E6F5600F8256C /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93ADFEC3168E6F5600F8256C /* Default-Portrait@2x.png */; };
+		93ADFEDD168EB82C00F8256C /* KCMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 93ADFEDC168EB82C00F8256C /* KCMutableDictionary.m */; };
+		93ADFEDF168EBC8E00F8256C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93ADFEDE168EBC8E00F8256C /* Security.framework */; };
 		93BADD411683C19900B0CD6F /* UIColor+BVMColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADD401683C19900B0CD6F /* UIColor+BVMColors.m */; };
 		93BADD481684DE9D00B0CD6F /* BVMAPIResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADD471684DE9D00B0CD6F /* BVMAPIResponseParser.m */; };
 /* End PBXBuildFile section */
@@ -120,6 +122,9 @@
 		93ADFEC1168E6F5600F8256C /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x.png"; sourceTree = "<group>"; };
 		93ADFEC2168E6F5600F8256C /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
 		93ADFEC3168E6F5600F8256C /* Default-Portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x.png"; sourceTree = "<group>"; };
+		93ADFEDB168EB82C00F8256C /* KCMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCMutableDictionary.h; sourceTree = "<group>"; };
+		93ADFEDC168EB82C00F8256C /* KCMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCMutableDictionary.m; sourceTree = "<group>"; };
+		93ADFEDE168EBC8E00F8256C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		93BADD3F1683C19900B0CD6F /* UIColor+BVMColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+BVMColors.h"; sourceTree = "<group>"; };
 		93BADD401683C19900B0CD6F /* UIColor+BVMColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+BVMColors.m"; sourceTree = "<group>"; };
 		93BADD461684DE9D00B0CD6F /* BVMAPIResponseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMAPIResponseParser.h; sourceTree = "<group>"; };
@@ -134,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93ADFEDF168EBC8E00F8256C /* Security.framework in Frameworks */,
 				9382EEAB1684F0200032E864 /* SystemConfiguration.framework in Frameworks */,
 				93270A1D16827E940013DEB5 /* CFNetwork.framework in Frameworks */,
 				932709BC1682353E0013DEB5 /* UIKit.framework in Frameworks */,
@@ -167,6 +173,7 @@
 		932709BA1682353E0013DEB5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				93ADFEDE168EBC8E00F8256C /* Security.framework */,
 				9382EEAA1684F0200032E864 /* SystemConfiguration.framework */,
 				93270A1C16827E940013DEB5 /* CFNetwork.framework */,
 				932709BB1682353E0013DEB5 /* UIKit.framework */,
@@ -195,6 +202,7 @@
 				935FEED01682BC3700BE3892 /* BVMServersManager.m */,
 				937CCC69168527FA0075BD01 /* Images */,
 				932709C21682353E0013DEB5 /* Supporting Files */,
+				93ADFED9168EB7FA00F8256C /* Vendor */,
 			);
 			path = buyvmmanager;
 			sourceTree = "<group>";
@@ -301,6 +309,15 @@
 				937CCC9E168633FF0075BD01 /* iTunesArtwork@2x */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		93ADFED9168EB7FA00F8256C /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				93ADFEDB168EB82C00F8256C /* KCMutableDictionary.h */,
+				93ADFEDC168EB82C00F8256C /* KCMutableDictionary.m */,
+			);
+			name = Vendor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -423,6 +440,7 @@
 				937CCC451684F5B70075BD01 /* BVMErrorDomain.m in Sources */,
 				937CCC71168533700075BD01 /* BVMAboutSettingsViewController.m in Sources */,
 				937CCC89168626780075BD01 /* CDZSubTableViewController.m in Sources */,
+				93ADFEDD168EB82C00F8256C /* KCMutableDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
