@@ -99,7 +99,9 @@
 - (void)addButtonTouched
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [self.addVCPopoverController presentPopoverFromBarButtonItem:self.addItem permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        [self.addVCPopoverController presentPopoverFromBarButtonItem:self.addItem
+                                            permittedArrowDirections:UIPopoverArrowDirectionAny
+                                                            animated:YES];
     } else {
         UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:self.addVC];
         [self presentViewController:vc animated:YES completion:nil];
