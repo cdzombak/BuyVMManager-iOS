@@ -23,6 +23,8 @@
 @property (nonatomic, strong, readonly) BVMAddServerViewController *addVC;
 @property (nonatomic, strong, readonly) UIPopoverController *addVCPopoverController;
 
+
+@property (nonatomic, strong, readonly) UIToolbar *bottomToolbar;
 @end
 
 @implementation BVMServersListViewController
@@ -31,6 +33,7 @@
             settingsItem = _settingsItem,
             addVC = _addVC,
             addVCPopoverController = _addVCPopoverController
+            bottomToolbar = _bottomToolbar
             ;
 
 - (id)initWithDetailNavigationController:(UINavigationController *)navigationController
@@ -49,12 +52,23 @@
     [super viewDidLoad];
 
     self.title = NSLocalizedString(@"My VMs", nil);
-    self.navigationItem.leftBarButtonItem = self.settingsItem;
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
     self.thirdPartyRefreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
     self.thirdPartyRefreshControl.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     [self.thirdPartyRefreshControl addTarget:self action:@selector(refreshControlActivated:) forControlEvents:UIControlEventValueChanged];
+
+    [self.view addSubview:self.bottomToolbar];
+    self.view.autoresizesSubviews = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    static const CGFloat ToolbarHeight = 44.0; // le sigh
+    self.bottomToolbar.frame = CGRectMake(0, self.view.bounds.size.height - ToolbarHeight,
+                                          self.view.bounds.size.width, ToolbarHeight);
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -73,7 +87,7 @@
     if (editing) {
         self.navigationItem.leftBarButtonItem = self.addItem;
     } else {
-        self.navigationItem.leftBarButtonItem = self.settingsItem;
+        self.navigationItem.leftBarButtonItem = nil;
     }
 }
 
@@ -225,6 +239,19 @@
         _addVC.afterAddAction = @selector(reloadData);
     }
     return _addVC;
+}
+
+- (UIToolbar *)bottomToolbar
+{
+    if (!_bottomToolbar) {
+        _bottomToolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
+        _bottomToolbar.items = @[
+            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+            self.settingsItem
+        ];
+        _bottomToolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+    }
+    return _bottomToolbar;
 }
 
 @end
