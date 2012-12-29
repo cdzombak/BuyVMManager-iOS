@@ -123,18 +123,6 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 
     if (!valid) return;
 
-    NSArray *serverNames = [BVMServersManager serverNames];
-    for (NSString *name in serverNames) {
-        if ([name isEqualToString:self.serverNameField.text]) {
-            self.serverNameField.superview.superview.backgroundColor = [UIColor bvm_fieldErrorBackgroundColor];
-            valid = NO;
-        } else {
-            self.serverNameField.superview.superview.backgroundColor = [UIColor whiteColor];
-        }
-    }
-
-    if (!valid) return;
-
     [BVMServersManager saveServerName:self.serverNameField.text key:self.apiKeyField.text hash:self.apiHashField.text];
 
     id afterAddTarget = self.afterAddTarget;
