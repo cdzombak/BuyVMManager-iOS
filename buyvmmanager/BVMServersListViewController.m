@@ -27,6 +27,8 @@
 @property (nonatomic, strong, readonly) BVMAboutSettingsViewController *settingsVC;
 @property (nonatomic, strong, readonly) UIPopoverController *settingsVCPopoverController;
 
+@property (nonatomic, strong) UIPopoverController *currentEditingPopoverController;
+
 @property (nonatomic, strong, readonly) UIToolbar *bottomToolbar;
 
 @end
@@ -65,6 +67,8 @@
 
     [self.view addSubview:self.bottomToolbar];
     self.view.autoresizesSubviews = YES;
+
+    self.tableView.allowsSelectionDuringEditing = YES;
 
     [self reloadData];
 }
@@ -127,6 +131,28 @@
     [self reloadData];
 
     [self.thirdPartyRefreshControl performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.2];
+}
+
+- (void)displayEditorForIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *serverId = [self serverIdForIndexPath:indexPath];
+    UIView *presentingCell = [self.tableView cellForRowAtIndexPath:indexPath];
+
+    BVMAddEditServerViewController *editVc = [[BVMAddEditServerViewController alloc] initForServerId:serverId];
+    editVc.afterAddTarget = self;
+    editVc.afterAddAction = @selector(reloadData);
+    UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:editVc];
+
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        self.currentEditingPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
+        editVc.myPopoverController = self.currentEditingPopoverController;
+        [self.currentEditingPopoverController presentPopoverFromRect:presentingCell.frame
+                                                              inView:self.tableView
+                                            permittedArrowDirections:UIPopoverArrowDirectionAny
+                                                            animated:YES];
+    } else {
+        [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 
 #pragma mark Data
@@ -198,6 +224,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
     [self configureCell:cell forIndexPath:indexPath];
@@ -226,6 +253,11 @@
 {
     NSString *serverId = [self serverIdForIndexPath:indexPath];
     NSString *serverName = [self serverNameForIndexPath:indexPath];
+
+    if (tableView.editing) {
+        [self displayEditorForIndexPath:indexPath];
+        return;
+    }
 
     UIViewController *hostVC = [[BVMHostViewController alloc] initWithServerId:serverId name:serverName];
 
