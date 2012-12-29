@@ -4,4 +4,6 @@
 
 - (id)bvm_firstObject;
 
+- (NSUInteger)bvm_indexOfString:(NSString *)searchString;
+
 @end
