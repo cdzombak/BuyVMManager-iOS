@@ -19,5 +19,6 @@
 
 @optional
 - (void)pinger:(BVMPinger *)pinger didEncounterError:(NSError *)error;
+- (void)pingerDidFinishPingSequence:(BVMPinger *)pinger;
 
 @end

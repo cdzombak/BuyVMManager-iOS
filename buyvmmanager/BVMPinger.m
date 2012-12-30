@@ -68,6 +68,9 @@ static const NSUInteger kBVMPingerNumPings = 20;
         [delegate pinger:self didUpdateWithTime:averageTime];
     }
     [self stopPinging];
+    if ([delegate respondsToSelector:@selector(pingerDidFinishPingSequence:)]) {
+        [delegate pingerDidFinishPingSequence:self];
+    }
 }
 
 #pragma mark SimplePingDelegate methods

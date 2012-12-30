@@ -164,7 +164,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 
 #pragma mark BVMPingerDelegate methods
 
-- (void)pinger:(BVMPinger *)pinger didUpdateWithTime :(double)seconds
+- (void)pinger:(BVMPinger *)pinger didUpdateWithTime:(double)seconds
 {
     self.pingString = [NSString stringWithFormat:@"%.f ms", seconds*1000];
 
@@ -176,6 +176,8 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 
 - (void)pinger:(BVMPinger *)pinger didEncounterError:(NSError *)error
 {
+    if (pinger != self.pinger) return;
+
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Ping Error", nil)
                                 message:[BVMHumanValueTransformer shortErrorFromError:error]
                                delegate:nil
@@ -185,6 +187,11 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     [self.pinger stopPinging];
     self.pinger = nil;
     self.pingString = @"";
+}
+
+- (void)pingerDidFinishPingSequence:(BVMPinger *)pinger
+{
+    self.pinger = nil;
 }
 
 #pragma mark UITableViewDataSource methods
