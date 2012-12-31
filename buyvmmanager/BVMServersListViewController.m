@@ -66,21 +66,16 @@
     self.thirdPartyRefreshControl.backgroundColor = [UIColor bvm_pullRefreshBackgroundColor];
     [self.thirdPartyRefreshControl addTarget:self action:@selector(refreshControlActivated:) forControlEvents:UIControlEventValueChanged];
 
-    [self.view addSubview:self.bottomToolbar];
     self.view.autoresizesSubviews = YES;
 
     self.tableView.allowsSelectionDuringEditing = YES;
 
-    [self reloadData];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
+    [self.view addSubview:self.bottomToolbar];
     static const CGFloat ToolbarHeight = 44.0; // le sigh
-    self.bottomToolbar.frame = CGRectMake(0, self.view.bounds.size.height - ToolbarHeight,
+    self.bottomToolbar.frame = CGRectMake(0, self.view.bounds.size.height - ToolbarHeight + 1,
                                           self.view.bounds.size.width, ToolbarHeight);
+
+    [self reloadData];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -356,6 +351,11 @@
             self.settingsItem
         ];
         _bottomToolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+
+        if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+            // fuck. this.
+            _bottomToolbar.autoresizingMask |= UIViewAutoresizingFlexibleHeight;
+        }
     }
     return _bottomToolbar;
 }
