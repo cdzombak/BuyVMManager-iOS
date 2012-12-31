@@ -1,0 +1,17 @@
+Check on all your BuyVM servers, and even reboot one if you need to, on your iPhone or iPad. BuyVM Manager gives you access to BuyVM's entire VM management API, with a universal app designed for iPhone and iPad.
+
+With BuyVM Manager:
+
+→ View the status of all your VMs
+→ View each VM's IPs and details about its bandwidth, memory, and HDD usage
+→ Check the ping time from your iOS device to the server
+→ API keys are stored securely in your device's keychain
+
+Using BuyVM Manager:
+
+→ Tap the "Ping" area to re-ping the server and get an updated ping time
+→ Add VMs to the app by quickly scanning QR codes for API keys
+→ The app requires you to enter the VM's hostname before reboot/boot/shutdown, to ensure you reboot the correct VM
+
+Security note:
+Because your API keys are stored in your device's keychain - just like passwords - you'll have to reenter them if you backup your device and restore the backup to a new one.
