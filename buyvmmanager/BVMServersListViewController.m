@@ -143,8 +143,6 @@
 - (void)refreshControlActivated:(id)sender
 {
     [self reloadData];
-
-    [self.thirdPartyRefreshControl performSelector:@selector(endRefreshing) withObject:nil afterDelay:0.2];
 }
 
 - (void)displayEditorForIndexPath:(NSIndexPath *)indexPath
@@ -202,6 +200,8 @@
                                           cell.detailTextLabel.text = [NSString stringWithFormat:@"(%@)", hostname];
                                       }
                                       [cell setNeedsLayout];
+
+                                      [self.thirdPartyRefreshControl endRefreshing];
                                   }];
 }
 
