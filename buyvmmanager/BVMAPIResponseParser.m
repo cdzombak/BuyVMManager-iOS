@@ -30,7 +30,7 @@
 
 #pragma mark Lifecycle
 
-- (id)initWithAPIResponseString:(NSData *)response error:(NSError **)error
+- (id)initWithAPIResponseString:(NSData *)response error:(__autoreleasing NSError **)error
 {
     self = [super init];
     if (self) {

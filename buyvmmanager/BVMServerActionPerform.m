@@ -25,7 +25,7 @@
     [[BVMAPIClient sharedClient] getPath:kBuyVMAPIPath
                               parameters:params
                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                     NSError *error = nil;
+                                     NSError __autoreleasing *error = nil;
                                      BVMAPIResponseParser *parser = [[BVMAPIResponseParser alloc] initWithAPIResponseString:responseObject error:&error];
                                      if (!parser) {
                                          failureBlock(error); return;

@@ -15,7 +15,7 @@
  *
  * returns nil if there was a parsing error or something.
  */
-- (id)initWithAPIResponseString:(NSData *)response error:(NSError **)error;
+- (id)initWithAPIResponseString:(NSData *)response error:(__autoreleasing NSError **)error;
 
 /**
  * Returns the text content of the first XML node in the response with
