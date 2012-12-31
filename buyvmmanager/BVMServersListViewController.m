@@ -5,6 +5,7 @@
 #import "BVMHostViewController.h"
 #import "BVMAboutSettingsViewController.h"
 #import "NSError+BVMErrors.h"
+#import "UIColor+BVMColors.h"
 #import "ODRefreshControl.h"
 
 @interface BVMServersListViewController ()
@@ -62,7 +63,7 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
     self.thirdPartyRefreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
-    self.thirdPartyRefreshControl.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    self.thirdPartyRefreshControl.backgroundColor = [UIColor bvm_pullRefreshBackgroundColor];
     [self.thirdPartyRefreshControl addTarget:self action:@selector(refreshControlActivated:) forControlEvents:UIControlEventValueChanged];
 
     [self.view addSubview:self.bottomToolbar];
