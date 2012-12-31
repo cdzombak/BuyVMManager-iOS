@@ -117,6 +117,7 @@
 		937CCC96168631D70075BD01 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; name = iTunesArtwork; path = icon/resources/iTunesArtwork; sourceTree = SOURCE_ROOT; };
 		937CCC9E168633FF0075BD01 /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; name = "iTunesArtwork@2x"; path = "icon/resources/iTunesArtwork@2x"; sourceTree = SOURCE_ROOT; };
 		9382EEAA1684F0200032E864 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		938662D81691F7F60049D6A1 /* CDZViewControllerModalDismissal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDZViewControllerModalDismissal.h; sourceTree = "<group>"; };
 		93ADFEC0168E6F5600F8256C /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
 		93ADFEC1168E6F5600F8256C /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x.png"; sourceTree = "<group>"; };
 		93ADFEC2168E6F5600F8256C /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
@@ -200,6 +201,7 @@
 				93270A041682726F0013DEB5 /* BVMHumanValueTransformer.m */,
 				935FEECF1682BC3700BE3892 /* BVMServersManager.h */,
 				935FEED01682BC3700BE3892 /* BVMServersManager.m */,
+				938662D81691F7F60049D6A1 /* CDZViewControllerModalDismissal.h */,
 				937CCC69168527FA0075BD01 /* Images */,
 				932709C21682353E0013DEB5 /* Supporting Files */,
 				93ADFED9168EB7FA00F8256C /* Vendor */,

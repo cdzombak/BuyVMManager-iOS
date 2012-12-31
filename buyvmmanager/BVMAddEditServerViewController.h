@@ -1,11 +1,10 @@
 #import <UIKit/UIKit.h>
+#import "CDZViewControllerModalDismissal.h"
 
-@interface BVMAddEditServerViewController : UITableViewController
+@interface BVMAddEditServerViewController : UITableViewController <CDZViewControllerModalDismissal>
 
 @property (nonatomic, weak) id afterAddTarget;
 @property (nonatomic, assign) SEL afterAddAction;
-
-@property (nonatomic, weak) UIPopoverController *myPopoverController;
 
 - (id)initForServerId:(NSString *)serverId;
 

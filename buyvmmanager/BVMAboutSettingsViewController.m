@@ -16,7 +16,8 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
 @implementation BVMAboutSettingsViewController
 
 @synthesize footerLabel = _footerLabel,
-            footerView = _footerView
+            footerView = _footerView,
+            dismissBlock = _dismissBlock
             ;
 
 - (id)init
@@ -55,7 +56,7 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
 
 - (void)doneButtonTapped
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.dismissBlock) self.dismissBlock();
 }
 
 #pragma mark Helpers

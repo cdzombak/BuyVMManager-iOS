@@ -106,11 +106,17 @@
 - (void)addButtonTouched
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        self.addVC.dismissBlock = ^() {
+            [self.addVCPopoverController dismissPopoverAnimated:YES];
+        };
         [self.addVCPopoverController presentPopoverFromBarButtonItem:self.addItem
                                                 permittedArrowDirections:UIPopoverArrowDirectionAny
                                                                 animated:YES];
     } else {
         UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:self.addVC];
+        self.addVC.dismissBlock = ^() {
+            [vc dismissViewControllerAnimated:YES completion:nil];
+        };
         [self presentViewController:vc animated:YES completion:nil];
     }
 }
@@ -118,11 +124,18 @@
 - (void)settingsButtonTouched
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        self.settingsVC.dismissBlock = ^() {
+            // not necessary for this iteration of the about/settings popover
+            [self.settingsVCPopoverController dismissPopoverAnimated:YES];
+        };
         [self.settingsVCPopoverController presentPopoverFromBarButtonItem:self.settingsItem
                                                  permittedArrowDirections:UIPopoverArrowDirectionAny
                                                                  animated:YES];
     } else {
         UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:self.settingsVC];
+        self.settingsVC.dismissBlock = ^() {
+            [vc dismissViewControllerAnimated:YES completion:nil];
+        };
         [self presentViewController:vc animated:YES completion:nil];
     }
 }
@@ -146,12 +159,17 @@
 
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         self.currentEditingPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
-        editVc.myPopoverController = self.currentEditingPopoverController;
+        editVc.dismissBlock = ^() {
+            [self.currentEditingPopoverController dismissPopoverAnimated:YES];
+        };
         [self.currentEditingPopoverController presentPopoverFromRect:presentingCell.frame
                                                               inView:self.tableView
                                             permittedArrowDirections:UIPopoverArrowDirectionAny
                                                             animated:YES];
     } else {
+        editVc.dismissBlock = ^() {
+            [vc dismissViewControllerAnimated:YES completion:nil];
+        };
         [self presentViewController:vc animated:YES completion:nil];
     }
 }
@@ -299,7 +317,6 @@
     if (!_addVCPopoverController) {
         UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:self.addVC];
         _addVCPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
-        _addVC.myPopoverController = _addVCPopoverController;
     }
     return _addVCPopoverController;
 }

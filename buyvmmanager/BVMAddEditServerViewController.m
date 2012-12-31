@@ -36,7 +36,8 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 @implementation BVMAddEditServerViewController
 
 @synthesize footerView = _footerView,
-            footerLabel = _footerLabel
+            footerLabel = _footerLabel,
+            dismissBlock = _dismissBlock
             ;
 
 - (id)initForServerId:(NSString *)serverId
@@ -62,22 +63,15 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     self.tableView.allowsSelection = NO;
     self.tableView.tableFooterView = self.footerView;
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonTouched)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                          target:self
+                                                                                          action:@selector(cancelButtonTouched)];
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                           target:self
+                                                                                           action:@selector(doneButtonTouched)];
 
     self.contentSizeForViewInPopover = CGSizeMake(320, self.footerView.frame.origin.y + self.footerView.frame.size.height);
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    if (!self.myPopoverController) {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                                                                                              target:self
-                                                                                              action:@selector(cancelButtonTouched)];
-    } else {
-        self.navigationItem.leftBarButtonItem = nil;
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -125,21 +119,12 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 
 - (void)cancelButtonTouched
 {
-    [self dismiss];
+    if (self.dismissBlock) self.dismissBlock();
 }
 
 - (void)doneButtonTouched
 {
     [self saveData];
-}
-
-- (void)dismiss
-{
-    if (!self.myPopoverController) {
-        [self.navigationController dismissModalViewControllerAnimated:YES];
-    } else {
-        [self.myPopoverController dismissPopoverAnimated:YES];
-    }
 }
 
 #pragma mark Data
@@ -187,7 +172,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
         field.text = nil;
     }
 
-    [self dismiss];
+    if (self.dismissBlock) self.dismissBlock();
 }
 
 #pragma mark ZBarReaderDelegate methods
