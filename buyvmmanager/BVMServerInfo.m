@@ -54,7 +54,7 @@ static const NSTimeInterval kBVMInfoTimeoutInterval = 20.0;
                          timeoutInterval:kBVMInfoTimeoutInterval
                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                      NSError __autoreleasing *error = nil;
-                                     BVMAPIResponseParser *parser = [[BVMAPIResponseParser alloc] initWithAPIResponseString:responseObject error:&error];
+                                     BVMAPIResponseParser *parser = [[BVMAPIResponseParser alloc] initWithAPIResponse:responseObject error:&error];
                                      if (!parser) {
                                          failureBlock(error); return;
                                      }
@@ -90,7 +90,7 @@ static const NSTimeInterval kBVMInfoTimeoutInterval = 20.0;
                          timeoutInterval:kBVMInfoTimeoutInterval
                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                      NSError __autoreleasing *error = nil;
-                                     BVMAPIResponseParser *parser = [[BVMAPIResponseParser alloc] initWithAPIResponseString:responseObject error:&error];
+                                     BVMAPIResponseParser *parser = [[BVMAPIResponseParser alloc] initWithAPIResponse:responseObject error:&error];
                                      if (!parser) {
                                          failureBlock(error); return;
                                      }

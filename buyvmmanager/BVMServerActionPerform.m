@@ -26,7 +26,7 @@
                               parameters:params
                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                      NSError __autoreleasing *error = nil;
-                                     BVMAPIResponseParser *parser = [[BVMAPIResponseParser alloc] initWithAPIResponseString:responseObject error:&error];
+                                     BVMAPIResponseParser *parser = [[BVMAPIResponseParser alloc] initWithAPIResponse:responseObject error:&error];
                                      if (!parser) {
                                          failureBlock(error); return;
                                      }
