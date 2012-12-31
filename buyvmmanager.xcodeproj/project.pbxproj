@@ -221,6 +221,12 @@
 				93ADFEC1168E6F5600F8256C /* Default-Landscape@2x.png */,
 				93ADFEC2168E6F5600F8256C /* Default-Portrait.png */,
 				93ADFEC3168E6F5600F8256C /* Default-Portrait@2x.png */,
+				937CCC92168631D70075BD01 /* Icon-72.png */,
+				937CCC93168631D70075BD01 /* Icon-72@2x.png */,
+				937CCC94168631D70075BD01 /* Icon.png */,
+				937CCC95168631D70075BD01 /* Icon@2x.png */,
+				937CCC96168631D70075BD01 /* iTunesArtwork */,
+				937CCC9E168633FF0075BD01 /* iTunesArtwork@2x */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -301,12 +307,6 @@
 				937CCC6D168528240075BD01 /* 119-Camera@2x.png */,
 				937CCC7416853B100075BD01 /* 247-InfoCircle.png */,
 				937CCC7516853B100075BD01 /* 247-InfoCircle@2x.png */,
-				937CCC92168631D70075BD01 /* Icon-72.png */,
-				937CCC93168631D70075BD01 /* Icon-72@2x.png */,
-				937CCC94168631D70075BD01 /* Icon.png */,
-				937CCC95168631D70075BD01 /* Icon@2x.png */,
-				937CCC96168631D70075BD01 /* iTunesArtwork */,
-				937CCC9E168633FF0075BD01 /* iTunesArtwork@2x */,
 			);
 			name = Images;
 			sourceTree = "<group>";
