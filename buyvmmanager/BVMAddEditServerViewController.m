@@ -160,11 +160,11 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
                                 key:apiKeyToSave
                                hash:apiHashToSave];
 
-    id afterAddTarget = self.afterAddTarget;
-    if (afterAddTarget && self.afterAddAction && [afterAddTarget respondsToSelector:self.afterAddAction]) {
+    id afterDataSaveTarget = self.afterDataSaveTarget;
+    if (afterDataSaveTarget && self.afterDataSaveAction && [afterDataSaveTarget respondsToSelector:self.afterDataSaveAction]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [afterAddTarget performSelector:self.afterAddAction];
+        [afterDataSaveTarget performSelector:self.afterDataSaveAction];
 #pragma clang diagnostic pop
     }
 

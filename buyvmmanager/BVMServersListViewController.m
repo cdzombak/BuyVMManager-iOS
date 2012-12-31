@@ -153,8 +153,8 @@
     UIView *presentingCell = [self.tableView cellForRowAtIndexPath:indexPath];
 
     BVMAddEditServerViewController *editVc = [[BVMAddEditServerViewController alloc] initForServerId:serverId];
-    editVc.afterAddTarget = self;
-    editVc.afterAddAction = @selector(reloadData);
+    editVc.afterDataSaveTarget = self;
+    editVc.afterDataSaveAction = @selector(reloadData);
     UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:editVc];
 
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -325,8 +325,8 @@
 {
     if (!_addVC) {
         _addVC = [[BVMAddEditServerViewController alloc] initForServerId:nil];
-        _addVC.afterAddTarget = self;
-        _addVC.afterAddAction = @selector(reloadData);
+        _addVC.afterDataSaveTarget = self;
+        _addVC.afterDataSaveAction = @selector(reloadData);
     }
     return _addVC;
 }
