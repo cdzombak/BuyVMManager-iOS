@@ -8,7 +8,7 @@
 #import "UIColor+BVMColors.h"
 #import "ODRefreshControl.h"
 
-@interface BVMServersListViewController ()
+@interface BVMServersListViewController () <UIPopoverControllerDelegate>
 
 @property (nonatomic, copy) NSDictionary *servers;
 @property (nonatomic, strong) NSArray *orderedServerIds;
@@ -153,8 +153,10 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         self.currentEditingPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
         editVc.dismissBlock = ^() {
+            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
             [self.currentEditingPopoverController dismissPopoverAnimated:YES];
         };
+        self.currentEditingPopoverController.delegate = self;
         [self.currentEditingPopoverController presentPopoverFromRect:presentingCell.frame
                                                               inView:self.tableView
                                             permittedArrowDirections:UIPopoverArrowDirectionAny
@@ -217,6 +219,18 @@
 {
     NSString *serverId = [self serverIdForIndexPath:indexPath];
     return self.servers[serverId];
+}
+
+#pragma mark UIPopoverControllerDelegate methods
+
+- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController
+{
+    if (popoverController != self.currentEditingPopoverController) return YES;
+
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    if (indexPath) [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    return YES;
 }
 
 #pragma mark UITableViewDataSource methods
