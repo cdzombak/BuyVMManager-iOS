@@ -1,4 +1,4 @@
-Check on all your BuyVM servers, and even reboot one if you need to, on your iPhone or iPad. BuyVM Manager gives you access to BuyVM's entire VM management API, with a universal app designed for iPhone and iPad.
+Check on all your BuyVM servers, and even reboot one if you need to, on your iPhone or iPad! BuyVM Manager gives you access to BuyVM's entire VM management API, with a universal iOS app.
 
 With BuyVM Manager:
 
