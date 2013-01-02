@@ -46,6 +46,7 @@
     
     cell.textLabel.text = self.ips[indexPath.row];
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
     return cell;
 }

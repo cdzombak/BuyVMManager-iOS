@@ -1,5 +1,6 @@
 #import "BVMSizesListViewController.h"
 #import "BVMHumanValueTransformer.h"
+#import "UIColor+BVMColors.h"
 
 @interface BVMSizesListViewController ()
 
@@ -36,6 +37,9 @@
     [super viewDidLoad];
 
     self.tableView.allowsSelection = NO;
+    
+    self.tableView.backgroundColor = [UIColor bvm_tableViewBackgroundColor];
+    self.tableView.backgroundView = nil;
 }
 
 #pragma mark UITableViewDataSource methods
@@ -53,6 +57,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"CellIdentifier"];
+
+    cell.textLabel.textColor = [UIColor darkGrayColor];
     
     switch (indexPath.row) {
         case 0:
@@ -81,6 +87,23 @@
 
 #pragma mark UITableViewDelegate methods
 
-// n/a
+// stolen/hacked from http://stackoverflow.com/a/3574501
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *customView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, 22.0)];
+    customView.backgroundColor = [UIColor clearColor];
+
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    headerLabel.backgroundColor = [UIColor clearColor];
+    headerLabel.textColor = [UIColor colorWithWhite:0.1 alpha:1.0];
+    headerLabel.font = [UIFont boldSystemFontOfSize:18.0];
+    headerLabel.shadowOffset = CGSizeMake(0.0, 1.0);
+    headerLabel.shadowColor = [UIColor bvm_darkGrayTextShadowColor];
+    headerLabel.frame = CGRectMake(16.0, 6.0, customView.bounds.size.width, 18.0);
+    headerLabel.text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];
+    
+    [customView addSubview:headerLabel];
+    return customView;
+}
 
 @end

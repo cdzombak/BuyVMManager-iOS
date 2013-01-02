@@ -97,6 +97,9 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     self.tableView.tableHeaderView = self.headerView;
     self.navigationItem.rightBarButtonItem = self.reloadButtonItem;
 
+    self.tableView.backgroundColor = [UIColor bvm_tableViewBackgroundColor];
+    self.tableView.backgroundView = nil;
+
     [self reloadData];
 }
 
@@ -227,7 +230,9 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     };
     UITableViewCellStyle style = indexPath.section == BVMHostTableViewSectionAction ? UITableViewCellStyleDefault : UITableViewCellStyleValue2;
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:style reuseIdentifier:CellIdentifiers[indexPath.section]];
-    
+
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+
     switch(indexPath.section) {
         case BVMHostTableViewSectionInfo:
             if (self.serverInfo && self.serverInfo.status == BVMServerStatusOnline) {
@@ -235,6 +240,8 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
             } else {
                 cell.accessoryType = UITableViewCellAccessoryNone;
             }
+
+            cell.textLabel.textColor = [UIColor darkGrayColor];
 
             switch(indexPath.row) {
                 case BVMHostTableViewInfoRowBandwidth:
@@ -267,6 +274,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         case BVMHostTableViewSectionPing:
             NSParameterAssert(indexPath.row == 0);
             cell.textLabel.text = NSLocalizedString(@"Ping", nil);
+            cell.textLabel.textColor = [UIColor darkGrayColor];
             if (self.pingString) {
                 cell.detailTextLabel.text = self.pingString;
             }
@@ -286,6 +294,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         case BVMHostTableViewSectionAction:
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.textLabel.text = BVMHostTableViewActionStrings[indexPath.row];
+            cell.textLabel.textColor = [UIColor darkTextColor];
             break;
     }
     
@@ -422,8 +431,8 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 
 - (void)toggleNavBarTint
 {
-    if (self.navigationController.navigationBar.tintColor) {
-        self.navigationController.navigationBar.tintColor = nil;
+    if ([self.navigationController.navigationBar.tintColor isEqual:[UIColor redColor]]) {
+        self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
     } else {
         self.navigationController.navigationBar.tintColor = [UIColor redColor];
     }
@@ -433,7 +442,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 {
     static NSInteger cancelButtonIndex = 0;
 
-    self.navigationController.navigationBar.tintColor = nil;
+    self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
     [self.navBarTintTimer invalidate];
     self.navBarTintTimer = nil;
     if (buttonIndex == cancelButtonIndex) return;
@@ -528,7 +537,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         self.headerHostnameLabel.font = [UIFont boldSystemFontOfSize:22.0];
         self.headerHostnameLabel.backgroundColor = [UIColor clearColor];
         self.headerHostnameLabel.text = NSLocalizedString(@"Loading...", nil);
-        self.headerHostnameLabel.shadowColor = [UIColor whiteColor];
+        self.headerHostnameLabel.shadowColor = [UIColor bvm_darkGrayTextShadowColor];
         self.headerHostnameLabel.shadowOffset = CGSizeMake(0, 1.0);
         [_headerView addSubview:self.headerHostnameLabel];
 

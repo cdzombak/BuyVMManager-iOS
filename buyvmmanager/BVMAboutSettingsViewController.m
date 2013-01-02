@@ -37,6 +37,9 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
 
     self.tableView.tableFooterView = self.footerView;
 
+    self.tableView.backgroundColor = [UIColor bvm_tableViewBackgroundColor];
+    self.tableView.backgroundView = nil;
+
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                           target:self
                                                                                           action:@selector(doneButtonTapped)];
@@ -93,6 +96,7 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
 
     cell.textLabel.text = NSLocalizedString(@"Email App Author", nil);
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
     return cell;
 }
@@ -116,8 +120,8 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
         NSString *notes = [NSString stringWithFormat:NSLocalizedString(@"BuyVM Manager v%@", nil), [self appVersion]];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(18, 0, self.view.bounds.size.width-36, 40)];
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor bvm_darkTableViewTextColor];
-        label.shadowColor = [UIColor whiteColor];
+        label.textColor = [UIColor darkGrayColor];
+        label.shadowColor = [UIColor bvm_darkGrayTextShadowColor];
         label.shadowOffset = CGSizeMake(0, 1.0);
         label.text = notes;
         label.lineBreakMode = UILineBreakModeWordWrap;

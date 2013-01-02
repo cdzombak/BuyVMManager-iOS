@@ -1,5 +1,5 @@
 #import "BVMAppDelegate.h"
-
+#import "UIColor+BVMColors.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "BVMServersListViewController.h"
 
@@ -10,11 +10,17 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
 
+    [[UIToolbar appearance] setTintColor:[UIColor darkGrayColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor darkGrayColor]];
+
     UIViewController *rootVC;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UISplitViewController *vc = [[UISplitViewController alloc] init];
         vc.delegate = self;
-        UINavigationController *detailNavigationVC = [[UINavigationController alloc] initWithRootViewController:[[UITableViewController alloc] initWithStyle:UITableViewStyleGrouped]];
+        UITableViewController *emptyVC = [[UITableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        emptyVC.tableView.backgroundColor = [UIColor bvm_tableViewBackgroundColor];
+        emptyVC.tableView.backgroundView = nil;
+        UINavigationController *detailNavigationVC = [[UINavigationController alloc] initWithRootViewController:emptyVC];
         vc.viewControllers = @[
             [[UINavigationController alloc] initWithRootViewController:[[BVMServersListViewController alloc] initWithDetailNavigationController:detailNavigationVC]],
             detailNavigationVC

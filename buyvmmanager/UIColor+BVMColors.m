@@ -28,10 +28,17 @@
 
 + (UIColor *)bvm_pullRefreshBackgroundColor
 {
-    return [UIColor colorWithRed:226.0/255.0
-                           green:229.0/255.0
-                            blue:234.0/255.0
-                           alpha:1.0];
+    return [UIColor colorWithWhite:232.0/255.0 alpha:1.0];
+}
+
++ (UIColor *)bvm_tableViewBackgroundColor
+{
+    return [UIColor colorWithPatternImage:[UIImage imageNamed:@"retina_dust"]];
+}
+
++ (UIColor *)bvm_darkGrayTextShadowColor
+{
+    return [UIColor colorWithWhite:0.95 alpha:1.0];
 }
 
 @end
