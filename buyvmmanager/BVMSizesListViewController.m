@@ -93,13 +93,20 @@
     UIView *customView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, 22.0)];
     customView.backgroundColor = [UIColor clearColor];
 
+    CGFloat startX;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        startX = 38.0;
+    } else {
+        startX = 16.0;
+    }
+
     UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     headerLabel.backgroundColor = [UIColor clearColor];
     headerLabel.textColor = [UIColor colorWithWhite:0.1 alpha:1.0];
     headerLabel.font = [UIFont boldSystemFontOfSize:18.0];
     headerLabel.shadowOffset = CGSizeMake(0.0, 1.0);
     headerLabel.shadowColor = [UIColor bvm_darkGrayTextShadowColor];
-    headerLabel.frame = CGRectMake(16.0, 6.0, customView.bounds.size.width, 18.0);
+    headerLabel.frame = CGRectMake(startX, 6.0, customView.bounds.size.width, 18.0);
     headerLabel.text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];
     
     [customView addSubview:headerLabel];
