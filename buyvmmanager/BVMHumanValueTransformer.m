@@ -31,13 +31,13 @@
 
     // Handle DNS errors as a special case.
     if ( [[error domain] isEqual:(NSString *)kCFErrorDomainCFNetwork] && ([error code] == kCFHostErrorUnknown) ) {
-        failureNum = [[error userInfo] objectForKey:(id)kCFGetAddrInfoFailureKey];
+        failureNum = [error userInfo][(id)kCFGetAddrInfoFailureKey];
         if ( [failureNum isKindOfClass:[NSNumber class]] ) {
             failure = [failureNum intValue];
             if (failure != 0) {
                 failureStr = gai_strerror(failure);
                 if (failureStr != NULL) {
-                    result = [NSString stringWithUTF8String:failureStr];
+                    result = @(failureStr);
                 }
             }
         }

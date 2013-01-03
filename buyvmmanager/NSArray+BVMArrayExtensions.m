@@ -11,7 +11,7 @@
 {
     NSUInteger index = NSNotFound;
     for (NSUInteger i=0; i<self.count; ++i) {
-        NSString *string = [self objectAtIndex:i];
+        NSString *string = self[i];
         if ([string isEqualToString:searchString]) {
             index = i;
             break;

@@ -161,7 +161,7 @@ static const NSTimeInterval kBVMInfoTimeoutInterval = 20.0;
 - (NSArray *)ipAddresses
 {
     if (!_ipAddresses) {
-        _ipAddresses = [NSArray array];
+        _ipAddresses = @[];
     }
     return _ipAddresses;
 }

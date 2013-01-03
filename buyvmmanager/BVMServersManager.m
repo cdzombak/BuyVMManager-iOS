@@ -8,7 +8,7 @@ static NSString * const kBVMUserDefaultsServersKey = @"servers";
 + (NSDictionary *)servers
 {
     NSDictionary *servers = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kBVMUserDefaultsServersKey];
-    if (!servers) servers = [NSDictionary dictionary];
+    if (!servers) servers = @{};
 
     return servers;
 }
@@ -32,16 +32,16 @@ static NSString * const kBVMUserDefaultsServersKey = @"servers";
         serverId = [BVMServersManager generateUUID];
     }
 
-    if ([mutableServers objectForKey:serverId]) {
+    if (mutableServers[serverId]) {
         [mutableServers removeObjectForKey:serverId];
     }
 
-    [mutableServers setObject:serverName forKey:serverId];
+    mutableServers[serverId] = serverName;
 
     NSString *credentialKey = [BVMServersManager keychainDictionaryNameForServerId:serverId];
     KCMutableDictionary *credentials = [KCMutableDictionary dictionaryWithName:credentialKey];
-    [credentials setObject:key forKey:kBVMServerKeyAPIKey];
-    [credentials setObject:hash forKey:kBVMServerKeyAPIHash];
+    credentials[kBVMServerKeyAPIKey] = key;
+    credentials[kBVMServerKeyAPIHash] = hash;
 
     [[NSUserDefaults standardUserDefaults] setObject:mutableServers forKey:kBVMUserDefaultsServersKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -51,7 +51,7 @@ static NSString * const kBVMUserDefaultsServersKey = @"servers";
 + (void)removeServerId:(NSString *)serverId
 {
     NSDictionary *servers = [[NSUserDefaults standardUserDefaults] dictionaryForKey:kBVMUserDefaultsServersKey];
-    if (![servers objectForKey:serverId]) return;
+    if (!servers[serverId]) return;
 
     NSMutableDictionary *mutableServers = [servers mutableCopy];
     [mutableServers removeObjectForKey:serverId];

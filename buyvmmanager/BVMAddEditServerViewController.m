@@ -184,7 +184,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 {
     [self.readerVc dismissModalViewControllerAnimated:YES];
 
-    id<NSFastEnumeration> results = [info objectForKey:ZBarReaderControllerResults];
+    id<NSFastEnumeration> results = info[ZBarReaderControllerResults];
     ZBarSymbol *bestResult = nil;
     for (ZBarSymbol *result in results) {
         if (result.quality > bestResult.quality) bestResult = result;

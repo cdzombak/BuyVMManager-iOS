@@ -66,7 +66,7 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
 
 - (NSString *)appVersion
 {
-    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    return [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
 }
 
 #pragma mark UITableViewDataSource methods
