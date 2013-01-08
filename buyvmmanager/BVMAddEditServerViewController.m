@@ -18,12 +18,16 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 @property (nonatomic, copy) NSString *savedApiKey;
 @property (nonatomic, copy) NSString *savedApiHash;
 
+@property (nonatomic, readonly, strong) UITableViewCell *serverNameCell;
+@property (nonatomic, readonly, strong) UITableViewCell *apiKeyCell;
+@property (nonatomic, readonly, strong) UITableViewCell *apiHashCell;
+
 @property (nonatomic, weak) UITextField *serverNameField;
 @property (nonatomic, weak) UITextField *apiKeyField;
 @property (nonatomic, weak) UITextField *apiHashField;
 
-@property (nonatomic, strong, readonly) UIView *footerView;
-@property (nonatomic, weak, readonly) UILabel *footerLabel;
+@property (nonatomic, readonly, strong) UIView *footerView;
+@property (nonatomic, readonly, weak) UILabel *footerLabel;
 
 @property (nonatomic, strong) ZBarReaderViewController *readerVc;
 @property (nonatomic, weak) UITextField *currentReadingTextField;
@@ -37,7 +41,10 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 
 @synthesize footerView = _footerView,
             footerLabel = _footerLabel,
-            dismissBlock = _dismissBlock
+            dismissBlock = _dismissBlock,
+            serverNameCell = _serverNameCell,
+            apiKeyCell = _apiKeyCell,
+            apiHashCell = _apiHashCell
             ;
 
 - (id)initForServerId:(NSString *)serverId
@@ -208,38 +215,16 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BVMTextFieldTableViewCell *cell = [[BVMTextFieldTableViewCell alloc] initWithReuseIdentifier:@"Cell"];
-    UITextField *tf = cell.textField;
-
     if (indexPath.row == BVMAddServerTableViewRowName) {
-        tf.placeholder = NSLocalizedString(@"Server Name", nil);
-        tf.returnKeyType = UIReturnKeyNext;
-        self.serverNameField = tf;
+        return self.serverNameCell;
     }
     else if (indexPath.row == BVMAddServerTableViewRowAPIKey) {
-        tf.placeholder = NSLocalizedString(@"API Key", nil);
-        tf.returnKeyType = UIReturnKeyNext;
-        CGFloat height = [tableView.delegate tableView:tableView heightForRowAtIndexPath:indexPath];
-        tf.rightView = [self buildCameraViewWithHeight:/*44*/height
-                                                tapSelector:@selector(scanQRForApiKey)];
-        tf.rightViewMode = UITextFieldViewModeUnlessEditing;
-        self.apiKeyField = tf;
+        return self.apiKeyCell;
     }
     else if (indexPath.row == BVMAddServerTableViewRowAPIHash) {
-        tf.placeholder = NSLocalizedString(@"API Hash", nil);
-        tf.returnKeyType = UIReturnKeyDone;
-        CGFloat height = [tableView.delegate tableView:tableView heightForRowAtIndexPath:indexPath];
-        tf.rightView = [self buildCameraViewWithHeight:/*44*/height
-                                                tapSelector:@selector(scanQRForApiHash)];
-        tf.rightViewMode = UITextFieldViewModeUnlessEditing;
-        self.apiHashField = tf;
+        return self.apiHashCell;
     }
-
-    tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    tf.autocorrectionType = UITextAutocorrectionTypeNo;
-    tf.delegate = self;
-
-    return cell;
+    return nil;
 }
 
 #pragma mark UITableViewDelegate methods
@@ -285,6 +270,62 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 }
 
 #pragma mark Property Overrides
+
+- (UITableViewCell *)serverNameCell
+{
+    if (!_serverNameCell) {
+        BVMTextFieldTableViewCell *cell = [[BVMTextFieldTableViewCell alloc] initWithReuseIdentifier:@"Cell"];
+        UITextField *tf = cell.textField;
+        tf.placeholder = NSLocalizedString(@"Server Name", nil);
+        tf.returnKeyType = UIReturnKeyNext;
+        tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        tf.autocorrectionType = UITextAutocorrectionTypeNo;
+        tf.delegate = self;
+        self.serverNameField = tf;
+        _serverNameCell = cell;
+    }
+    return _serverNameCell;
+}
+
+- (UITableViewCell *)apiKeyCell
+{
+    if (!_apiKeyCell) {
+        BVMTextFieldTableViewCell *cell = [[BVMTextFieldTableViewCell alloc] initWithReuseIdentifier:@"Cell"];
+        UITextField *tf = cell.textField;
+        tf.placeholder = NSLocalizedString(@"API Key", nil);
+        tf.returnKeyType = UIReturnKeyNext;
+        CGFloat height = [self.tableView.delegate tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+        tf.rightView = [self buildCameraViewWithHeight:height
+                                           tapSelector:@selector(scanQRForApiKey)];
+        tf.rightViewMode = UITextFieldViewModeUnlessEditing;
+        tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        tf.autocorrectionType = UITextAutocorrectionTypeNo;
+        tf.delegate = self;
+        self.apiKeyField = tf;
+        _apiKeyCell = cell;
+    }
+    return _apiKeyCell;
+}
+
+- (UITableViewCell *)apiHashCell
+{
+    if (!_apiHashCell) {
+        BVMTextFieldTableViewCell *cell = [[BVMTextFieldTableViewCell alloc] initWithReuseIdentifier:@"Cell"];
+        UITextField *tf = cell.textField;
+        tf.placeholder = NSLocalizedString(@"API Hash", nil);
+        tf.returnKeyType = UIReturnKeyDone;
+        CGFloat height = [self.tableView.delegate tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+        tf.rightView = [self buildCameraViewWithHeight:height
+                                           tapSelector:@selector(scanQRForApiHash)];
+        tf.rightViewMode = UITextFieldViewModeUnlessEditing;
+        tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        tf.autocorrectionType = UITextAutocorrectionTypeNo;
+        tf.delegate = self;
+        self.apiHashField = tf;
+        _apiHashCell = cell;
+    }
+    return _apiHashCell;
+}
 
 - (UIView *)footerView
 {
