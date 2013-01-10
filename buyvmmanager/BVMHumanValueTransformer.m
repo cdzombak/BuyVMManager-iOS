@@ -17,7 +17,10 @@
 
     if (multiplyFactor > 9) multiplyFactor = 9;
 
-    return [NSString stringWithFormat:@"%.0f %@", currentValue, tokens[multiplyFactor]];
+    NSString *formatString = @"%.0f %@";
+    if (currentValue < 10.0) formatString = @"%.1f %@";
+
+    return [NSString stringWithFormat:formatString, currentValue, tokens[multiplyFactor]];
 }
 
 + (NSString *)shortErrorFromError:(NSError *)error
