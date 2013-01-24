@@ -33,7 +33,7 @@
 
 + (UIColor *)bvm_tableViewBackgroundColor
 {
-    return [UIColor colorWithPatternImage:[UIImage imageNamed:@"retina_dust"]];
+    return [UIColor colorWithWhite:222.0/255.0 alpha:1.0];
 }
 
 + (UIColor *)bvm_darkGrayTextShadowColor
