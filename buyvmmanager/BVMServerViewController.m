@@ -1,4 +1,4 @@
-#import "BVMHostViewController.h"
+#import "BVMServerViewController.h"
 #import "BVMServerInfo.h"
 #import "BVMServerActionPerform.h"
 #import "BVMPinger.h"
@@ -8,44 +8,44 @@
 #import "UIColor+BVMColors.h"
 #import "MBProgressHUD.h"
 
-typedef NS_ENUM(NSUInteger, BVMHostTableViewSections) {
-    BVMHostTableViewSectionInfo = 0,
-    BVMHostTableViewSectionPing,
-    BVMHostTableViewSectionAction,
-    BVMHostTableViewNumSections
+typedef NS_ENUM(NSUInteger, BVMServerTableViewSections) {
+    BVMServerTableViewSectionInfo = 0,
+    BVMServerTableViewSectionPing,
+    BVMServerTableViewSectionAction,
+    BVMServerTableViewNumSections
 };
 
-typedef NS_ENUM(NSUInteger, BVMHostTableViewInfoRows) {
-    BVMHostTableViewInfoRowIP = 0,
-    BVMHostTableViewInfoRowBandwidth,
-    BVMHostTableViewInfoRowMemory,
-    BVMHostTableViewInfoRowHDD,
-    BVMHostTableViewInfoNumRows
+typedef NS_ENUM(NSUInteger, BVMServerTableViewInfoRows) {
+    BVMServerTableViewInfoRowIP = 0,
+    BVMServerTableViewInfoRowBandwidth,
+    BVMServerTableViewInfoRowMemory,
+    BVMServerTableViewInfoRowHDD,
+    BVMServerTableViewInfoNumRows
 };
 
-typedef NS_ENUM(NSUInteger, BVMHostTableViewPingRows) {
-    BVMHostTableViewPingRow = 0,
-    BVMHostTableViewPingNumRows
+typedef NS_ENUM(NSUInteger, BVMServerTableViewPingRows) {
+    BVMServerTableViewPingRow = 0,
+    BVMServerTableViewPingNumRows
 };
 
-typedef NS_ENUM(NSUInteger, BVMHostTableViewActionRows) {
-    BVMHostTableViewActionRowReboot = 0,
-    BVMHostTableViewActionRowBoot,
-    BVMHostTableViewActionRowShutdown,
-    BVMHostTableViewActionNumRows
+typedef NS_ENUM(NSUInteger, BVMServerTableViewActionRows) {
+    BVMServerTableViewActionRowReboot = 0,
+    BVMServerTableViewActionRowBoot,
+    BVMServerTableViewActionRowShutdown,
+    BVMServerTableViewActionNumRows
 };
 
-static NSString * BVMHostTableViewActionStrings[BVMHostTableViewActionNumRows];
-__attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
+static NSString * BVMServerTableViewActionStrings[BVMServerTableViewActionNumRows];
+__attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 {
     @autoreleasepool {
-        BVMHostTableViewActionStrings[BVMHostTableViewActionRowReboot] = NSLocalizedString(@"Reboot", nil);
-        BVMHostTableViewActionStrings[BVMHostTableViewActionRowBoot] = NSLocalizedString(@"Boot", nil);
-        BVMHostTableViewActionStrings[BVMHostTableViewActionRowShutdown] = NSLocalizedString(@"Shutdown", nil);
+        BVMServerTableViewActionStrings[BVMServerTableViewActionRowReboot] = NSLocalizedString(@"Reboot", nil);
+        BVMServerTableViewActionStrings[BVMServerTableViewActionRowBoot] = NSLocalizedString(@"Boot", nil);
+        BVMServerTableViewActionStrings[BVMServerTableViewActionRowShutdown] = NSLocalizedString(@"Shutdown", nil);
     }
 }
 
-@interface BVMHostViewController () <BVMPingerDelegate>
+@interface BVMServerViewController () <BVMPingerDelegate>
 
 @property (nonatomic, copy) NSString *serverId;
 @property (nonatomic, copy) NSString *serverName;
@@ -72,7 +72,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 
 @end
 
-@implementation BVMHostViewController
+@implementation BVMServerViewController
 
 @synthesize reloadButtonItem = _reloadButtonItem,
             progressHUD = _progressHUD,
@@ -141,11 +141,11 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 
         [self.tableView beginUpdates];
         [self.tableView reloadRowsAtIndexPaths:@[
-            [NSIndexPath indexPathForRow:BVMHostTableViewInfoRowBandwidth inSection:BVMHostTableViewSectionInfo],
-            [NSIndexPath indexPathForRow:BVMHostTableViewInfoRowHDD inSection:BVMHostTableViewSectionInfo],
-            [NSIndexPath indexPathForRow:BVMHostTableViewInfoRowIP inSection:BVMHostTableViewSectionInfo],
-            [NSIndexPath indexPathForRow:BVMHostTableViewInfoRowMemory inSection:BVMHostTableViewSectionInfo],
-            [NSIndexPath indexPathForRow:BVMHostTableViewPingRow inSection:BVMHostTableViewSectionPing]
+            [NSIndexPath indexPathForRow:BVMServerTableViewInfoRowBandwidth inSection:BVMServerTableViewSectionInfo],
+            [NSIndexPath indexPathForRow:BVMServerTableViewInfoRowHDD inSection:BVMServerTableViewSectionInfo],
+            [NSIndexPath indexPathForRow:BVMServerTableViewInfoRowIP inSection:BVMServerTableViewSectionInfo],
+            [NSIndexPath indexPathForRow:BVMServerTableViewInfoRowMemory inSection:BVMServerTableViewSectionInfo],
+            [NSIndexPath indexPathForRow:BVMServerTableViewPingRow inSection:BVMServerTableViewSectionPing]
          ] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
 
@@ -172,7 +172,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
     self.pingString = [NSString stringWithFormat:@"%.f ms", seconds*1000];
 
     [self.tableView beginUpdates];
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:BVMHostTableViewSectionPing]]
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:BVMServerTableViewSectionPing]]
                           withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
 }
@@ -202,19 +202,19 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     NSParameterAssert(tableView == self.tableView);
-    return BVMHostTableViewNumSections;
+    return BVMServerTableViewNumSections;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSParameterAssert(tableView == self.tableView);
     switch(section) {
-        case BVMHostTableViewSectionInfo:
-            return BVMHostTableViewInfoNumRows;
-        case BVMHostTableViewSectionPing:
-            return BVMHostTableViewPingNumRows;
-        case BVMHostTableViewSectionAction:
-            return BVMHostTableViewActionNumRows;
+        case BVMServerTableViewSectionInfo:
+            return BVMServerTableViewInfoNumRows;
+        case BVMServerTableViewSectionPing:
+            return BVMServerTableViewPingNumRows;
+        case BVMServerTableViewSectionAction:
+            return BVMServerTableViewActionNumRows;
         default:
             NSLog(@"Unknown section %d in %s", section, __PRETTY_FUNCTION__);
     }
@@ -223,18 +223,18 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString * CellIdentifiers[BVMHostTableViewNumSections] = {
+    static NSString * CellIdentifiers[BVMServerTableViewNumSections] = {
         @"UITableViewCellStyleValue2",
         @"UITableViewCellStyleValue2",
         @"UITableViewCellStyleDefault"
     };
-    UITableViewCellStyle style = indexPath.section == BVMHostTableViewSectionAction ? UITableViewCellStyleDefault : UITableViewCellStyleValue2;
+    UITableViewCellStyle style = indexPath.section == BVMServerTableViewSectionAction ? UITableViewCellStyleDefault : UITableViewCellStyleValue2;
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:style reuseIdentifier:CellIdentifiers[indexPath.section]];
 
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
 
     switch(indexPath.section) {
-        case BVMHostTableViewSectionInfo:
+        case BVMServerTableViewSectionInfo:
             if (self.serverInfo && self.serverInfo.status == BVMServerStatusOnline) {
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             } else {
@@ -244,25 +244,25 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
             cell.textLabel.textColor = [UIColor darkGrayColor];
 
             switch(indexPath.row) {
-                case BVMHostTableViewInfoRowBandwidth:
+                case BVMServerTableViewInfoRowBandwidth:
                     cell.textLabel.text = NSLocalizedString(@"Bandwidth", nil);
                     if (!self.serverInfo) cell.detailTextLabel.text = nil;
                     else cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ used (%d%%)",
                                                       [BVMHumanValueTransformer humanSizeValueFromBytes:self.serverInfo.bwUsed],
                                                       self.serverInfo.bwPercentUsed];
                     break;
-                case BVMHostTableViewInfoRowHDD:
+                case BVMServerTableViewInfoRowHDD:
                     cell.textLabel.text = NSLocalizedString(@"HDD", nil);
                     if (self.serverInfo.status != BVMServerStatusOnline) cell.detailTextLabel.text = nil;
                     else cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ used (%d%%)",
                                                       [BVMHumanValueTransformer humanSizeValueFromBytes:self.serverInfo.hddUsed],
                                                       self.serverInfo.hddPercentUsed];
                     break;
-                case BVMHostTableViewInfoRowIP:
+                case BVMServerTableViewInfoRowIP:
                     cell.textLabel.text = NSLocalizedString(@"IP", nil);
                     cell.detailTextLabel.text = self.serverInfo.mainIpAddress;
                     break;
-                case BVMHostTableViewInfoRowMemory:
+                case BVMServerTableViewInfoRowMemory:
                     cell.textLabel.text = NSLocalizedString(@"Memory", nil);
                     if (self.serverInfo.status != BVMServerStatusOnline) cell.detailTextLabel.text = nil;
                     else cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ used (%d%%)",
@@ -271,7 +271,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
                     break;
             }
             break;
-        case BVMHostTableViewSectionPing:
+        case BVMServerTableViewSectionPing:
             NSParameterAssert(indexPath.row == 0);
             cell.textLabel.text = NSLocalizedString(@"Ping", nil);
             cell.textLabel.textColor = [UIColor darkGrayColor];
@@ -291,9 +291,9 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
                 }
             }
             break;
-        case BVMHostTableViewSectionAction:
+        case BVMServerTableViewSectionAction:
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.textLabel.text = BVMHostTableViewActionStrings[indexPath.row];
+            cell.textLabel.text = BVMServerTableViewActionStrings[indexPath.row];
             cell.textLabel.textColor = [UIColor darkTextColor];
             break;
     }
@@ -305,15 +305,15 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == BVMHostTableViewSectionInfo) {
+    if (indexPath.section == BVMServerTableViewSectionInfo) {
         UIViewController *vc = nil;
         switch (indexPath.row) {
-            case BVMHostTableViewInfoRowIP: {
+            case BVMServerTableViewInfoRowIP: {
                 vc = [[BVMIPListViewController alloc] initWithServer:self.serverName
                                                                  ips:self.serverInfo.ipAddresses];
                 break;
             }
-            case BVMHostTableViewInfoRowBandwidth: {
+            case BVMServerTableViewInfoRowBandwidth: {
                 vc = [[BVMSizesListViewController alloc] initWithServer:self.serverName
                                                               statistic:NSLocalizedString(@"Bandwidth", nil)
                                                                   total:self.serverInfo.bwTotal
@@ -322,7 +322,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
                                                             percentUsed:self.serverInfo.bwPercentUsed];
                 break;
             }
-            case BVMHostTableViewInfoRowHDD: {
+            case BVMServerTableViewInfoRowHDD: {
                 vc = [[BVMSizesListViewController alloc] initWithServer:self.serverName
                                                               statistic:NSLocalizedString(@"HDD", nil)
                                                                   total:self.serverInfo.hddTotal
@@ -331,7 +331,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
                                                             percentUsed:self.serverInfo.hddPercentUsed];
                 break;
             }
-            case BVMHostTableViewInfoRowMemory: {
+            case BVMServerTableViewInfoRowMemory: {
                 vc = [[BVMSizesListViewController alloc] initWithServer:self.serverName
                                                               statistic:NSLocalizedString(@"Memory", nil)
                                                                   total:self.serverInfo.memTotal
@@ -343,22 +343,22 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
         }
         if (vc) [self.navigationController pushViewController:vc animated:YES];
     }
-    else if (indexPath.section == BVMHostTableViewSectionAction) {
+    else if (indexPath.section == BVMServerTableViewSectionAction) {
         switch (indexPath.row) {
-            case BVMHostTableViewActionRowBoot:
+            case BVMServerTableViewActionRowBoot:
                 self.selectedAction = BVMServerActionBoot;
                 break;
-            case BVMHostTableViewActionRowReboot:
+            case BVMServerTableViewActionRowReboot:
                 self.selectedAction = BVMServerActionReboot;
                 break;
-            case BVMHostTableViewActionRowShutdown:
+            case BVMServerTableViewActionRowShutdown:
                 self.selectedAction = BVMServerActionShutdown;
                 break;
         }
         [self displayActionAlertView];
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
-    else if (indexPath.section == BVMHostTableViewSectionPing) {
+    else if (indexPath.section == BVMServerTableViewSectionPing) {
         // this section only contains the Ping row, so let's just assume that row was selected
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         self.pingString = nil;
@@ -372,8 +372,8 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (!self.serverInfo || self.serverInfo.status != BVMServerStatusOnline) {
-        if (indexPath.section == BVMHostTableViewSectionInfo
-            || indexPath.section == BVMHostTableViewSectionPing) {
+        if (indexPath.section == BVMServerTableViewSectionInfo
+            || indexPath.section == BVMServerTableViewSectionPing) {
             return nil;
         }
     }
@@ -508,7 +508,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 
 -(BOOL)tableView:(UITableView*)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath*)indexPath withSender:(id)sender
 {
-    if (indexPath.section == BVMHostTableViewSectionInfo || indexPath.section == BVMHostTableViewSectionPing) {
+    if (indexPath.section == BVMServerTableViewSectionInfo || indexPath.section == BVMServerTableViewSectionPing) {
         if (action == @selector(copy:)) {
             return YES;
         }
@@ -518,7 +518,7 @@ __attribute__((constructor)) static void __BVMHostTableViewConstantsInit(void)
 
 -(BOOL)tableView:(UITableView*)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    if (indexPath.section == BVMHostTableViewSectionInfo || indexPath.section == BVMHostTableViewSectionPing) {
+    if (indexPath.section == BVMServerTableViewSectionInfo || indexPath.section == BVMServerTableViewSectionPing) {
         return YES;
     }
     return NO;

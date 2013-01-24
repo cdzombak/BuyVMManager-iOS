@@ -2,7 +2,7 @@
 #import "BVMServersManager.h"
 #import "BVMServerInfo.h"
 #import "BVMAddEditServerViewController.h"
-#import "BVMHostViewController.h"
+#import "BVMServerViewController.h"
 #import "BVMAboutSettingsViewController.h"
 #import "NSError+BVMErrors.h"
 #import "UIColor+BVMColors.h"
@@ -288,7 +288,7 @@
         return;
     }
 
-    UIViewController *hostVC = [[BVMHostViewController alloc] initWithServerId:serverId name:serverName];
+    UIViewController *hostVC = [[BVMServerViewController alloc] initWithServerId:serverId name:serverName];
 
     if (!self.detailNavigationVC || self.detailNavigationVC == self.navigationController) {
         [self.navigationController pushViewController:hostVC animated:YES];
