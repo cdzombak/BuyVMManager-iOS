@@ -294,7 +294,6 @@
         [self.navigationController pushViewController:hostVC animated:YES];
     } else {
         [self.detailNavigationVC setViewControllers:@[hostVC] animated:NO];
-        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
 
