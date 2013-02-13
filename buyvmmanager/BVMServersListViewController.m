@@ -204,9 +204,24 @@
 
 - (void)reloadData
 {
-    self.servers = [BVMServersManager servers];
+    // Store current selection:
+    NSIndexPath *selectedIP = [self.tableView indexPathForSelectedRow];
+    NSString *selectedServerId = (selectedIP == nil) ? nil : [self serverIdForIndexPath:selectedIP];
 
+    // Reload underlying data structures and table view:
+    self.servers = [BVMServersManager servers];
     [self.tableView reloadData];
+
+    // Attempt to restore saved selection
+    if (selectedServerId != nil) {
+        [self.orderedServerIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            if ([selectedServerId isEqualToString:obj]) {
+                NSIndexPath *ip = [NSIndexPath indexPathForRow:idx inSection:0];
+                [self.tableView selectRowAtIndexPath:ip animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+                stop = YES;
+            }
+        }];
+    }
 }
 
 - (NSString *)serverIdForIndexPath:(NSIndexPath *)indexPath
