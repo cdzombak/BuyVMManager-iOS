@@ -1,9 +1,22 @@
 #import "BVMAppDelegate.h"
 #import "UIColor+BVMColors.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "iRate.h"
 #import "BVMServersListViewController.h"
 
 @implementation BVMAppDelegate
+
++ (void)initialize
+{
+    [iRate sharedInstance].daysUntilPrompt = 10;
+    [iRate sharedInstance].usesUntilPrompt = 10;
+    [iRate sharedInstance].remindPeriod = 2;
+    [iRate sharedInstance].promptAgainForEachNewVersion = NO;
+    [iRate sharedInstance].onlyPromptIfLatestVersion = YES;
+    [iRate sharedInstance].applicationName = NSLocalizedString(@"BuyVM Manager", nil);
+    [iRate sharedInstance].message = NSLocalizedString(@"If this app is useful, could you help me out by rating it in the App Store? It'll just take a minute. Thanks!", nil);
+    [iRate sharedInstance].disableAlertViewResizing = NO;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
