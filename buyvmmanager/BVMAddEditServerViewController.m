@@ -96,8 +96,10 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
         self.savedApiHash = credentials[kBVMServerKeyAPIHash];
         self.savedApiKey = credentials[kBVMServerKeyAPIKey];
 
-        self.apiKeyField.text = self.apiKeyHiddenText;
-        self.apiHashField.text = self.apiHashHiddenText;
+        if (self.savedApiKey != nil && ![self.savedApiKey isEqualToString:@""])
+            self.apiKeyField.text = self.apiKeyHiddenText;
+        if (self.savedApiHash != nil && ![self.savedApiHash isEqualToString:@""])
+            self.apiHashField.text = self.apiHashHiddenText;
 
         self.didLoadEditingContent = YES;
     }

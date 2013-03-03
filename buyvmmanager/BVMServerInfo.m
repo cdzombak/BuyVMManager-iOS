@@ -34,8 +34,8 @@ static const NSTimeInterval kBVMInfoTimeoutInterval = 20.0;
 {
     NSDictionary *credentials = [BVMServersManager credentialsForServerId:serverId];
     NSDictionary *params = @{
-        @"key": credentials[kBVMServerKeyAPIKey],
-        @"hash": credentials[kBVMServerKeyAPIHash],
+        @"key": credentials[kBVMServerKeyAPIKey] != nil ? credentials[kBVMServerKeyAPIKey] : @"",
+        @"hash": credentials[kBVMServerKeyAPIHash] != nil ? credentials[kBVMServerKeyAPIHash] : @"",
         @"action": @"info",
         @"ipaddr": @"true",
         @"status": @"true",
@@ -75,8 +75,8 @@ static const NSTimeInterval kBVMInfoTimeoutInterval = 20.0;
 {
     NSDictionary *credentials = [BVMServersManager credentialsForServerId:serverId];
     NSDictionary *params = @{
-        @"key": credentials[kBVMServerKeyAPIKey],
-        @"hash": credentials[kBVMServerKeyAPIHash],
+        @"key": credentials[kBVMServerKeyAPIKey] != nil ? credentials[kBVMServerKeyAPIKey] : @"",
+        @"hash": credentials[kBVMServerKeyAPIHash] != nil ? credentials[kBVMServerKeyAPIHash] : @"",
         @"action": @"status"
     };
 
