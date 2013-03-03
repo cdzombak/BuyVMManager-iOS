@@ -45,6 +45,9 @@
 		937CCC9B168631D70075BD01 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 937CCC95168631D70075BD01 /* Icon@2x.png */; };
 		937CCC9C168631D70075BD01 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 937CCC96168631D70075BD01 /* iTunesArtwork */; };
 		937CCC9F168633FF0075BD01 /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = 937CCC9E168633FF0075BD01 /* iTunesArtwork@2x */; };
+		9382C96B16E3F26B00191302 /* jrhand.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9382C96A16E3F26B00191302 /* jrhand.ttf */; };
+		9382C97216E3F36B00191302 /* BVMEmptyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9382C97016E3F36B00191302 /* BVMEmptyDetailViewController.m */; };
+		9382C97316E3F36B00191302 /* BVMEmptyDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9382C97116E3F36B00191302 /* BVMEmptyDetailViewController.xib */; };
 		9382EEAB1684F0200032E864 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9382EEAA1684F0200032E864 /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		93ADFEC4168E6F5600F8256C /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 93ADFEC0168E6F5600F8256C /* Default-Landscape.png */; };
 		93ADFEC5168E6F5600F8256C /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93ADFEC1168E6F5600F8256C /* Default-Landscape@2x.png */; };
@@ -116,6 +119,10 @@
 		937CCC95168631D70075BD01 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "icon/resources/Icon@2x.png"; sourceTree = SOURCE_ROOT; };
 		937CCC96168631D70075BD01 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; name = iTunesArtwork; path = icon/resources/iTunesArtwork; sourceTree = SOURCE_ROOT; };
 		937CCC9E168633FF0075BD01 /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; name = "iTunesArtwork@2x"; path = "icon/resources/iTunesArtwork@2x"; sourceTree = SOURCE_ROOT; };
+		9382C96A16E3F26B00191302 /* jrhand.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = jrhand.ttf; sourceTree = "<group>"; };
+		9382C96F16E3F36B00191302 /* BVMEmptyDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMEmptyDetailViewController.h; sourceTree = "<group>"; };
+		9382C97016E3F36B00191302 /* BVMEmptyDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMEmptyDetailViewController.m; sourceTree = "<group>"; };
+		9382C97116E3F36B00191302 /* BVMEmptyDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BVMEmptyDetailViewController.xib; sourceTree = "<group>"; };
 		9382EEAA1684F0200032E864 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		938662D81691F7F60049D6A1 /* CDZViewControllerModalDismissal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDZViewControllerModalDismissal.h; sourceTree = "<group>"; };
 		93ADFEC0168E6F5600F8256C /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
@@ -216,6 +223,7 @@
 				932709C41682353E0013DEB5 /* InfoPlist.strings */,
 				932709C71682353E0013DEB5 /* main.m */,
 				932709C91682353E0013DEB5 /* buyvmmanager-Prefix.pch */,
+				9382C96A16E3F26B00191302 /* jrhand.ttf */,
 				932709CD1682353E0013DEB5 /* Default.png */,
 				932709CF1682353E0013DEB5 /* Default@2x.png */,
 				932709D11682353E0013DEB5 /* Default-568h@2x.png */,
@@ -255,6 +263,9 @@
 				937CCC70168533700075BD01 /* BVMAboutSettingsViewController.m */,
 				935FEED51682C87300BE3892 /* BVMAddEditServerViewController.h */,
 				93ADFEE0168F487F00F8256C /* BVMAddEditServerViewController.m */,
+				9382C96F16E3F36B00191302 /* BVMEmptyDetailViewController.h */,
+				9382C97016E3F36B00191302 /* BVMEmptyDetailViewController.m */,
+				9382C97116E3F36B00191302 /* BVMEmptyDetailViewController.xib */,
 				935FEEC016829B4700BE3892 /* BVMIPListViewController.h */,
 				935FEEC116829B4700BE3892 /* BVMIPListViewController.m */,
 				935FEED21682C06900BE3892 /* BVMServersListViewController.h */,
@@ -393,6 +404,8 @@
 				93ADFEC5168E6F5600F8256C /* Default-Landscape@2x.png in Resources */,
 				93ADFEC6168E6F5600F8256C /* Default-Portrait.png in Resources */,
 				93ADFEC7168E6F5600F8256C /* Default-Portrait@2x.png in Resources */,
+				9382C96B16E3F26B00191302 /* jrhand.ttf in Resources */,
+				9382C97316E3F36B00191302 /* BVMEmptyDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +456,7 @@
 				937CCC89168626780075BD01 /* CDZSubTableViewController.m in Sources */,
 				93ADFEDD168EB82C00F8256C /* KCMutableDictionary.m in Sources */,
 				93ADFEE1168F487F00F8256C /* BVMAddEditServerViewController.m in Sources */,
+				9382C97216E3F36B00191302 /* BVMEmptyDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -3,6 +3,7 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "iRate.h"
 #import "BVMServersListViewController.h"
+#import "BVMEmptyDetailViewController.h"
 
 @implementation BVMAppDelegate
 
@@ -30,9 +31,7 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UISplitViewController *vc = [[UISplitViewController alloc] init];
         vc.delegate = self;
-        UITableViewController *emptyVC = [[UITableViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        emptyVC.tableView.backgroundColor = [UIColor bvm_tableViewBackgroundColor];
-        emptyVC.tableView.backgroundView = nil;
+        UIViewController *emptyVC = [[BVMEmptyDetailViewController alloc] init];
         UINavigationController *detailNavigationVC = [[UINavigationController alloc] initWithRootViewController:emptyVC];
         vc.viewControllers = @[
             [[UINavigationController alloc] initWithRootViewController:[[BVMServersListViewController alloc] initWithDetailNavigationController:detailNavigationVC]],
