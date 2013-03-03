@@ -101,8 +101,9 @@
 - (void)addButtonTouched
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        CDZWeakSelf weakSelf = self;
         self.addVC.dismissBlock = ^() {
-            [self.addVCPopoverController dismissPopoverAnimated:YES];
+            [weakSelf.addVCPopoverController dismissPopoverAnimated:YES];
         };
         [self.addVCPopoverController presentPopoverFromBarButtonItem:self.addItem
                                                 permittedArrowDirections:UIPopoverArrowDirectionAny
@@ -119,9 +120,10 @@
 - (void)settingsButtonTouched
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        CDZWeakSelf weakSelf = self;
         self.settingsVC.dismissBlock = ^() {
             // not necessary for this iteration of the about/settings popover
-            [self.settingsVCPopoverController dismissPopoverAnimated:YES];
+            [weakSelf.settingsVCPopoverController dismissPopoverAnimated:YES];
         };
         [self.settingsVCPopoverController presentPopoverFromBarButtonItem:self.settingsItem
                                                  permittedArrowDirections:UIPopoverArrowDirectionAny
