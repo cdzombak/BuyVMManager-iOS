@@ -24,13 +24,13 @@
     self.view.backgroundColor = [UIColor bvm_tableViewBackgroundColor];
     self.textLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
 
-    UIFont *font = [UIFont fontWithName:@"Jrhand" size:24];
+    UIFont *font = [UIFont fontWithName:@"Jrhand" size:25];
     self.textLabel.font = font;
     self.textLabel.textColor = [UIColor darkTextColor];
 
     if ([BVMServersManager servers].count == 0) {
         self.textLabel.numberOfLines = 0;
-        self.textLabel.text = NSLocalizedString(@"Get started:\nTap the \"+\" button to add a VM.\n(If there's no \"+\" button, tap \"Edit\".)", nil);
+        self.textLabel.text = NSLocalizedString(@"Tap the \"+\" button to add a VM.\n(If there's no \"+\" button, tap \"Edit\".)", nil);
 
         CGRect labelFrame = self.textLabel.frame;
         labelFrame.size.height *= 3;
