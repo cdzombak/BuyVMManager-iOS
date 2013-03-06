@@ -68,15 +68,12 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 
 @property (nonatomic, strong, readonly) MBProgressHUD *progressHUD;
 
-@property (nonatomic, assign, readonly) CGFloat headerViewSidePadding;
-
 @end
 
 @implementation BVMServerViewController
 
 @synthesize reloadButtonItem = _reloadButtonItem,
-            progressHUD = _progressHUD,
-            headerViewSidePadding = _headerViewSidePadding
+            progressHUD = _progressHUD
             ;
 
 - (id)initWithServerId:(NSString *)serverId name:(NSString *)serverName
@@ -101,6 +98,17 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
     self.tableView.backgroundView = nil;
 
     [self reloadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self adjustTableViewHeaderPaddingForOrientation:[[UIDevice currentDevice] orientation]];
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self adjustTableViewHeaderPaddingForOrientation:toInterfaceOrientation];
 }
 
 #pragma mark BVM Data Management
@@ -524,6 +532,32 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
     return NO;
 }
 
+#pragma mark UI Adjustments
+
+- (void)adjustTableViewHeaderPaddingForOrientation:(UIDeviceOrientation)orientation
+{
+    CGFloat padding;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        padding = 10;
+    } else { // pad
+        if (UIDeviceOrientationIsPortrait(orientation)) {
+            padding = 30;
+        } else { // landscape
+            padding = 45;
+        }
+    }
+
+    CGRect hostnameFrame = self.headerHostnameLabel.frame;
+    hostnameFrame.origin.x = padding;
+    hostnameFrame.size.width = self.tableView.bounds.size.width - 2*padding;
+    self.headerHostnameLabel.frame = hostnameFrame;
+
+    CGRect headerStatusLabelFrame = self.headerStatusLabel.frame;
+    headerStatusLabelFrame.origin.x = padding;
+    headerStatusLabelFrame.size.width = self.tableView.bounds.size.width - 2*padding;
+    self.headerStatusLabel.frame = headerStatusLabelFrame;
+}
+
 #pragma mark Property overrides
 
 - (UIView *)headerView {
@@ -533,7 +567,7 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
         _headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         _headerView.backgroundColor = [UIColor clearColor];
 
-        self.headerHostnameLabel = [[UILabel alloc] initWithFrame:(CGRect){ {self.headerViewSidePadding, 10} , { _headerView.bounds.size.width-2*self.headerViewSidePadding, 35 }}];
+        self.headerHostnameLabel = [[UILabel alloc] initWithFrame:(CGRect){ {0, 10} , { _headerView.bounds.size.width, 35 }}];
         self.headerHostnameLabel.font = [UIFont boldSystemFontOfSize:22.0];
         self.headerHostnameLabel.backgroundColor = [UIColor clearColor];
         self.headerHostnameLabel.text = NSLocalizedString(@"Loading...", nil);
@@ -541,7 +575,7 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
         self.headerHostnameLabel.shadowOffset = CGSizeMake(0, 1.0);
         [_headerView addSubview:self.headerHostnameLabel];
 
-        self.headerStatusLabel = [[UILabel alloc] initWithFrame:(CGRect){ {self.headerViewSidePadding, 41} , { self.headerHostnameLabel.bounds.size.width, 20 }}];
+        self.headerStatusLabel = [[UILabel alloc] initWithFrame:(CGRect){ {0, 41} , { _headerView.bounds.size.width, 20 }}];
         self.headerStatusLabel.font = [UIFont boldSystemFontOfSize:18.0];
         self.headerStatusLabel.backgroundColor = [UIColor clearColor];
         self.headerStatusLabel.shadowColor = self.headerHostnameLabel.shadowColor;
@@ -575,18 +609,6 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
         [self.view addSubview:_progressHUD];
     }
     return _progressHUD;
-}
-
-- (CGFloat)headerViewSidePadding
-{
-    if (!_headerViewSidePadding) {
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            _headerViewSidePadding = 36;
-        } else {
-            _headerViewSidePadding = 18;
-        }
-    }
-    return _headerViewSidePadding;
 }
 
 @end
