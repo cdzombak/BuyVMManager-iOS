@@ -30,13 +30,13 @@
     UIViewController *rootVC;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UISplitViewController *vc = [[UISplitViewController alloc] init];
-        vc.delegate = self;
         UIViewController *emptyVC = [[BVMEmptyDetailViewController alloc] init];
         UINavigationController *detailNavigationVC = [[UINavigationController alloc] initWithRootViewController:emptyVC];
         vc.viewControllers = @[
             [[UINavigationController alloc] initWithRootViewController:[[BVMServersListViewController alloc] initWithDetailNavigationController:detailNavigationVC]],
             detailNavigationVC
         ];
+        vc.delegate = self;
         rootVC = vc;
     } else {
         rootVC = [[UINavigationController alloc] initWithRootViewController:[[BVMServersListViewController alloc] initWithDetailNavigationController:nil]];
