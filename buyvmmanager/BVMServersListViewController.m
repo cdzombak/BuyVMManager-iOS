@@ -32,6 +32,8 @@
 
 @property (nonatomic, strong, readonly) UIToolbar *bottomToolbar;
 
+@property (nonatomic, strong) NSString *serverIdSelectedBeforeEdit;
+
 @end
 
 @implementation BVMServersListViewController
@@ -89,12 +91,21 @@
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
+    if (editing) {
+        NSIndexPath *selectedIP = [self.tableView indexPathForSelectedRow];
+        if (selectedIP == nil) self.serverIdSelectedBeforeEdit = nil;
+        else self.serverIdSelectedBeforeEdit = [self serverIdForIndexPath:selectedIP];
+    }
+
     [super setEditing:editing animated:animated];
 
     if (editing) {
         self.navigationItem.leftBarButtonItem = self.addItem;
     } else {
         self.navigationItem.leftBarButtonItem = nil;
+
+        NSIndexPath *ipToSelect = [self indexPathForServerId:self.serverIdSelectedBeforeEdit];
+        [self.tableView selectRowAtIndexPath:ipToSelect animated:YES scrollPosition:UITableViewScrollPositionMiddle];
     }
 }
 
@@ -236,6 +247,21 @@
 {
     NSString *serverId = [self serverIdForIndexPath:indexPath];
     return self.servers[serverId];
+}
+
+- (NSIndexPath *)indexPathForServerId:(NSString *)serverId
+{
+    if (serverId == nil) return nil;
+
+    NSUInteger idIndex = [self.orderedServerIds indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        if ([serverId isEqualToString:obj]) {
+            stop = YES;
+            return YES;
+        }
+        return NO;
+    }];
+
+    return [NSIndexPath indexPathForItem:idIndex inSection:0];
 }
 
 #pragma mark UIPopoverControllerDelegate methods
