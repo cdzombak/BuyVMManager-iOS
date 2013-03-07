@@ -92,9 +92,7 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     if (editing) {
-        NSIndexPath *selectedIP = [self.tableView indexPathForSelectedRow];
-        if (selectedIP == nil) self.serverIdSelectedBeforeEdit = nil;
-        else self.serverIdSelectedBeforeEdit = [self serverIdForIndexPath:selectedIP];
+        [self saveSelection];
     }
 
     [super setEditing:editing animated:animated];
@@ -103,9 +101,7 @@
         self.navigationItem.leftBarButtonItem = self.addItem;
     } else {
         self.navigationItem.leftBarButtonItem = nil;
-
-        NSIndexPath *ipToSelect = [self indexPathForServerId:self.serverIdSelectedBeforeEdit];
-        [self.tableView selectRowAtIndexPath:ipToSelect animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+        [self restoreSelection];
     }
 }
 
@@ -180,6 +176,21 @@
         };
         [self presentViewController:vc animated:YES completion:nil];
     }
+}
+
+#pragma mark Selection save/restore
+
+- (void)saveSelection
+{
+    NSIndexPath *selectedIP = [self.tableView indexPathForSelectedRow];
+    if (selectedIP == nil) self.serverIdSelectedBeforeEdit = nil;
+    else self.serverIdSelectedBeforeEdit = [self serverIdForIndexPath:selectedIP];
+}
+
+- (void)restoreSelection
+{
+    NSIndexPath *ipToSelect = [self indexPathForServerId:self.serverIdSelectedBeforeEdit];
+    [self.tableView selectRowAtIndexPath:ipToSelect animated:YES scrollPosition:UITableViewScrollPositionMiddle];
 }
 
 #pragma mark Data
@@ -338,6 +349,21 @@
     } else {
         [self.detailNavigationVC setViewControllers:@[hostVC] animated:NO];
     }
+}
+
+- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self saveSelection];
+}
+
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self restoreSelection];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NSLocalizedString(@"Forget", nil);
 }
 
 #pragma mark Property Overrides
