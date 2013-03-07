@@ -538,10 +538,10 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 {
     CGFloat padding;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        padding = 10;
+        padding = 14;
     } else { // pad
         if (UIDeviceOrientationIsPortrait(orientation)) {
-            padding = 30;
+            padding = 33;
         } else { // landscape
             padding = 45;
         }
