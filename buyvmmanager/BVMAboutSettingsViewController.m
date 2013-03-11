@@ -1,10 +1,33 @@
 #import "BVMAboutSettingsViewController.h"
 #import "UIColor+BVMColors.h"
 
-typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
+typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableViewSections) {
     BVMAboutSettingsTableViewSectionContactSupport = 0,
+    BVMAboutSettingsTableViewSectionUsefulLinks,
     BVMAboutSettingsTableViewNumSections
 };
+
+typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableContactSupportRows) {
+    BVMAboutSettingsTableContactSupportRowEmailAppAuthor = 0,
+    BVMAboutSettingsTableContactSupportNumRows
+};
+
+typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableUsefulLinksRows) {
+    BVMAboutSettingsTableUsefulLinksRowStallion = 0,
+    BVMAboutSettingsTableUsefulLinksRowClientArea,
+    BVMAboutSettingsTableUsefulLinksNumRows
+};
+
+static NSString * BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewNumSections][2];
+
+__attribute__((constructor)) static void __NLReportSalesAnalyticsFilterViewControllerTableConstantsInit(void)
+{
+    @autoreleasepool {
+        BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionContactSupport][BVMAboutSettingsTableContactSupportRowEmailAppAuthor] = NSLocalizedString(@"Email App Author", nil);
+        BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionUsefulLinks][BVMAboutSettingsTableUsefulLinksRowStallion] = NSLocalizedString(@"BuyVM Manager (Stallion)", nil);
+        BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionUsefulLinks][BVMAboutSettingsTableUsefulLinksRowClientArea] = NSLocalizedString(@"BuyVM Billing/Support", nil);
+    }
+}
 
 @interface BVMAboutSettingsViewController ()
 
@@ -23,9 +46,7 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
 - (id)init
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
-    if (self) {
-        // w/e
-    }
+    if (self) { }
     return self;
 }
 
@@ -52,19 +73,31 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
 - (void)sendSupportEmail
 {
     NSString *url = [NSString stringWithFormat:@"mailto:chris+bvmsupport@chrisdzombak.net?subject=BuyVM%%20Manager%%20Support%%20-%%20%@",
-                     [self appVersion]];
-    NSLog(@"%@", url);
+                     [BVMAboutSettingsViewController appVersion]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+}
+
+- (void)openStallion
+{
+    NSString *url = @"https://manage.buyvm.net";
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+}
+
+- (void)openClientArea
+{
+    NSString *url = @"https://my.frantech.ca";
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
 }
 
 - (void)doneButtonTapped
 {
     if (self.dismissBlock) self.dismissBlock();
+    else NSLog(@"%@ cannot dismiss without a dismissBlock", NSStringFromClass([self class]));
 }
 
 #pragma mark Helpers
 
-- (NSString *)appVersion
++ (NSString *)appVersion
 {
     return [[NSBundle mainBundle] infoDictionary][@"CFBundleVersion"];
 }
@@ -78,26 +111,30 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSParameterAssert(section == BVMAboutSettingsTableViewSectionContactSupport);
-
-    // only 1 section right now woo
-    return 1;
+    switch(section) {
+        case BVMAboutSettingsTableViewSectionContactSupport:
+            return BVMAboutSettingsTableContactSupportNumRows;
+        case BVMAboutSettingsTableViewSectionUsefulLinks:
+            return BVMAboutSettingsTableUsefulLinksNumRows;
+        default:
+            NSLog(@"unknown section %d in %s", section, __PRETTY_FUNCTION__);
+            return 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSParameterAssert(indexPath.section == BVMAboutSettingsTableViewSectionContactSupport);
-    NSParameterAssert(indexPath.row == 0);
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    }
 
-    // right now, we only have one cell.
-    // this code will be rewritten in shor torder when I add PIN support.
+    cell.textLabel.text = BVMAboutSettingsTableRowTitles[indexPath.section][indexPath.row];
 
-    cell.textLabel.text = NSLocalizedString(@"Email App Author", nil);
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.selectionStyle = UITableViewCellSelectionStyleGray;
-    
     return cell;
 }
 
@@ -105,10 +142,27 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSParameterAssert(indexPath.section == BVMAboutSettingsTableViewSectionContactSupport);
-    NSParameterAssert(indexPath.row == 0);
+    switch (indexPath.section) {
+        case BVMAboutSettingsTableViewSectionContactSupport:
+            NSParameterAssert(indexPath.row == 0);
+            [self sendSupportEmail];
+            break;
 
-    [self sendSupportEmail];
+        case BVMAboutSettingsTableViewSectionUsefulLinks:
+            if (indexPath.row == BVMAboutSettingsTableUsefulLinksRowClientArea) {
+                [self openClientArea];
+            } else if (indexPath.row == BVMAboutSettingsTableUsefulLinksRowStallion) {
+                [self openStallion];
+            } else {
+                NSLog(@"Unrecognized row %d in %s", indexPath.row, __PRETTY_FUNCTION__);
+            }
+            break;
+
+        default:
+            NSLog(@"Unrecognized section %d in %s", indexPath.section, __PRETTY_FUNCTION__);
+            break;
+    }
+
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -117,7 +171,7 @@ typedef NS_ENUM(NSInteger, BVMAboutSettingsTableViewSections) {
 - (UIView *)footerView
 {
     if (!_footerView) {
-        NSString *notes = [NSString stringWithFormat:NSLocalizedString(@"BuyVM Manager v%@", nil), [self appVersion]];
+        NSString *notes = [NSString stringWithFormat:NSLocalizedString(@"BuyVM Manager v%@", nil), [BVMAboutSettingsViewController appVersion]];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(18, 0, self.view.bounds.size.width-36, 40)];
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor darkGrayColor];
