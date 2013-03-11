@@ -9,15 +9,15 @@
 
 - (NSUInteger)bvm_indexOfString:(NSString *)searchString
 {
-    NSUInteger index = NSNotFound;
-    for (NSUInteger i=0; i<self.count; ++i) {
-        NSString *string = self[i];
-        if ([string isEqualToString:searchString]) {
-            index = i;
-            break;
+    return [self indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isEqualToString:searchString]) {
+            stop = YES;
+            return YES;
         }
-    }
-    return index;
+        return NO;
+    }];
 }
+
+
 
 @end
