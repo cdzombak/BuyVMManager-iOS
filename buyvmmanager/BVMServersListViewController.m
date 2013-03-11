@@ -412,7 +412,8 @@
 - (UIPopoverController *)settingsVCPopoverController
 {
     if (!_settingsVCPopoverController) {
-        _settingsVCPopoverController = [[UIPopoverController alloc] initWithContentViewController:self.settingsVC];
+        UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:self.settingsVC];
+        _settingsVCPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
     }
     return _settingsVCPopoverController;
 }

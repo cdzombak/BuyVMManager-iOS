@@ -1,9 +1,12 @@
 #import "BVMAboutSettingsViewController.h"
+#import "BVMLinkOpenManager.h"
+#import "BVMBrowserSelectorViewController.h"
 #import "UIColor+BVMColors.h"
 
 typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableViewSections) {
     BVMAboutSettingsTableViewSectionContactSupport = 0,
     BVMAboutSettingsTableViewSectionUsefulLinks,
+    BVMAboutSettingsTableViewSectionSettings,
     BVMAboutSettingsTableViewNumSections
 };
 
@@ -18,14 +21,25 @@ typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableUsefulLinksRows) {
     BVMAboutSettingsTableUsefulLinksNumRows
 };
 
-static NSString * BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewNumSections][2];
+typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableSettingsRows) {
+    BVMAboutSettingsTableSettingsRowBrowser = 0,
+    BVMAboutSettingsTableSettingsNumRows
+};
 
-__attribute__((constructor)) static void __NLReportSalesAnalyticsFilterViewControllerTableConstantsInit(void)
+static NSString * BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewNumSections][2];
+static NSUInteger BVMAboutSettingsTableRowsInSection[BVMAboutSettingsTableViewNumSections];
+
+__attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableConstantsInit(void)
 {
     @autoreleasepool {
         BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionContactSupport][BVMAboutSettingsTableContactSupportRowEmailAppAuthor] = NSLocalizedString(@"Email App Author", nil);
         BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionUsefulLinks][BVMAboutSettingsTableUsefulLinksRowStallion] = NSLocalizedString(@"BuyVM Manager (Stallion)", nil);
         BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionUsefulLinks][BVMAboutSettingsTableUsefulLinksRowClientArea] = NSLocalizedString(@"BuyVM Billing/Support", nil);
+        BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionSettings][BVMAboutSettingsTableSettingsRowBrowser] = NSLocalizedString(@"Select Browser", nil);
+
+        BVMAboutSettingsTableRowsInSection[BVMAboutSettingsTableViewSectionContactSupport] = BVMAboutSettingsTableContactSupportNumRows;
+        BVMAboutSettingsTableRowsInSection[BVMAboutSettingsTableViewSectionUsefulLinks] = BVMAboutSettingsTableUsefulLinksNumRows;
+        BVMAboutSettingsTableRowsInSection[BVMAboutSettingsTableViewSectionSettings] = BVMAboutSettingsTableSettingsNumRows;
     }
 }
 
@@ -74,25 +88,31 @@ __attribute__((constructor)) static void __NLReportSalesAnalyticsFilterViewContr
 {
     NSString *url = [NSString stringWithFormat:@"mailto:chris+bvmsupport@chrisdzombak.net?subject=BuyVM%%20Manager%%20Support%%20-%%20%@",
                      [BVMAboutSettingsViewController appVersion]];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    [BVMLinkOpenManager openURLString:url];
 }
 
 - (void)openStallion
 {
     NSString *url = @"https://manage.buyvm.net";
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    [BVMLinkOpenManager openURLString:url];
 }
 
 - (void)openClientArea
 {
     NSString *url = @"https://my.frantech.ca";
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    [BVMLinkOpenManager openURLString:url];
 }
 
 - (void)doneButtonTapped
 {
     if (self.dismissBlock) self.dismissBlock();
     else NSLog(@"%@ cannot dismiss without a dismissBlock", NSStringFromClass([self class]));
+}
+
+- (void)pushToBrowserSelector
+{
+    UIViewController *browserSelector = [[BVMBrowserSelectorViewController alloc] init];
+    [self.navigationController pushViewController:browserSelector animated:YES];
 }
 
 #pragma mark Helpers
@@ -111,15 +131,7 @@ __attribute__((constructor)) static void __NLReportSalesAnalyticsFilterViewContr
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    switch(section) {
-        case BVMAboutSettingsTableViewSectionContactSupport:
-            return BVMAboutSettingsTableContactSupportNumRows;
-        case BVMAboutSettingsTableViewSectionUsefulLinks:
-            return BVMAboutSettingsTableUsefulLinksNumRows;
-        default:
-            NSLog(@"unknown section %d in %s", section, __PRETTY_FUNCTION__);
-            return 0;
-    }
+    return BVMAboutSettingsTableRowsInSection[section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -156,6 +168,11 @@ __attribute__((constructor)) static void __NLReportSalesAnalyticsFilterViewContr
             } else {
                 NSLog(@"Unrecognized row %d in %s", indexPath.row, __PRETTY_FUNCTION__);
             }
+            break;
+
+        case BVMAboutSettingsTableViewSectionSettings:
+            NSParameterAssert(indexPath.row == 0);
+            [self pushToBrowserSelector];
             break;
 
         default:

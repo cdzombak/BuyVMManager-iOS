@@ -58,6 +58,8 @@
 		93ADFEE1168F487F00F8256C /* BVMAddEditServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93ADFEE0168F487F00F8256C /* BVMAddEditServerViewController.m */; };
 		93BADD411683C19900B0CD6F /* UIColor+BVMColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADD401683C19900B0CD6F /* UIColor+BVMColors.m */; };
 		93BADD481684DE9D00B0CD6F /* BVMAPIResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADD471684DE9D00B0CD6F /* BVMAPIResponseParser.m */; };
+		93E5D84416EE727B00C57111 /* BVMBrowserSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E5D84316EE727A00C57111 /* BVMBrowserSelectorViewController.m */; };
+		93E5D84716EE73D400C57111 /* BVMLinkOpenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E5D84616EE73D200C57111 /* BVMLinkOpenManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,6 +142,10 @@
 		93BADD491684E47A00B0CD6F /* NSError+BVMErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+BVMErrors.h"; sourceTree = "<group>"; };
 		93BADD4A1684E47A00B0CD6F /* NSError+BVMErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+BVMErrors.m"; sourceTree = "<group>"; };
 		93BADD4C1684E60A00B0CD6F /* BVMErrorDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMErrorDomain.h; sourceTree = "<group>"; };
+		93E5D84216EE727900C57111 /* BVMBrowserSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMBrowserSelectorViewController.h; sourceTree = "<group>"; };
+		93E5D84316EE727A00C57111 /* BVMBrowserSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMBrowserSelectorViewController.m; sourceTree = "<group>"; };
+		93E5D84516EE73D200C57111 /* BVMLinkOpenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMLinkOpenManager.h; sourceTree = "<group>"; };
+		93E5D84616EE73D200C57111 /* BVMLinkOpenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMLinkOpenManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +212,8 @@
 				937CCC441684F5B70075BD01 /* BVMErrorDomain.m */,
 				93270A031682726F0013DEB5 /* BVMHumanValueTransformer.h */,
 				93270A041682726F0013DEB5 /* BVMHumanValueTransformer.m */,
+				93E5D84516EE73D200C57111 /* BVMLinkOpenManager.h */,
+				93E5D84616EE73D200C57111 /* BVMLinkOpenManager.m */,
 				935FEECF1682BC3700BE3892 /* BVMServersManager.h */,
 				935FEED01682BC3700BE3892 /* BVMServersManager.m */,
 				938662D81691F7F60049D6A1 /* CDZViewControllerModalDismissal.h */,
@@ -268,6 +276,8 @@
 				9382C97116E3F36B00191302 /* BVMEmptyDetailViewController.xib */,
 				935FEEC016829B4700BE3892 /* BVMIPListViewController.h */,
 				935FEEC116829B4700BE3892 /* BVMIPListViewController.m */,
+				93E5D84216EE727900C57111 /* BVMBrowserSelectorViewController.h */,
+				93E5D84316EE727A00C57111 /* BVMBrowserSelectorViewController.m */,
 				935FEED21682C06900BE3892 /* BVMServersListViewController.h */,
 				935FEED31682C06900BE3892 /* BVMServersListViewController.m */,
 				932709F1168244E20013DEB5 /* BVMServerViewController.h */,
@@ -457,6 +467,8 @@
 				93ADFEDD168EB82C00F8256C /* KCMutableDictionary.m in Sources */,
 				93ADFEE1168F487F00F8256C /* BVMAddEditServerViewController.m in Sources */,
 				9382C97216E3F36B00191302 /* BVMEmptyDetailViewController.m in Sources */,
+				93E5D84416EE727B00C57111 /* BVMBrowserSelectorViewController.m in Sources */,
+				93E5D84716EE73D400C57111 /* BVMLinkOpenManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
