@@ -4,9 +4,9 @@
 #import "UIColor+BVMColors.h"
 
 typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableViewSections) {
-    BVMAboutSettingsTableViewSectionContactSupport = 0,
-    BVMAboutSettingsTableViewSectionUsefulLinks,
+    BVMAboutSettingsTableViewSectionUsefulLinks = 0,
     BVMAboutSettingsTableViewSectionSettings,
+    BVMAboutSettingsTableViewSectionContactSupport,
     BVMAboutSettingsTableViewNumSections
 };
 

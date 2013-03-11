@@ -36,8 +36,6 @@
 		937CCC6C168528100075BD01 /* 119-Camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 937CCC6B168528100075BD01 /* 119-Camera.png */; };
 		937CCC6E168528240075BD01 /* 119-Camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 937CCC6D168528240075BD01 /* 119-Camera@2x.png */; };
 		937CCC71168533700075BD01 /* BVMAboutSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 937CCC70168533700075BD01 /* BVMAboutSettingsViewController.m */; };
-		937CCC7616853B100075BD01 /* 247-InfoCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 937CCC7416853B100075BD01 /* 247-InfoCircle.png */; };
-		937CCC7716853B100075BD01 /* 247-InfoCircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 937CCC7516853B100075BD01 /* 247-InfoCircle@2x.png */; };
 		937CCC89168626780075BD01 /* CDZSubTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 937CCC88168626780075BD01 /* CDZSubTableViewController.m */; };
 		937CCC98168631D70075BD01 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 937CCC92168631D70075BD01 /* Icon-72.png */; };
 		937CCC99168631D70075BD01 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 937CCC93168631D70075BD01 /* Icon-72@2x.png */; };
@@ -60,6 +58,8 @@
 		93BADD481684DE9D00B0CD6F /* BVMAPIResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADD471684DE9D00B0CD6F /* BVMAPIResponseParser.m */; };
 		93E5D84416EE727B00C57111 /* BVMBrowserSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E5D84316EE727A00C57111 /* BVMBrowserSelectorViewController.m */; };
 		93E5D84716EE73D400C57111 /* BVMLinkOpenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E5D84616EE73D200C57111 /* BVMLinkOpenManager.m */; };
+		93E5D84916EE83EA00C57111 /* 072-Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93E5D84816EE83EA00C57111 /* 072-Settings@2x.png */; };
+		93E5D84B16EE83FE00C57111 /* 072-Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 93E5D84A16EE83FE00C57111 /* 072-Settings.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,8 +111,6 @@
 		937CCC6D168528240075BD01 /* 119-Camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "119-Camera@2x.png"; sourceTree = "<group>"; };
 		937CCC6F168533700075BD01 /* BVMAboutSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMAboutSettingsViewController.h; sourceTree = "<group>"; };
 		937CCC70168533700075BD01 /* BVMAboutSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMAboutSettingsViewController.m; sourceTree = "<group>"; };
-		937CCC7416853B100075BD01 /* 247-InfoCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "247-InfoCircle.png"; sourceTree = "<group>"; };
-		937CCC7516853B100075BD01 /* 247-InfoCircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "247-InfoCircle@2x.png"; sourceTree = "<group>"; };
 		937CCC87168626780075BD01 /* CDZSubTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDZSubTableViewController.h; sourceTree = "<group>"; };
 		937CCC88168626780075BD01 /* CDZSubTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDZSubTableViewController.m; sourceTree = "<group>"; };
 		937CCC92168631D70075BD01 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "icon/resources/Icon-72.png"; sourceTree = SOURCE_ROOT; };
@@ -146,6 +144,8 @@
 		93E5D84316EE727A00C57111 /* BVMBrowserSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMBrowserSelectorViewController.m; sourceTree = "<group>"; };
 		93E5D84516EE73D200C57111 /* BVMLinkOpenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMLinkOpenManager.h; sourceTree = "<group>"; };
 		93E5D84616EE73D200C57111 /* BVMLinkOpenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMLinkOpenManager.m; sourceTree = "<group>"; };
+		93E5D84816EE83EA00C57111 /* 072-Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "072-Settings@2x.png"; sourceTree = "<group>"; };
+		93E5D84A16EE83FE00C57111 /* 072-Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "072-Settings.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,10 +326,10 @@
 		937CCC69168527FA0075BD01 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				93E5D84A16EE83FE00C57111 /* 072-Settings.png */,
+				93E5D84816EE83EA00C57111 /* 072-Settings@2x.png */,
 				937CCC6B168528100075BD01 /* 119-Camera.png */,
 				937CCC6D168528240075BD01 /* 119-Camera@2x.png */,
-				937CCC7416853B100075BD01 /* 247-InfoCircle.png */,
-				937CCC7516853B100075BD01 /* 247-InfoCircle@2x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -402,8 +402,6 @@
 				932709D21682353E0013DEB5 /* Default-568h@2x.png in Resources */,
 				937CCC6C168528100075BD01 /* 119-Camera.png in Resources */,
 				937CCC6E168528240075BD01 /* 119-Camera@2x.png in Resources */,
-				937CCC7616853B100075BD01 /* 247-InfoCircle.png in Resources */,
-				937CCC7716853B100075BD01 /* 247-InfoCircle@2x.png in Resources */,
 				937CCC98168631D70075BD01 /* Icon-72.png in Resources */,
 				937CCC99168631D70075BD01 /* Icon-72@2x.png in Resources */,
 				937CCC9A168631D70075BD01 /* Icon.png in Resources */,
@@ -416,6 +414,8 @@
 				93ADFEC7168E6F5600F8256C /* Default-Portrait@2x.png in Resources */,
 				9382C96B16E3F26B00191302 /* jrhand.ttf in Resources */,
 				9382C97316E3F36B00191302 /* BVMEmptyDetailViewController.xib in Resources */,
+				93E5D84916EE83EA00C57111 /* 072-Settings@2x.png in Resources */,
+				93E5D84B16EE83FE00C57111 /* 072-Settings.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

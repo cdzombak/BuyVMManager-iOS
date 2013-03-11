@@ -385,7 +385,7 @@
 - (UIBarButtonItem *)settingsItem
 {
     if (!_settingsItem) {
-        _settingsItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"247-InfoCircle"] style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonTouched)];
+        _settingsItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"072-Settings"] style:UIBarButtonItemStylePlain target:self action:@selector(settingsButtonTouched)];
     }
     return _settingsItem;
 }
