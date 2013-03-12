@@ -1,7 +1,7 @@
 When prompted for VM API details on first launch, use the following information:
 
 Server name: anything
-API Key: 67Q0S-XVTCQ-RVOEJ
-API Hash: bade9514138cdf9c2fd37759762364428216abfc
+API Key: <todo>
+API Hash: <todo>
 
 These credentials will allow you to view and manage a server (tesla.cdzombak.net) which is provisioned for testing and is not in production. It may be rebooted, etc. at will.
