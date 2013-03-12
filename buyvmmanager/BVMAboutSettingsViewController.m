@@ -5,14 +5,15 @@
 
 typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableViewSections) {
     BVMAboutSettingsTableViewSectionUsefulLinks = 0,
+    BVMAboutSettingsTableViewSectionSupport,
     BVMAboutSettingsTableViewSectionSettings,
-    BVMAboutSettingsTableViewSectionContactSupport,
     BVMAboutSettingsTableViewNumSections
 };
 
-typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableContactSupportRows) {
-    BVMAboutSettingsTableContactSupportRowEmailAppAuthor = 0,
-    BVMAboutSettingsTableContactSupportNumRows
+typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableSupportRows) {
+    BVMAboutSettingsTableSupportRowReportIssue = 0,
+    BVMAboutSettingsTableSupportRowGithubProject,
+    BVMAboutSettingsTableSupportNumRows
 };
 
 typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableUsefulLinksRows) {
@@ -32,12 +33,13 @@ static NSUInteger BVMAboutSettingsTableRowsInSection[BVMAboutSettingsTableViewNu
 __attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableConstantsInit(void)
 {
     @autoreleasepool {
-        BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionContactSupport][BVMAboutSettingsTableContactSupportRowEmailAppAuthor] = NSLocalizedString(@"Email App Author", nil);
+        BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionSupport][BVMAboutSettingsTableSupportRowReportIssue] = NSLocalizedString(@"Report Issue", nil);
+        BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionSupport][BVMAboutSettingsTableSupportRowGithubProject] = NSLocalizedString(@"Github Project", nil);
         BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionUsefulLinks][BVMAboutSettingsTableUsefulLinksRowStallion] = NSLocalizedString(@"BuyVM Manager (Stallion)", nil);
         BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionUsefulLinks][BVMAboutSettingsTableUsefulLinksRowClientArea] = NSLocalizedString(@"BuyVM Billing/Support", nil);
         BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionSettings][BVMAboutSettingsTableSettingsRowBrowser] = NSLocalizedString(@"Select Browser", nil);
 
-        BVMAboutSettingsTableRowsInSection[BVMAboutSettingsTableViewSectionContactSupport] = BVMAboutSettingsTableContactSupportNumRows;
+        BVMAboutSettingsTableRowsInSection[BVMAboutSettingsTableViewSectionSupport] = BVMAboutSettingsTableSupportNumRows;
         BVMAboutSettingsTableRowsInSection[BVMAboutSettingsTableViewSectionUsefulLinks] = BVMAboutSettingsTableUsefulLinksNumRows;
         BVMAboutSettingsTableRowsInSection[BVMAboutSettingsTableViewSectionSettings] = BVMAboutSettingsTableSettingsNumRows;
     }
@@ -84,10 +86,15 @@ __attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableCo
 
 #pragma mark Interface actions
 
-- (void)sendSupportEmail
+- (void)reportIssue
 {
-    NSString *url = [NSString stringWithFormat:@"mailto:chris+bvmsupport@chrisdzombak.net?subject=BuyVM%%20Manager%%20Support%%20-%%20%@",
-                     [BVMAboutSettingsViewController appVersion]];
+    NSString *url = @"https://github.com/cdzombak/BuyVMManager-iOS/issues/new";
+    [BVMLinkOpenManager openURLString:url];
+}
+
+- (void)openGithubProject
+{
+    NSString *url = @"https://github.com/cdzombak/BuyVMManager-iOS/";
     [BVMLinkOpenManager openURLString:url];
 }
 
@@ -155,9 +162,12 @@ __attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableCo
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.section) {
-        case BVMAboutSettingsTableViewSectionContactSupport:
-            NSParameterAssert(indexPath.row == 0);
-            [self sendSupportEmail];
+        case BVMAboutSettingsTableViewSectionSupport:
+            if (indexPath.row == BVMAboutSettingsTableSupportRowReportIssue) {
+                [self reportIssue];
+            } else if (indexPath.row == BVMAboutSettingsTableSupportRowGithubProject) {
+                [self openGithubProject];
+            }
             break;
 
         case BVMAboutSettingsTableViewSectionUsefulLinks:
