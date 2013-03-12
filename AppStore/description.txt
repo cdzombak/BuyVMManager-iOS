@@ -9,9 +9,10 @@ With BuyVM Manager:
 
 Helpful tips:
 
-→ Tap the "Ping" area to re-ping the server and get an updated ping time
 → Add VMs to the app by quickly scanning QR codes for API keys
+→ The ping time shown is the average ping over the last 6 seconds
 → The app requires you to enter the VM's hostname before reboot/boot/shutdown, to ensure you reboot the correct VM
+→ From the Settings menu, quickly open the BuyVM management web interface or billing/support area in Safari, Chrome, or 1Password
 
 Security note:
 
