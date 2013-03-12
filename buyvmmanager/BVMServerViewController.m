@@ -140,8 +140,7 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
         self.serverInfo = info;
 
         if (self.serverInfo.status == BVMServerStatusOnline) {
-            [self.pinger startPinging];
-            self.pingString = nil;
+            [self restartPing];
         } else {
             self.pingString = @"";
             self.pinger = nil;
@@ -161,6 +160,19 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
     }];
 }
 
+- (void)restartPing
+{
+    self.pingString = nil;
+    self.pinger = nil;
+
+    NSIndexPath *ip = [NSIndexPath indexPathForRow:0 inSection:BVMServerTableViewSectionPing];
+    [self.tableView beginUpdates];
+    [self.tableView reloadRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
+
+    [self.pinger startPinging];
+}
+
 - (void)refreshHeaderView
 {
     self.headerHostnameLabel.text = self.serverInfo.hostname;
@@ -175,13 +187,13 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 
 #pragma mark BVMPingerDelegate methods
 
-- (void)pinger:(BVMPinger *)pinger didUpdateWithTime:(double)seconds
+- (void)pinger:(BVMPinger *)pinger didUpdateWithAverageSeconds:(double)seconds
 {
     self.pingString = [NSString stringWithFormat:@"%.f ms", seconds*1000];
 
     [self.tableView beginUpdates];
     [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:BVMServerTableViewSectionPing]]
-                          withRowAnimation:UITableViewRowAnimationAutomatic];
+                          withRowAnimation:UITableViewRowAnimationNone];
     [self.tableView endUpdates];
 }
 
@@ -189,20 +201,8 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 {
     if (pinger != self.pinger) return;
 
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Ping Error", nil)
-                                message:[BVMHumanValueTransformer shortErrorFromError:error]
-                               delegate:nil
-                      cancelButtonTitle:@":("
-                      otherButtonTitles:nil]
-     show];
-    [self.pinger stopPinging];
     self.pinger = nil;
-    self.pingString = @"";
-}
-
-- (void)pingerDidFinishPingSequence:(BVMPinger *)pinger
-{
-    self.pinger = nil;
+    self.pingString = [BVMHumanValueTransformer shortErrorFromError:error];
 }
 
 #pragma mark UITableViewDataSource methods
@@ -367,13 +367,9 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
     else if (indexPath.section == BVMServerTableViewSectionPing) {
-        // this section only contains the Ping row, so let's just assume that row was selected
+        NSParameterAssert(indexPath.row == 0);
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-        self.pingString = nil;
-        [self.pinger startPinging];
-        [self.tableView beginUpdates];
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
+        [self restartPing];
     }
 }
 

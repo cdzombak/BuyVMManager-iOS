@@ -5,6 +5,7 @@
 @interface BVMPinger : NSObject
 
 @property (nonatomic, weak) id<BVMPingerDelegate> delegate;
+@property (nonatomic, copy, readonly) NSString *domainOrIp;
 
 - (id)initWithHost:(NSString *)domainOrIp;
 
@@ -15,10 +16,14 @@
 
 @protocol BVMPingerDelegate <NSObject>
 
-- (void)pinger:(BVMPinger *)pinger didUpdateWithTime:(double)seconds;
+- (void)pinger:(BVMPinger *)pinger didUpdateWithAverageSeconds:(double)seconds;
 
 @optional
+
+/**
+ *
+ * note: Pinger stops when an error is encountered
+ */
 - (void)pinger:(BVMPinger *)pinger didEncounterError:(NSError *)error;
-- (void)pingerDidFinishPingSequence:(BVMPinger *)pinger;
 
 @end
