@@ -1,0 +1,12 @@
+1.0.4 changes:
+
+★ Add links to Settings screen to open useful BuyVM web tools (and you can pick whether to open Safari, Chrome, or 1Password)
+★ Big ping improvements: we now ping your server every second and display the average time for the last 6 pings
+✓ Add a crash reporter, just in case
+✓ Additional bug fixes and interface improvements
+
+1.0.3 changes:
+
+★ Various UI tweaks and improvements
+✓ Fix for a possible crash after restoring to a new iOS device from iCloud or iTunes backup
+✓ Fixes for small memory management issues
