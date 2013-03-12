@@ -1,7 +1,7 @@
 #import "BVMServerViewController.h"
 #import "BVMServerInfo.h"
 #import "BVMServerActionPerform.h"
-#import "BVMPinger.h"
+#import "CDZPinger.h"
 #import "BVMHumanValueTransformer.h"
 #import "BVMIPListViewController.h"
 #import "BVMSizesListViewController.h"
@@ -45,14 +45,14 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
     }
 }
 
-@interface BVMServerViewController () <BVMPingerDelegate>
+@interface BVMServerViewController () <CDZPingerDelegate>
 
 @property (nonatomic, copy) NSString *serverId;
 @property (nonatomic, copy) NSString *serverName;
 @property (nonatomic, strong) BVMServerInfo *serverInfo;
 
 @property (nonatomic, copy) NSString *pingString;
-@property (nonatomic, strong) BVMPinger *pinger;
+@property (nonatomic, strong) CDZPinger *pinger;
 
 @property (nonatomic, strong) UIView *headerView;
 @property (nonatomic, strong) UILabel *headerHostnameLabel;
@@ -185,9 +185,9 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
     }
 }
 
-#pragma mark BVMPingerDelegate methods
+#pragma mark CDZPingerDelegate methods
 
-- (void)pinger:(BVMPinger *)pinger didUpdateWithAverageSeconds:(double)seconds
+- (void)pinger:(CDZPinger *)pinger didUpdateWithAverageSeconds:(NSTimeInterval)seconds
 {
     self.pingString = [NSString stringWithFormat:@"%.f ms", seconds*1000];
 
@@ -197,7 +197,7 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
     [self.tableView endUpdates];
 }
 
-- (void)pinger:(BVMPinger *)pinger didEncounterError:(NSError *)error
+- (void)pinger:(CDZPinger *)pinger didEncounterError:(NSError *)error
 {
     if (pinger != self.pinger) return;
 
@@ -581,10 +581,10 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
     return _headerView;
 }
 
-- (BVMPinger *)pinger
+- (CDZPinger *)pinger
 {
     if (!_pinger) {
-        _pinger = [[BVMPinger alloc] initWithHost:self.serverInfo.mainIpAddress];
+        _pinger = [[CDZPinger alloc] initWithHost:self.serverInfo.mainIpAddress];
         _pinger.delegate = self;
     }
     return _pinger;

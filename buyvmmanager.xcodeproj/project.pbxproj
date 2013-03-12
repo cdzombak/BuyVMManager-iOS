@@ -23,9 +23,6 @@
 		932709F3168244E20013DEB5 /* BVMServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709F2168244E20013DEB5 /* BVMServerViewController.m */; };
 		93270A02168269740013DEB5 /* NSArray+BVMArrayExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 93270A01168269740013DEB5 /* NSArray+BVMArrayExtensions.m */; };
 		93270A051682726F0013DEB5 /* BVMHumanValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 93270A041682726F0013DEB5 /* BVMHumanValueTransformer.m */; };
-		93270A14168279E60013DEB5 /* BVMPinger.m in Sources */ = {isa = PBXBuildFile; fileRef = 93270A13168279E60013DEB5 /* BVMPinger.m */; };
-		93270A1B16827E640013DEB5 /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = 93270A1A16827E640013DEB5 /* SimplePing.m */; };
-		93270A1D16827E940013DEB5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93270A1C16827E940013DEB5 /* CFNetwork.framework */; };
 		935FEEC216829B4700BE3892 /* BVMIPListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEEC116829B4700BE3892 /* BVMIPListViewController.m */; };
 		935FEEC61682A0FA00BE3892 /* BVMSizesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEEC51682A0FA00BE3892 /* BVMSizesListViewController.m */; };
 		935FEED11682BC3700BE3892 /* BVMServersManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FEED01682BC3700BE3892 /* BVMServersManager.m */; };
@@ -90,10 +87,6 @@
 		93270A01168269740013DEB5 /* NSArray+BVMArrayExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+BVMArrayExtensions.m"; sourceTree = "<group>"; };
 		93270A031682726F0013DEB5 /* BVMHumanValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMHumanValueTransformer.h; sourceTree = "<group>"; };
 		93270A041682726F0013DEB5 /* BVMHumanValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMHumanValueTransformer.m; sourceTree = "<group>"; };
-		93270A12168279E60013DEB5 /* BVMPinger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMPinger.h; sourceTree = "<group>"; };
-		93270A13168279E60013DEB5 /* BVMPinger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMPinger.m; sourceTree = "<group>"; };
-		93270A1916827E640013DEB5 /* SimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePing.h; sourceTree = "<group>"; };
-		93270A1A16827E640013DEB5 /* SimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePing.m; sourceTree = "<group>"; };
 		93270A1C16827E940013DEB5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		935FEEC016829B4700BE3892 /* BVMIPListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMIPListViewController.h; sourceTree = "<group>"; };
 		935FEEC116829B4700BE3892 /* BVMIPListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMIPListViewController.m; sourceTree = "<group>"; };
@@ -155,7 +148,6 @@
 			files = (
 				93ADFEDF168EBC8E00F8256C /* Security.framework in Frameworks */,
 				9382EEAB1684F0200032E864 /* SystemConfiguration.framework in Frameworks */,
-				93270A1D16827E940013DEB5 /* CFNetwork.framework in Frameworks */,
 				932709BC1682353E0013DEB5 /* UIKit.framework in Frameworks */,
 				932709BE1682353E0013DEB5 /* Foundation.framework in Frameworks */,
 				932709C01682353E0013DEB5 /* CoreGraphics.framework in Frameworks */,
@@ -203,7 +195,6 @@
 			children = (
 				932709E616823FA20013DEB5 /* API */,
 				932709FE168269380013DEB5 /* Categories */,
-				93270A0E1682797A0013DEB5 /* Ping */,
 				935FEEDB1682CC2900BE3892 /* Views */,
 				932709F0168244710013DEB5 /* View Controllers */,
 				932709CA1682353E0013DEB5 /* BVMAppDelegate.h */,
@@ -301,17 +292,6 @@
 				93BADD4A1684E47A00B0CD6F /* NSError+BVMErrors.m */,
 			);
 			name = Categories;
-			sourceTree = "<group>";
-		};
-		93270A0E1682797A0013DEB5 /* Ping */ = {
-			isa = PBXGroup;
-			children = (
-				93270A12168279E60013DEB5 /* BVMPinger.h */,
-				93270A13168279E60013DEB5 /* BVMPinger.m */,
-				93270A1916827E640013DEB5 /* SimplePing.h */,
-				93270A1A16827E640013DEB5 /* SimplePing.m */,
-			);
-			name = Ping;
 			sourceTree = "<group>";
 		};
 		935FEEDB1682CC2900BE3892 /* Views */ = {
@@ -452,8 +432,6 @@
 				932709F3168244E20013DEB5 /* BVMServerViewController.m in Sources */,
 				93270A02168269740013DEB5 /* NSArray+BVMArrayExtensions.m in Sources */,
 				93270A051682726F0013DEB5 /* BVMHumanValueTransformer.m in Sources */,
-				93270A14168279E60013DEB5 /* BVMPinger.m in Sources */,
-				93270A1B16827E640013DEB5 /* SimplePing.m in Sources */,
 				935FEEC216829B4700BE3892 /* BVMIPListViewController.m in Sources */,
 				935FEEC61682A0FA00BE3892 /* BVMSizesListViewController.m in Sources */,
 				935FEED11682BC3700BE3892 /* BVMServersManager.m in Sources */,
