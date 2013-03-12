@@ -4,6 +4,11 @@
 #import "iRate.h"
 #import "BVMServersListViewController.h"
 #import "BVMEmptyDetailViewController.h"
+#import "BWQuincyManager.h"
+
+@interface BVMAppDelegate () <BWQuincyManagerDelegate, UISplitViewControllerDelegate>
+
+@end
 
 @implementation BVMAppDelegate
 
@@ -21,6 +26,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[BWQuincyManager sharedQuincyManager] setSubmissionURL:@"http://quincy.cdzombak.net/crash_v200.php"];
+    [[BWQuincyManager sharedQuincyManager] setDelegate:self];
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
 
