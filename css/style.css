@@ -1,0 +1,306 @@
+/*-----------------------------------------------------------------------------------*/
+/*	Start Global CSS
+/*-----------------------------------------------------------------------------------*/
+
+body{
+	font-size:12px;
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	color:#555;
+	background:#f2f2f2;
+}
+
+a{
+	text-decoration:underline;
+}
+
+.header a, .bottom-wrapper a{
+    border-bottom: none;
+    color: #555555;
+    -webkit-transition: color .2s linear;
+	-moz-transition: color .2s linear;
+	-o-transition: color .2s linear;
+	-ms-transition: color .2s linear;
+	transition: color .2s linear;
+}
+
+.header a:hover, .bottom-wrapper a:hover{
+    color:#FF6248;
+}
+
+.footer-wrapper a{
+    border-bottom: none;
+    color: #ffffff;
+    -webkit-transition: color .2s linear;
+	-moz-transition: color .2s linear;
+	-o-transition: color .2s linear;
+	-ms-transition: color .2s linear;
+	transition: color .2s linear;
+}
+
+.footer-wrapper a:hover{
+    color:#000000;
+}
+
+.form-flex{
+	width:98% !important;
+	padding:1% !important;
+}
+
+/*-----------------------------------------------------------------------------------*/
+/*	Header & Social Links
+/*-----------------------------------------------------------------------------------*/
+
+.header{
+	background:#f2f2f2;
+	padding:20px 0 10px 0;
+}
+
+#nav{
+	float:right;
+}
+
+#nav a{
+	float:left;
+	margin-right:25px;
+	margin-top:11px;
+	margin-bottom:5px;
+}
+
+#nav a.last{
+	margin-right:0 !important;
+}
+
+/*-----------------------------------------------------------------------------------*/
+/*	Page Wrappers
+/*-----------------------------------------------------------------------------------*/
+
+.slider-wrapper{
+	background:#ffffff;
+	border-top:1px solid #EDEDED;
+	border-bottom:1px solid #EDEDED;
+	padding:20px 0px 0 0;
+}
+
+.bottom-wrapper{
+	padding:32px 0 0 0;
+	background:#f2f2f2;
+}
+
+/*-----------------------------------------------------------------------------------*/
+/*	Feature Styles & Feedback
+/*-----------------------------------------------------------------------------------*/
+
+.break-feature h2{
+	border-top:1px solid #D3D3D3;
+	border-bottom:1px solid #D3D3D3;
+	text-align:center;
+	font-family:'Dosis', sans-serif;
+	text-transform:uppercase;
+	padding:8px 0px;
+	color:#353534;
+	font-size:31px;
+}
+
+.break-feature p{
+	font-family:'Nobile', sans-serif;
+	font-size:13px;
+}
+
+.feedback div{
+	display:none;
+}
+
+.feedback p{
+	font-size:22px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	text-align:center;
+	line-height:30px;
+	margin:20px 0 5px 0;
+}
+
+.feedback cite{
+	float:right;
+	font-style:italic;
+}
+
+/*-----------------------------------------------------------------------------------*/
+/*	Footer Styles
+/*-----------------------------------------------------------------------------------*/
+
+.footer-wrapper{
+	background:#444;
+	padding:25px 0px;
+	color:#ffffff;
+}
+
+.footer-wrapper p{
+	margin-bottom:0px !important;
+	line-height:26px;
+}
+
+.footer-right{
+	text-align:right;
+	float:right;
+}
+
+#footer-top{
+	margin-top:8px;
+}
+
+.fleximage img{
+	max-width: 100%;
+	height: auto;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	-webkit-box-shadow:  0px 0px 3px 3px rgba(0, 0, 0, .10);
+    box-shadow:  0px 0px 3px 3px rgba(0, 0, 0, .10);
+}
+
+/*-----------------------------------------------------------------------------------*/
+/*	App Store Buttons
+/*-----------------------------------------------------------------------------------*/
+
+.appstore{
+	display:block;
+	height:24px;
+	line-height:24px;
+	text-decoration:none;
+	background:url(../images/devices.png) no-repeat transparent;
+	padding:0 0 0 50px;
+	margin:20px 0 0 0;
+	font-size:16px;
+	font-family:'Dosis', sans-serif;
+}
+
+.appstore.ipad{background-position:0px -25px;}
+.appstore.mac{background-position:0px -50px;}
+.appstore.cloud{background-position:0px -75px;}
+
+/*-----------------------------------------------------------------------------------*/
+/*	Social Buttons
+/*-----------------------------------------------------------------------------------*/
+
+.social{
+	display:block;
+	height:16px;
+	line-height:16px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	padding:0 0 0 23px !important;
+	text-decoration:none !important;
+	border-bottom:none !important;
+}
+
+.social.500px{background:url(../images/social-icons/500px.png) left center no-repeat transparent;}
+.social.behance{background:url(../images/social-icons/Behance.png) left center no-repeat transparent;}
+.social.blogger{background:url(../images/social-icons/Blogger.png) left center no-repeat transparent;}
+.social.delicious{background:url(../images/social-icons/Delicious.png) left center no-repeat transparent;}
+.social.deviantart{background:url(../images/social-icons/DeviantART.png) left center no-repeat transparent;}
+.social.digg{background:url(../images/social-icons/Digg.png) left center no-repeat transparent;}
+.social.dopplr{background:url(../images/social-icons/Dopplr.png) left center no-repeat transparent;}
+.social.dribbble{background:url(../images/social-icons/Dribbble.png) left center no-repeat transparent;}
+.social.evernote{background:url(../images/social-icons/Evernote.png) left center no-repeat transparent;}
+.social.facebook{background:url(../images/social-icons/FaceBook.png) left center no-repeat transparent;}
+.social.flickr{background:url(../images/social-icons/Flickr.png) left center no-repeat transparent;}
+.social.forrst{background:url(../images/social-icons/Forrst.png) left center no-repeat transparent;}
+.social.github{background:url(../images/social-icons/GitHub.png) left center no-repeat transparent;}
+.social.googleplus{background:url(../images/social-icons/GooglePlus.png) left center no-repeat transparent;}
+.social.grooveshark{background:url(../images/social-icons/Grooveshark.png) left center no-repeat transparent;}
+.social.instagram{background:url(../images/social-icons/Instagram.png) left center no-repeat transparent;}
+.social.lastfm{background:url(../images/social-icons/Lastfm.png) left center no-repeat transparent;}
+.social.linkedin{background:url(../images/social-icons/LinkedIn.png) left center no-repeat transparent;}
+.social.mail{background:url(../images/social-icons/Mail.png) left center no-repeat transparent;}
+.social.myspace{background:url(../images/social-icons/MySpace.png) left center no-repeat transparent;}
+.social.path{background:url(../images/social-icons/Path.png) left center no-repeat transparent;}
+.social.paypal{background:url(../images/social-icons/PayPal.png) left center no-repeat transparent;}
+.social.picasa{background:url(../images/social-icons/Picasa.png) left center no-repeat transparent;}
+.social.posterous{background:url(../images/social-icons/Posterous.png) left center no-repeat transparent;}
+.social.reddit{background:url(../images/social-icons/Reddit.png) left center no-repeat transparent;}
+.social.rss{background:url(../images/social-icons/RSS.png) left center no-repeat transparent;}
+.social.sharethis{background:url(../images/social-icons/ShareThis.png) left center no-repeat transparent;}
+.social.skype{background:url(../images/social-icons/Skype.png) left center no-repeat transparent;}
+.social.soundcloud{background:url(../images/social-icons/SoundCloud.png) left center no-repeat transparent;}
+.social.spotify{background:url(../images/social-icons/Spotify.png) left center no-repeat transparent;}
+.social.stumbleupon{background:url(../images/social-icons/Stumbleupon.png) left center no-repeat transparent;}
+.social.tumblr{background:url(../images/social-icons/Tumblr.png) left center no-repeat transparent;}
+.social.twitter{background:url(../images/social-icons/Twitter.png) left center no-repeat transparent;}
+.social.viddler{background:url(../images/social-icons/Viddler.png) left center no-repeat transparent;}
+.social.vimeo{background:url(../images/social-icons/Vimeo.png) left center no-repeat transparent;}
+.social.virb{background:url(../images/social-icons/Virb.png) left center no-repeat transparent;}
+.social.windows{background:url(../images/social-icons/Windows.png) left center no-repeat transparent;}
+.social.wordpress{background:url(../images/social-icons/WordPress.png) left center no-repeat transparent;}
+.social.youtube{background:url(../images/social-icons/Youtube.png) left center no-repeat transparent;}
+.social.zerply{background:url(../images/social-icons/Zerply.png) left center no-repeat transparent;}
+
+.icons{
+	padding:0 0 0 23px;
+	line-height:16px;
+	height:16px;
+	display:block;
+	color:#222222;
+	font-size:13px;
+	font-family:Arial, Helvetica, sans-serif;
+	margin:0 0 8px 0;
+	font-weight:bold;
+}
+
+.icons.add{background:url(../images/icons/add.png) left center no-repeat transparent;}
+.icons.alien{background:url(../images/icons/alien.png) left center no-repeat transparent;}
+.icons.calculator{background:url(../images/icons/calculator.png) left center no-repeat transparent;}
+.icons.calender{background:url(../images/icons/calender.png) left center no-repeat transparent;}
+.icons.cloud1{background:url(../images/icons/cloud1.png) left center no-repeat transparent;}
+.icons.cloud2{background:url(../images/icons/cloud2.png) left center no-repeat transparent;}
+.icons.cloud3{background:url(../images/icons/cloud3.png) left center no-repeat transparent;}
+.icons.comment1{background:url(../images/icons/comment1.png) left center no-repeat transparent;}
+.icons.comment2{background:url(../images/icons/comment2.png) left center no-repeat transparent;}
+.icons.comment3{background:url(../images/icons/comment3.png) left center no-repeat transparent;}
+.icons.comment4{background:url(../images/icons/comment4.png) left center no-repeat transparent;}
+.icons.cross{background:url(../images/icons/cross.png) left center no-repeat transparent;}
+.icons.down1{background:url(../images/icons/down1.png) left center no-repeat transparent;}
+.icons.down2{background:url(../images/icons/down2.png) left center no-repeat transparent;}
+.icons.female{background:url(../images/icons/female.png) left center no-repeat transparent;}
+.icons.flag{background:url(../images/icons/flag.png) left center no-repeat transparent;}
+.icons.heart{background:url(../images/icons/heart.png) left center no-repeat transparent;}
+.icons.home1{background:url(../images/icons/home1.png) left center no-repeat transparent;}
+.icons.home2{background:url(../images/icons/home2.png) left center no-repeat transparent;}
+.icons.identification{background:url(../images/icons/identification.png) left center no-repeat transparent;}
+.icons.image{background:url(../images/icons/image.png) left center no-repeat transparent;}
+.icons.images{background:url(../images/icons/images.png) left center no-repeat transparent;}
+.icons.iphone1{background:url(../images/icons/iphone1.png) left center no-repeat transparent;}
+.icons.iphone2{background:url(../images/icons/iphone2.png) left center no-repeat transparent;}
+.icons.link{background:url(../images/icons/link.png) left center no-repeat transparent;}
+.icons.mail1{background:url(../images/icons/mail1.png) left center no-repeat transparent;}
+.icons.mail2{background:url(../images/icons/mail2.png) left center no-repeat transparent;}
+.icons.male{background:url(../images/icons/male.png) left center no-repeat transparent;}
+.icons.monitor{background:url(../images/icons/monitor.png) left center no-repeat transparent;}
+.icons.mouse{background:url(../images/icons/mouse.png) left center no-repeat transparent;}
+.icons.paperplane{background:url(../images/icons/paperplane.png) left center no-repeat transparent;}
+.icons.pencil{background:url(../images/icons/pencil.png) left center no-repeat transparent;}
+.icons.piechart{background:url(../images/icons/piechart.png) left center no-repeat transparent;}
+.icons.polaroidcamera{background:url(../images/icons/polaroidcamera.png) left center no-repeat transparent;}
+.icons.remove{background:url(../images/icons/remove.png) left center no-repeat transparent;}
+.icons.ribbon{background:url(../images/icons/ribbon.png) left center no-repeat transparent;}
+.icons.search1{background:url(../images/icons/search1.png) left center no-repeat transparent;}
+.icons.search2{background:url(../images/icons/search2.png) left center no-repeat transparent;}
+.icons.search3{background:url(../images/icons/search3.png) left center no-repeat transparent;}
+.icons.settings{background:url(../images/icons/settings.png) left center no-repeat transparent;}
+.icons.star1{background:url(../images/icons/star1.png) left center no-repeat transparent;}
+.icons.star2{background:url(../images/icons/star2.png) left center no-repeat transparent;}
+.icons.stats1{background:url(../images/icons/stats1.png) left center no-repeat transparent;}
+.icons.stats2{background:url(../images/icons/stats2.png) left center no-repeat transparent;}
+.icons.stats3{background:url(../images/icons/stats3.png) left center no-repeat transparent;}
+.icons.telephone{background:url(../images/icons/telephone.png) left center no-repeat transparent;}
+.icons.testtube{background:url(../images/icons/testtube.png) left center no-repeat transparent;}
+.icons.tick{background:url(../images/icons/tick.png) left center no-repeat transparent;}
+.icons.trash{background:url(../images/icons/trash.png) left center no-repeat transparent;}
+.icons.tv{background:url(../images/icons/tv.png) left center no-repeat transparent;}
+.icons.ufo{background:url(../images/icons/ufo.png) left center no-repeat transparent;}
+.icons.up-down{background:url(../images/icons/up-down.png) left center no-repeat transparent;}
+.icons.up1{background:url(../images/icons/up1.png) left center no-repeat transparent;}
+.icons.up2{background:url(../images/icons/up2.png) left center no-repeat transparent;}
+.icons.views{background:url(../images/icons/views.png) left center no-repeat transparent;}
+.icons.vote1{background:url(../images/icons/vote1.png) left center no-repeat transparent;}
+.icons.vote2{background:url(../images/icons/vote2.png) left center no-repeat transparent;}
+.icons.wrench{background:url(../images/icons/wrench.png) left center no-repeat transparent;}

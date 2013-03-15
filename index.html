@@ -1,0 +1,216 @@
+---
+title: BuyVM Manager for iOS - BuyVM server management for iPhone and iPad
+
+description: "BuyVM Manager is an iPhone/iPad/iOS app for managing your BuyVM servers. Check on your servers, ping them, and even reboot/shutdown/boot them from your iPhone/iPad."
+---
+
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Meta -->
+	<meta charset="utf-8">
+	<title>BuyVM Manager for iOS - BuyVM server management for iPhone and iPad</title>
+	<meta name="description" content="BuyVM Manager is an iPhone/iPad/iOS app for managing your BuyVM servers. Check on your servers, ping them, and even reboot/shutdown/boot them from your iPhone/iPad.">
+	<meta name="author" content="Chris Dzombak">
+    <meta name="apple-itunes-app" content="app-id=591002061">
+
+	<!-- Mobile Metas & Icons -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="shortcut icon" href="favicon.png">
+
+    <!-- Include CSS -->
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/skeleton.css">
+	<!--<link rel="stylesheet" href="css/flexslider.css">-->
+	<link rel="stylesheet" href="css/fancybox.css">
+	<link rel="stylesheet" href="css/style.css">
+    <link href='http://fonts.googleapis.com/css?family=Dosis|Nobile' rel='stylesheet' type='text/css'>
+
+    <style type="text/css">
+        .slider-wrapper img { width: 900px; max-width: 100%; }
+        .bottom-wrapper { margin-top: -7px; border-top: 1px solid #d2d2d2; } /* hack */
+    </style>
+
+	<!-- Include JS -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <!-- <script src="js/jquery.flexslider-min.js"></script> -->
+    <script src="js/jquery.fancybox.pack.js"></script>
+    <!--<script src="js/jquery.fitvids.js"></script>-->
+    <script src="js/custom.js"></script>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-6672483-2']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+</head>
+<body>
+
+
+<!-- start header -->
+<div class="header">
+
+	<!-- start container -->
+    <div class="container">
+
+        <div id="logo" class="nine columns">
+            <a href="http://chris.dzombak.name/bvmmgr/" id="logo-img"><img src="images/logo.png" alt="BuyVM Manager" style="width:270px;"></a>
+        </div>
+
+        <div class="seven columns">
+        	<div id="nav">
+                <a href="http://twitter.com/cdzombak" class="social twitter">@cdzombak</a>
+                <a href="https://github.com/cdzombak/BuyVMManager-iOS" class="social">Github Project</a>
+            </div>
+        </div>
+
+    </div><!-- end container -->
+
+</div><!-- end header -->
+
+
+<!-- start slider wrapper -->
+<div class="slider-wrapper clearfix">
+<!-- I've removed the slider and am using only one hero image. -->
+
+    <!-- start container -->
+    <div class="container">
+
+        <div class="sixteen columns">
+            <img src="images/hero.png" title="BuyVM Manager screenshots" />
+        </div>
+
+    </div><!-- end container -->
+
+</div><!-- end slider wrapper -->
+
+
+<!-- bottom wrapper -->
+<div class="bottom-wrapper">
+
+	<!-- start container -->
+    <div class="container">
+
+    	<!-- start responsive row -->
+    	<div class="row">
+
+            <div class="break-feature one-third column">
+                <h2>Checkup</h2>
+                <p>Check on your VMs' <strong>memory, HDD,</strong> and <strong>bandwidth</strong> usage, and get an exhaustive list of their IPv4 and IPv6 addresses.</p>
+                <p>And BuyVM Manager <strong>pings</strong> the server right from your iOS device to check how it's doing.</p>
+            </div>
+
+            <div class="break-feature one-third column">
+                <h2>Reboot</h2>
+                <p><strong>Reboot a runaway VM,</strong> on the road, any time. BuyVM Manager lets you reboot, shutdown, and boot VMs from your iPhone or iPad.</p>
+                <p><a href="http://manpages.ubuntu.com/manpages/natty/man8/molly-guard.8.html">molly-guard</a> style hostname confirmation ensures you never reboot the wrong VM, no matter what else is on your mind.</p>
+            </div>
+
+            <div class="break-feature one-third column">
+                <h2>Get the app</h2>
+                <p><strong>What're you waiting for?</strong> <a href="https://itunes.apple.com/us/app/buyvm-manager/id591002061?ls=1&mt=8">BuyVM Manager is FREE</a>, and it's a universal iPhone/iPad app.</p>
+
+                <a href="https://itunes.apple.com/us/app/buyvm-manager/id591002061?ls=1&mt=8"><img src="images/appstore.png" style="width:140px; display:block; margin:-15px auto auto auto; padding:0;" alt="Available on the App Store" /></a>
+            </div>
+
+        </div><!-- end responsive row -->
+
+    	<!-- start row -->
+    	<div class="row break-feature clearfix">
+
+        	<div class="eight columns add-bottom">
+
+            	<h2>Get started!</h2>
+
+                <p>Get started by grabbing API keys for your VMs from <a href="https://manage.buyvm.net">the BuyVM management panel</a>. Select a server there, and click on the "API Settings" icon under the "System Control" section.</p>
+
+                <p>This app is now <strong>open source</strong>: <a href="https://github.com/cdzombak/BuyVMManager-iOS">check out the Github project</a>!</p>
+
+            </div>
+
+            <div class="eight columns">
+
+            	<h2>Just FYI</h2>
+
+                <p><strong>Grab your API keys quickly</strong> by scanning QR codes. Grab an extension <a href="https://chrome.google.com/webstore/detail/qr-code-generator/cicimfkkbejhggfjaabggafffgdnjgjp" title="QR Code Generator">like this one</a>, and you can highlight an API key in the BuyVM Manager, right-click, and get a QR code. Then, while you're adding a new VM to BuyVM Manager, touch the camera icon next to "API Key" or "API Hash" and scan away!</p>
+
+                <p><strong>Your BuyVM API keys are stored securely</strong> in your device's keychain, just like passwords. Because of that, you'll have to reenter them if you backup your device and restore the backup to a new one. It's for your own safety - really!</p>
+
+            </div>
+
+        </div><!-- end row -->
+
+
+        <!-- TODO: reviews, eventually
+    	<div class="row clearfix add-bottom">
+
+            <div class="sixteen columns break-feature break-buffer">
+
+                <h2>What People Are Saying</h2>
+
+                <div class="feedback">
+                    <div>
+                        <p>"Bold, bright, and functional Puree is a must have for any app designers toolkit."</p>
+                        <cite>- Forbes Magazine.</cite>
+                    </div>
+                    <div>
+                        <p>"If your site is not responsive, your doing it wrong!"</p>
+                        <cite>- Web Design Ledger.</cite>
+                    </div>
+                    <div>
+                        <p>"Puree Makes Going Responsive Easier and Cheaper Than Ever."</p>
+                        <cite>- Steve Jobs.</cite>
+                    </div>
+                    <div>
+                        <p>"Increase App Sales With A Quality, Responsive Landing Page!"</p>
+                        <cite>- Tyler Colwell</cite>
+                    </div>
+                </div>
+
+            </div>
+
+        </div> -->
+
+    </div><!-- end container -->
+
+</div><!-- end bottom-wrapper -->
+
+
+<!-- start footer-wrapper -->
+<div class="footer-wrapper">
+
+
+	<!-- start container -->
+    <div class="container">
+
+        <div class="sixteen columns clearfix">
+
+            <p>
+                BuyVM Manager and this site are made by <a href="http://chris.dzombak.name">Chris Dzombak</a>. &copy; 2013.<br />
+                I'm not officially affiliated with <a href="http://buyvm.net">BuyVM</a> at all; I just use their VMs, like you.
+            </p>
+
+        </div>
+
+	</div><!-- end container -->
+
+</div><!-- end footer-wrapper -->
+
+</body>
+</html>
