@@ -25,6 +25,7 @@ test-reports
 # Bundler
 .bundle
 Vendor/bundle/ruby
+/bin
 
 # CocoaPods
 Pods
