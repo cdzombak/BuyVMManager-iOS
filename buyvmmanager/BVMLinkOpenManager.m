@@ -42,6 +42,8 @@ __attribute__((constructor)) static void __BVMBrowserConstantsInit(void)
 
 + (void)setSelectedBrowser:(BVMBrowser)browser
 {
+    NSParameterAssert(browser >= 0 && browser < BVMNumBrowsers);
+
     [[NSUserDefaults standardUserDefaults] setInteger:browser forKey:kBVMBrowserPrefsKey];
 }
 

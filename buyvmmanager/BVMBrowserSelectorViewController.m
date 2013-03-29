@@ -1,5 +1,4 @@
 #import "BVMBrowserSelectorViewController.h"
-#import "BVMLinkOpenManager.h"
 #import "UIColor+BVMColors.h"
 
 @interface BVMBrowserSelectorViewController ()
@@ -13,7 +12,9 @@
 - (id)init
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
-    if (self) { }
+    if (self) {
+        self.tableViewCellSelectionStyle = UITableViewCellSelectionStyleBlue;
+    }
     return self;
 }
 
@@ -25,6 +26,12 @@
 
     self.tableView.backgroundColor = [UIColor bvm_tableViewBackgroundColor];
     self.tableView.backgroundView = nil;
+    self.tableViewCellSelectionStyle = UITableViewCellSelectionStyleGray;
+
+    CDZWeakSelf weakSelf = self;
+    self.browserSelectedBlock = ^(BVMBrowser browser) {
+        [weakSelf.navigationController popViewControllerAnimated:YES];
+    };
 
     self.contentSizeForViewInPopover = CGSizeMake(320, 44*BVMNumBrowsers + 20);
 }
@@ -37,7 +44,7 @@
 
     if ([BVMLinkOpenManager browserAvailable:indexPath.row]) {
         cell.textLabel.textColor = [UIColor darkTextColor];
-        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        cell.selectionStyle = self.tableViewCellSelectionStyle;
     } else {
         cell.textLabel.textColor = [UIColor lightGrayColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -64,7 +71,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString * const CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -78,13 +85,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [BVMLinkOpenManager setSelectedBrowser:indexPath.row];
+    BVMBrowser selectedBrowser = indexPath.row;
+    [BVMLinkOpenManager setSelectedBrowser:selectedBrowser];
+
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
 
     if (self.previouslySelectedIndexPath && [indexPath compare:self.previouslySelectedIndexPath] != NSOrderedSame) {
         [self.tableView cellForRowAtIndexPath:self.previouslySelectedIndexPath].accessoryType = UITableViewCellAccessoryNone;
+    }
+
+    if (self.browserSelectedBlock) {
+        self.browserSelectedBlock(selectedBrowser);
     }
 }
 
