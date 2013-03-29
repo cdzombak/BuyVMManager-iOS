@@ -3,6 +3,7 @@
 static NSString *kBVMBrowserPrefsKey = @"BVMBrowserPrefsKey";
 
 static NSString *kBVMBrowserNames[BVMNumBrowsers];
+static NSURL *kBVMBrowserTestURLs[BVMNumBrowsers];
 
 __attribute__((constructor)) static void __BVMBrowserConstantsInit(void)
 {
@@ -10,6 +11,10 @@ __attribute__((constructor)) static void __BVMBrowserConstantsInit(void)
         kBVMBrowserNames[BVMBrowserSafari] = NSLocalizedString(@"Safari", nil);
         kBVMBrowserNames[BVMBrowserOnePassword] = NSLocalizedString(@"1Password", nil);
         kBVMBrowserNames[BVMBrowserChrome] = NSLocalizedString(@"Google Chrome", nil);
+
+        kBVMBrowserTestURLs[BVMBrowserSafari] = [NSURL URLWithString:@"http://google.com"];
+        kBVMBrowserTestURLs[BVMBrowserChrome] = [NSURL URLWithString:@"googlechrome://google.com"];
+        kBVMBrowserTestURLs[BVMBrowserOnePassword] = [NSURL URLWithString:@"onepassword://search"];
     }
 }
 
@@ -19,17 +24,13 @@ __attribute__((constructor)) static void __BVMBrowserConstantsInit(void)
 
 + (BOOL)browserAvailable:(BVMBrowser)browser
 {
-    switch(browser) {
-        case BVMBrowserSafari:
-            return YES;
-        case BVMBrowserChrome:
-            return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"googlechrome://google.com"]];
-        case BVMBrowserOnePassword:
-            return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"onepassword://search"]];
-        default:
-            NSLog(@"Unknown browser %d in %s", browser, __PRETTY_FUNCTION__);
-            return NO;
+    if (browser >= BVMNumBrowsers || browser < 0) {
+        NSLog(@"Unknown browser %d in %s", browser, __PRETTY_FUNCTION__);
+        return NO;
     }
+
+    NSURL *testURL = kBVMBrowserTestURLs[browser];
+    return [[UIApplication sharedApplication] canOpenURL:testURL];
 }
 
 #pragma mark Default browser management
