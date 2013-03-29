@@ -93,8 +93,10 @@ __attribute__((constructor)) static void __BVMBrowserConstantsInit(void)
 
 + (NSString *)nameForBrowser:(BVMBrowser)browser
 {
-    NSParameterAssert(browser < BVMNumBrowsers);
-    NSParameterAssert(browser >= 0);
+    if (browser >= BVMNumBrowsers || browser < 0) {
+        NSLog(@"Unknown browser %d in %s", browser, __PRETTY_FUNCTION__);
+        return nil;
+    }
 
     return kBVMBrowserNames[browser];
 }
