@@ -36,6 +36,7 @@ __attribute__((constructor)) static void __BVMBrowserConstantsInit(void)
 #pragma mark Default browser management
 
 + (BVMBrowser)selectedBrowser {
+    // note: if not set, this falls back to 0 == BVMBrowserSafari
     return [[NSUserDefaults standardUserDefaults] integerForKey:kBVMBrowserPrefsKey];
 }
 
