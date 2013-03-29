@@ -1,6 +1,6 @@
 #import "BVMAboutSettingsViewController.h"
 #import "CDZLinkOpenManager.h"
-#import "CDZBrowserSelectorViewController.h"
+#import "BVMBrowserSelectorViewController.h"
 #import "UIColor+BVMColors.h"
 
 typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableViewSections) {
@@ -118,7 +118,7 @@ __attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableCo
 
 - (void)pushToBrowserSelector
 {
-    UIViewController *browserSelector = [[CDZBrowserSelectorViewController alloc] init];
+    UIViewController *browserSelector = [[BVMBrowserSelectorViewController alloc] init];
     [self.navigationController pushViewController:browserSelector animated:YES];
 }
 

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		130AAD4E603A434F8D6A27DC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5465409E48DF47418E17CBD0 /* libPods.a */; };
+		83D310D61706154500BBE53D /* BVMBrowserSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D310D51706154500BBE53D /* BVMBrowserSelectorViewController.m */; };
 		932709BC1682353E0013DEB5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932709BB1682353E0013DEB5 /* UIKit.framework */; };
 		932709BE1682353E0013DEB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932709BD1682353E0013DEB5 /* Foundation.framework */; };
 		932709C01682353E0013DEB5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932709BF1682353E0013DEB5 /* CoreGraphics.framework */; };
@@ -62,6 +63,8 @@
 /* Begin PBXFileReference section */
 		5465409E48DF47418E17CBD0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		80B2C269AC9B4268AAA56007 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		83D310D41706154500BBE53D /* BVMBrowserSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMBrowserSelectorViewController.h; sourceTree = "<group>"; };
+		83D310D51706154500BBE53D /* BVMBrowserSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMBrowserSelectorViewController.m; sourceTree = "<group>"; };
 		932709B71682353E0013DEB5 /* buyvmmanager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = buyvmmanager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		932709BB1682353E0013DEB5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		932709BD1682353E0013DEB5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -262,6 +265,8 @@
 				937CCC70168533700075BD01 /* BVMAboutSettingsViewController.m */,
 				935FEED51682C87300BE3892 /* BVMAddEditServerViewController.h */,
 				93ADFEE0168F487F00F8256C /* BVMAddEditServerViewController.m */,
+				83D310D41706154500BBE53D /* BVMBrowserSelectorViewController.h */,
+				83D310D51706154500BBE53D /* BVMBrowserSelectorViewController.m */,
 				93E5D84216EE727900C57111 /* CDZBrowserSelectorViewController.h */,
 				93E5D84316EE727A00C57111 /* CDZBrowserSelectorViewController.m */,
 				9382C96F16E3F36B00191302 /* BVMEmptyDetailViewController.h */,
@@ -447,6 +452,7 @@
 				9382C97216E3F36B00191302 /* BVMEmptyDetailViewController.m in Sources */,
 				93E5D84416EE727B00C57111 /* CDZBrowserSelectorViewController.m in Sources */,
 				93E5D84716EE73D400C57111 /* CDZLinkOpenManager.m in Sources */,
+				83D310D61706154500BBE53D /* BVMBrowserSelectorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
