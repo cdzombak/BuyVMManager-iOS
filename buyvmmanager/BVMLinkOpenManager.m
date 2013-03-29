@@ -2,14 +2,14 @@
 
 static NSString *kBVMBrowserPrefsKey = @"BVMBrowserPrefsKey";
 
-static NSString * BVMBrowserNames[BVMNumBrowsers];
+static NSString *kBVMBrowserNames[BVMNumBrowsers];
 
 __attribute__((constructor)) static void __BVMBrowserConstantsInit(void)
 {
     @autoreleasepool {
-        BVMBrowserNames[BVMBrowserSafari] = NSLocalizedString(@"Safari", nil);
-        BVMBrowserNames[BVMBrowserOnePassword] = NSLocalizedString(@"1Password", nil);
-        BVMBrowserNames[BVMBrowserChrome] = NSLocalizedString(@"Google Chrome", nil);
+        kBVMBrowserNames[BVMBrowserSafari] = NSLocalizedString(@"Safari", nil);
+        kBVMBrowserNames[BVMBrowserOnePassword] = NSLocalizedString(@"1Password", nil);
+        kBVMBrowserNames[BVMBrowserChrome] = NSLocalizedString(@"Google Chrome", nil);
     }
 }
 
@@ -95,7 +95,7 @@ __attribute__((constructor)) static void __BVMBrowserConstantsInit(void)
     NSParameterAssert(browser < BVMNumBrowsers);
     NSParameterAssert(browser >= 0);
 
-    return BVMBrowserNames[browser];
+    return kBVMBrowserNames[browser];
 }
 
 @end
