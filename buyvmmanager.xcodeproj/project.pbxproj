@@ -54,8 +54,6 @@
 		93ADFEE1168F487F00F8256C /* BVMAddEditServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93ADFEE0168F487F00F8256C /* BVMAddEditServerViewController.m */; };
 		93BADD411683C19900B0CD6F /* UIColor+BVMColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADD401683C19900B0CD6F /* UIColor+BVMColors.m */; };
 		93BADD481684DE9D00B0CD6F /* BVMAPIResponseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADD471684DE9D00B0CD6F /* BVMAPIResponseParser.m */; };
-		93E5D84416EE727B00C57111 /* CDZBrowserSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E5D84316EE727A00C57111 /* CDZBrowserSelectorViewController.m */; };
-		93E5D84716EE73D400C57111 /* CDZLinkOpenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E5D84616EE73D200C57111 /* CDZLinkOpenManager.m */; };
 		93E5D84916EE83EA00C57111 /* 072-Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93E5D84816EE83EA00C57111 /* 072-Settings@2x.png */; };
 		93E5D84B16EE83FE00C57111 /* 072-Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 93E5D84A16EE83FE00C57111 /* 072-Settings.png */; };
 /* End PBXBuildFile section */
@@ -136,10 +134,6 @@
 		93BADD491684E47A00B0CD6F /* NSError+BVMErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+BVMErrors.h"; sourceTree = "<group>"; };
 		93BADD4A1684E47A00B0CD6F /* NSError+BVMErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+BVMErrors.m"; sourceTree = "<group>"; };
 		93BADD4C1684E60A00B0CD6F /* BVMErrorDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMErrorDomain.h; sourceTree = "<group>"; };
-		93E5D84216EE727900C57111 /* CDZBrowserSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDZBrowserSelectorViewController.h; sourceTree = "<group>"; };
-		93E5D84316EE727A00C57111 /* CDZBrowserSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDZBrowserSelectorViewController.m; sourceTree = "<group>"; };
-		93E5D84516EE73D200C57111 /* CDZLinkOpenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDZLinkOpenManager.h; sourceTree = "<group>"; };
-		93E5D84616EE73D200C57111 /* CDZLinkOpenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDZLinkOpenManager.m; sourceTree = "<group>"; };
 		93E5D84816EE83EA00C57111 /* 072-Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "072-Settings@2x.png"; sourceTree = "<group>"; };
 		93E5D84A16EE83FE00C57111 /* 072-Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "072-Settings.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -206,8 +200,6 @@
 				937CCC441684F5B70075BD01 /* BVMErrorDomain.m */,
 				93270A031682726F0013DEB5 /* BVMHumanValueTransformer.h */,
 				93270A041682726F0013DEB5 /* BVMHumanValueTransformer.m */,
-				93E5D84516EE73D200C57111 /* CDZLinkOpenManager.h */,
-				93E5D84616EE73D200C57111 /* CDZLinkOpenManager.m */,
 				935FEECF1682BC3700BE3892 /* BVMServersManager.h */,
 				935FEED01682BC3700BE3892 /* BVMServersManager.m */,
 				938662D81691F7F60049D6A1 /* CDZViewControllerModalDismissal.h */,
@@ -267,8 +259,6 @@
 				93ADFEE0168F487F00F8256C /* BVMAddEditServerViewController.m */,
 				83D310D41706154500BBE53D /* BVMBrowserSelectorViewController.h */,
 				83D310D51706154500BBE53D /* BVMBrowserSelectorViewController.m */,
-				93E5D84216EE727900C57111 /* CDZBrowserSelectorViewController.h */,
-				93E5D84316EE727A00C57111 /* CDZBrowserSelectorViewController.m */,
 				9382C96F16E3F36B00191302 /* BVMEmptyDetailViewController.h */,
 				9382C97016E3F36B00191302 /* BVMEmptyDetailViewController.m */,
 				9382C97116E3F36B00191302 /* BVMEmptyDetailViewController.xib */,
@@ -450,8 +440,6 @@
 				93ADFEDD168EB82C00F8256C /* KCMutableDictionary.m in Sources */,
 				93ADFEE1168F487F00F8256C /* BVMAddEditServerViewController.m in Sources */,
 				9382C97216E3F36B00191302 /* BVMEmptyDetailViewController.m in Sources */,
-				93E5D84416EE727B00C57111 /* CDZBrowserSelectorViewController.m in Sources */,
-				93E5D84716EE73D400C57111 /* CDZLinkOpenManager.m in Sources */,
 				83D310D61706154500BBE53D /* BVMBrowserSelectorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,5 +1,6 @@
 PODS:
   - AFNetworking (1.0.1)
+  - CDZLinkOpenManager (1.0)
   - CDZPinger (1.0)
   - iRate (1.7.2)
   - KissXML (5.0)
@@ -10,6 +11,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - CDZLinkOpenManager (from `https://raw.github.com/cdzombak/CDZLinkOpenManager/master/CDZLinkOpenManager.podspec`)
   - CDZPinger (from `https://raw.github.com/cdzombak/CDZPinger/master/CDZPinger.podspec`)
   - iRate
   - KissXML
@@ -19,11 +21,14 @@ DEPENDENCIES:
   - ZBarSDK
 
 EXTERNAL SOURCES:
+  CDZLinkOpenManager:
+    :podspec: https://raw.github.com/cdzombak/CDZLinkOpenManager/master/CDZLinkOpenManager.podspec
   CDZPinger:
     :podspec: https://raw.github.com/cdzombak/CDZPinger/master/CDZPinger.podspec
 
 SPEC CHECKSUMS:
   AFNetworking: 0bce3ae41023e080e96b8a2e0d07c94709f72a81
+  CDZLinkOpenManager: 3085d07c7572b2fdc80217d8a3bc350a977f19b9
   CDZPinger: 90f5eb629f26b780d08a3359ba4d504896359fbb
   iRate: eb1d02ff0a2bfee220f5fe028583b4ce5f3ef3bd
   KissXML: 8dfe0fb6d4e987fec63656ff07d5e697f49976f8
