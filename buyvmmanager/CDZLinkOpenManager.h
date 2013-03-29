@@ -1,28 +1,28 @@
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, BVMBrowser) {
-    BVMBrowserSafari = 0,
-    BVMBrowserChrome,
-    BVMBrowserOnePassword,
-    BVMNumBrowsers
+typedef NS_ENUM(NSInteger, CDZBrowser) {
+    CDZBrowserSafari = 0,
+    CDZBrowserChrome,
+    CDZBrowserOnePassword,
+    CDZNumBrowsers
 };
 
-@interface BVMLinkOpenManager : NSObject
+@interface CDZLinkOpenManager : NSObject
 
 /**
  * Returns YES if the given browser is available on this device.
  */
-+ (BOOL)browserAvailable:(BVMBrowser)browser;
++ (BOOL)browserAvailable:(CDZBrowser)browser;
 
 /**
  * Returns the user's selected default browser.
  */
-+ (BVMBrowser)selectedBrowser;
++ (CDZBrowser)selectedBrowser;
 
 /**
  * Sets the user's selected default browser.
  */
-+ (void)setSelectedBrowser:(BVMBrowser)browser;
++ (void)setSelectedBrowser:(CDZBrowser)browser;
 
 /**
  * Opens the given URL.
@@ -35,6 +35,6 @@ typedef NS_ENUM(NSInteger, BVMBrowser) {
 /**
  * Returns the human-friendly name for the given browser.
  */
-+ (NSString *)nameForBrowser:(BVMBrowser)browser;
++ (NSString *)nameForBrowser:(CDZBrowser)browser;
 
 @end

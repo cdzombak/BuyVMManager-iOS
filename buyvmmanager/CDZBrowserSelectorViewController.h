@@ -1,9 +1,9 @@
 #import <UIKit/UIKit.h>
-#import "BVMLinkOpenManager.h"
+#import "CDZLinkOpenManager.h"
 
-typedef void (^BVMBrowserSelectedBlock)(BVMBrowser browser);
+typedef void (^CDZBrowserSelectedBlock)(CDZBrowser browser);
 
-@interface BVMBrowserSelectorViewController : UITableViewController
+@interface CDZBrowserSelectorViewController : UITableViewController
 
 /**
  * This block will be called when the user selects a browser.
@@ -11,7 +11,7 @@ typedef void (^BVMBrowserSelectedBlock)(BVMBrowser browser);
  * You might take this opportunity to dismiss a popover or pop your
  * navigation controller, for example.
  */
-@property (nonatomic, copy) BVMBrowserSelectedBlock browserSelectedBlock;
+@property (nonatomic, copy) CDZBrowserSelectedBlock browserSelectedBlock;
 
 /**
  * You can customize the UItableView's cell selection style here.

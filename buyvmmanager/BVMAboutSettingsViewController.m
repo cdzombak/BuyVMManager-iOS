@@ -1,6 +1,6 @@
 #import "BVMAboutSettingsViewController.h"
-#import "BVMLinkOpenManager.h"
-#import "BVMBrowserSelectorViewController.h"
+#import "CDZLinkOpenManager.h"
+#import "CDZBrowserSelectorViewController.h"
 #import "UIColor+BVMColors.h"
 
 typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableViewSections) {
@@ -89,25 +89,25 @@ __attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableCo
 - (void)reportIssue
 {
     NSString *url = @"https://github.com/cdzombak/BuyVMManager-iOS/issues/new";
-    [BVMLinkOpenManager openURLString:url];
+    [CDZLinkOpenManager openURLString:url];
 }
 
 - (void)openGithubProject
 {
     NSString *url = @"https://github.com/cdzombak/BuyVMManager-iOS/";
-    [BVMLinkOpenManager openURLString:url];
+    [CDZLinkOpenManager openURLString:url];
 }
 
 - (void)openStallion
 {
     NSString *url = @"https://manage.buyvm.net";
-    [BVMLinkOpenManager openURLString:url];
+    [CDZLinkOpenManager openURLString:url];
 }
 
 - (void)openClientArea
 {
     NSString *url = @"https://my.frantech.ca";
-    [BVMLinkOpenManager openURLString:url];
+    [CDZLinkOpenManager openURLString:url];
 }
 
 - (void)doneButtonTapped
@@ -118,7 +118,7 @@ __attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableCo
 
 - (void)pushToBrowserSelector
 {
-    UIViewController *browserSelector = [[BVMBrowserSelectorViewController alloc] init];
+    UIViewController *browserSelector = [[CDZBrowserSelectorViewController alloc] init];
     [self.navigationController pushViewController:browserSelector animated:YES];
 }
 

@@ -1,13 +1,13 @@
-#import "BVMBrowserSelectorViewController.h"
+#import "CDZBrowserSelectorViewController.h"
 #import "UIColor+BVMColors.h"
 
-@interface BVMBrowserSelectorViewController ()
+@interface CDZBrowserSelectorViewController ()
 
 @property (nonatomic, strong) NSIndexPath *previouslySelectedIndexPath;
 
 @end
 
-@implementation BVMBrowserSelectorViewController
+@implementation CDZBrowserSelectorViewController
 
 - (id)init
 {
@@ -29,20 +29,20 @@
     self.tableViewCellSelectionStyle = UITableViewCellSelectionStyleGray;
 
     CDZWeakSelf weakSelf = self;
-    self.browserSelectedBlock = ^(BVMBrowser browser) {
+    self.browserSelectedBlock = ^(CDZBrowser browser) {
         [weakSelf.navigationController popViewControllerAnimated:YES];
     };
 
-    self.contentSizeForViewInPopover = CGSizeMake(320, 44*BVMNumBrowsers + 20);
+    self.contentSizeForViewInPopover = CGSizeMake(320, 44*CDZNumBrowsers + 20);
 }
 
 #pragma mark UI Help
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    cell.textLabel.text = [BVMLinkOpenManager nameForBrowser:indexPath.row];
+    cell.textLabel.text = [CDZLinkOpenManager nameForBrowser:indexPath.row];
 
-    if ([BVMLinkOpenManager browserAvailable:indexPath.row]) {
+    if ([CDZLinkOpenManager browserAvailable:indexPath.row]) {
         cell.textLabel.textColor = [UIColor darkTextColor];
         cell.selectionStyle = self.tableViewCellSelectionStyle;
     } else {
@@ -50,7 +50,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 
-    if ([BVMLinkOpenManager selectedBrowser] == indexPath.row) {
+    if ([CDZLinkOpenManager selectedBrowser] == indexPath.row) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -66,7 +66,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return BVMNumBrowsers;
+    return CDZNumBrowsers;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -85,8 +85,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BVMBrowser selectedBrowser = indexPath.row;
-    [BVMLinkOpenManager setSelectedBrowser:selectedBrowser];
+    CDZBrowser selectedBrowser = indexPath.row;
+    [CDZLinkOpenManager setSelectedBrowser:selectedBrowser];
 
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 
@@ -104,9 +104,9 @@
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // hack:
-    self.previouslySelectedIndexPath = [NSIndexPath indexPathForRow:[BVMLinkOpenManager selectedBrowser] inSection:0];
+    self.previouslySelectedIndexPath = [NSIndexPath indexPathForRow:[CDZLinkOpenManager selectedBrowser] inSection:0];
 
-    if ([BVMLinkOpenManager browserAvailable:indexPath.row]) return indexPath;
+    if ([CDZLinkOpenManager browserAvailable:indexPath.row]) return indexPath;
     else return nil;
 }
 
