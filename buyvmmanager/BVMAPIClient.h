@@ -9,7 +9,7 @@ static NSString * const kBuyVMAPIPath = @"command.php";
 - (void)getPath:(NSString *)path
      parameters:(NSDictionary *)parameters
 timeoutInterval:(NSTimeInterval)timeout
-        success:(void ( ^ ) ( AFHTTPRequestOperation *operation , id responseObject ))success
-        failure:(void ( ^ ) ( AFHTTPRequestOperation *operation , NSError *error ))failure;
+        success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 @end
