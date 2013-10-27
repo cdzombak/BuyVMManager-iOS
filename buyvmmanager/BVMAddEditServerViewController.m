@@ -329,11 +329,10 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 - (UIView *)footerView
 {
     if (!_footerView) {
-        NSString *notes = NSLocalizedString(@"Server name may be anything you like.\nAPI Key and API Hash must be entered exactly as they appear in the VPS Control Panel at https://manage.buyvm.net/ clientapi.php.\nCopying these from elsewhere - an email, for example - is easiest.\nYou may scan QR codes for these fields by tapping the camera icon.", nil);
+        NSString *notes = NSLocalizedString(@"Server name may be anything you like.\nAPI Key and API Hash must be entered exactly as they appear in the VPS Control Panel at https://​manage.buyvm.net.\nCopying these from elsewhere—an email, for example—is easiest.\nScan QR codes for these fields by tapping the camera icon.", nil);
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(18, 0, self.view.bounds.size.width-36, 170)];
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor darkGrayColor];
-        label.shadowOffset = CGSizeMake(0, 1.0);
         label.text = notes;
         label.lineBreakMode = UILineBreakModeWordWrap;
         label.numberOfLines = 0;
