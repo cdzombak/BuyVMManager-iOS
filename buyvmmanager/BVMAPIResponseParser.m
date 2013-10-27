@@ -1,6 +1,5 @@
 #import "BVMAPIResponseParser.h"
 #import "BVMErrorDomain.h"
-#import "NSArray+BVMArrayExtensions.h"
 #import "DDXML.h"
 
 @interface BVMAPIResponseParser ()
@@ -55,7 +54,7 @@
     NSString *xpathQuery = [NSString stringWithFormat:@"//%@", nodeName];
     NSArray *nodes = [self.xmlDoc nodesForXPath:xpathQuery error:NULL];
     if (!nodes || !nodes.count) return nil;
-    DDXMLNode *textNode = [nodes bvm_firstObject];
+    DDXMLNode *textNode = [nodes firstObject];
     return [[textNode childAtIndex:0] stringValue];
 }
 
