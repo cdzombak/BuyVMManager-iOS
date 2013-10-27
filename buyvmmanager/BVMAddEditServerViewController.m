@@ -14,22 +14,18 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 @interface BVMAddEditServerViewController () <UITextFieldDelegate>
 
 @property (nonatomic, copy) NSString *editingServerId;
-@property (nonatomic, assign) BOOL didLoadEditingContent;
 @property (nonatomic, copy) NSString *savedApiKey;
 @property (nonatomic, copy) NSString *savedApiHash;
 
-@property (nonatomic, readonly, strong) UITableViewCell *serverNameCell;
-@property (nonatomic, readonly, strong) UITableViewCell *apiKeyCell;
-@property (nonatomic, readonly, strong) UITableViewCell *apiHashCell;
-
+@property (nonatomic, strong) UITableViewCell *serverNameCell;
+@property (nonatomic, strong) UITableViewCell *apiKeyCell;
+@property (nonatomic, strong) UITableViewCell *apiHashCell;
 @property (nonatomic, weak) UITextField *serverNameField;
 @property (nonatomic, weak) UITextField *apiKeyField;
 @property (nonatomic, weak) UITextField *apiHashField;
 
 @property (nonatomic, readonly, strong) UIView *footerView;
 @property (nonatomic, readonly, weak) UILabel *footerLabel;
-
-@property (nonatomic, weak) UITextField *currentReadingTextField;
 
 @property (nonatomic, readonly) NSString *apiKeyHiddenText;
 @property (nonatomic, readonly) NSString *apiHashHiddenText;
@@ -40,10 +36,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 
 @synthesize footerView = _footerView,
             footerLabel = _footerLabel,
-            dismissBlock = _dismissBlock,
-            serverNameCell = _serverNameCell,
-            apiKeyCell = _apiKeyCell,
-            apiHashCell = _apiHashCell
+            dismissBlock = _dismissBlock
             ;
 
 - (id)initForServerId:(NSString *)serverId
@@ -51,13 +44,12 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         self.editingServerId = serverId;
-        self.didLoadEditingContent = NO;
 
-        if (self.editingServerId) {
-            self.title = NSLocalizedString(@"Edit VM", nil);
-        } else {
-            self.title = NSLocalizedString(@"Add VM", nil);
-        }
+        NSDictionary *credentials = [BVMServersManager credentialsForServerId:self.editingServerId];
+        self.savedApiHash = credentials[kBVMServerKeyAPIHash];
+        self.savedApiKey = credentials[kBVMServerKeyAPIKey];
+
+        self.title = self.editingServerId ? NSLocalizedString(@"Edit VM", nil) : NSLocalizedString(@"Add VM", nil);
     }
     return self;
 }
@@ -77,28 +69,62 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
                                                                                            target:self
                                                                                            action:@selector(doneButtonTouched)];
 
-    self.contentSizeForViewInPopover = CGSizeMake(320, self.footerView.frame.origin.y + self.footerView.frame.size.height);
+    [self initializeCells];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-    if (self.editingServerId && !self.didLoadEditingContent) {
-        NSString *serverName = [BVMServersManager servers][self.editingServerId];
-        self.serverNameField.text = serverName;
-
-        NSDictionary *credentials = [BVMServersManager credentialsForServerId:self.editingServerId];
-        self.savedApiHash = credentials[kBVMServerKeyAPIHash];
-        self.savedApiKey = credentials[kBVMServerKeyAPIKey];
-
-        if (self.savedApiKey != nil && ![self.savedApiKey isEqualToString:@""])
-            self.apiKeyField.text = self.apiKeyHiddenText;
-        if (self.savedApiHash != nil && ![self.savedApiHash isEqualToString:@""])
-            self.apiHashField.text = self.apiHashHiddenText;
-
-        self.didLoadEditingContent = YES;
+- (void)initializeCells {
+    {
+        BVMTextFieldTableViewCell *cell = [[BVMTextFieldTableViewCell alloc] initWithReuseIdentifier:@"Cell"];
+        UITextField *tf = cell.textField;
+        tf.placeholder = NSLocalizedString(@"Server Name", nil);
+        tf.returnKeyType = UIReturnKeyNext;
+        tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        tf.autocorrectionType = UITextAutocorrectionTypeNo;
+        tf.delegate = self;
+        self.serverNameField = tf;
+        self.serverNameCell = cell;
     }
+
+    {
+        BVMTextFieldTableViewCell *cell = [[BVMTextFieldTableViewCell alloc] initWithReuseIdentifier:@"Cell"];
+        UITextField *tf = cell.textField;
+        tf.placeholder = NSLocalizedString(@"API Key", nil);
+        tf.returnKeyType = UIReturnKeyNext;
+        CGFloat height = [self.tableView.delegate tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+        tf.rightView = [self buildCameraViewWithHeight:height
+                                           tapSelector:@selector(scanQRForApiKey)];
+        tf.rightViewMode = UITextFieldViewModeUnlessEditing;
+        tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        tf.autocorrectionType = UITextAutocorrectionTypeNo;
+        tf.delegate = self;
+        self.apiKeyField = tf;
+        self.apiKeyCell = cell;
+    }
+
+    {
+        BVMTextFieldTableViewCell *cell = [[BVMTextFieldTableViewCell alloc] initWithReuseIdentifier:@"Cell"];
+        UITextField *tf = cell.textField;
+        tf.placeholder = NSLocalizedString(@"API Hash", nil);
+        tf.returnKeyType = UIReturnKeyDone;
+        CGFloat height = [self.tableView.delegate tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+        tf.rightView = [self buildCameraViewWithHeight:height
+                                           tapSelector:@selector(scanQRForApiHash)];
+        tf.rightViewMode = UITextFieldViewModeUnlessEditing;
+        tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        tf.autocorrectionType = UITextAutocorrectionTypeNo;
+        tf.delegate = self;
+        self.apiHashField = tf;
+        self.apiHashCell = cell;
+    }
+
+    if (self.editingServerId)
+        self.serverNameField.text = [BVMServersManager servers][self.editingServerId];
+
+    if (self.savedApiKey && ![self.savedApiKey isEqualToString:@""])
+        self.apiKeyField.text = self.apiKeyHiddenText;
+
+    if (self.savedApiHash && ![self.savedApiHash isEqualToString:@""])
+        self.apiHashField.text = self.apiHashHiddenText;
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -266,62 +292,6 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 }
 
 #pragma mark Property Overrides
-
-- (UITableViewCell *)serverNameCell
-{
-    if (!_serverNameCell) {
-        BVMTextFieldTableViewCell *cell = [[BVMTextFieldTableViewCell alloc] initWithReuseIdentifier:@"Cell"];
-        UITextField *tf = cell.textField;
-        tf.placeholder = NSLocalizedString(@"Server Name", nil);
-        tf.returnKeyType = UIReturnKeyNext;
-        tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        tf.autocorrectionType = UITextAutocorrectionTypeNo;
-        tf.delegate = self;
-        self.serverNameField = tf;
-        _serverNameCell = cell;
-    }
-    return _serverNameCell;
-}
-
-- (UITableViewCell *)apiKeyCell
-{
-    if (!_apiKeyCell) {
-        BVMTextFieldTableViewCell *cell = [[BVMTextFieldTableViewCell alloc] initWithReuseIdentifier:@"Cell"];
-        UITextField *tf = cell.textField;
-        tf.placeholder = NSLocalizedString(@"API Key", nil);
-        tf.returnKeyType = UIReturnKeyNext;
-        CGFloat height = [self.tableView.delegate tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-        tf.rightView = [self buildCameraViewWithHeight:height
-                                           tapSelector:@selector(scanQRForApiKey)];
-        tf.rightViewMode = UITextFieldViewModeUnlessEditing;
-        tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        tf.autocorrectionType = UITextAutocorrectionTypeNo;
-        tf.delegate = self;
-        self.apiKeyField = tf;
-        _apiKeyCell = cell;
-    }
-    return _apiKeyCell;
-}
-
-- (UITableViewCell *)apiHashCell
-{
-    if (!_apiHashCell) {
-        BVMTextFieldTableViewCell *cell = [[BVMTextFieldTableViewCell alloc] initWithReuseIdentifier:@"Cell"];
-        UITextField *tf = cell.textField;
-        tf.placeholder = NSLocalizedString(@"API Hash", nil);
-        tf.returnKeyType = UIReturnKeyDone;
-        CGFloat height = [self.tableView.delegate tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
-        tf.rightView = [self buildCameraViewWithHeight:height
-                                           tapSelector:@selector(scanQRForApiHash)];
-        tf.rightViewMode = UITextFieldViewModeUnlessEditing;
-        tf.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        tf.autocorrectionType = UITextAutocorrectionTypeNo;
-        tf.delegate = self;
-        self.apiHashField = tf;
-        _apiHashCell = cell;
-    }
-    return _apiHashCell;
-}
 
 - (UIView *)footerView
 {
