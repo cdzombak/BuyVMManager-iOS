@@ -207,7 +207,7 @@
     cell.textLabel.textColor = [UIColor blackColor];
     cell.detailTextLabel.text = @"";
 
-    [BVMServerInfo requestInfoForServerId:serverId withBlock:^(BVMServerInfo *info, NSError *error) {
+    [BVMServerInfo requestInfoForServerId:serverId success:^(BVMServerInfo *info) {
         BVMServerStatus status = info.status;
         if (status == BVMServerStatusOffline) {
             cell.textLabel.textColor = [UIColor redColor];
@@ -223,8 +223,11 @@
         } else if (info.hostname) {
             cell.detailTextLabel.text = [NSString stringWithFormat:@"(%@)", info.hostname];
         }
+    } error:^(NSError *error) {
+        cell.textLabel.textColor = [UIColor blueColor];
+        cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ [unknown]", nil), cell.textLabel.text];
+    } completion:^{
         [cell setNeedsLayout];
-
         [self.refreshControl endRefreshing];
     }];
 }

@@ -30,8 +30,14 @@ static const NSTimeInterval kBVMInfoTimeoutInterval = 20.0;
 @implementation BVMServerInfo
 
 + (void)requestInfoForServerId:(NSString *)serverId
-                     withBlock:(void (^)(BVMServerInfo *, NSError *))resultBlock
+                       success:(void (^)(BVMServerInfo *info))successBlock
+                         error:(void (^)(NSError *error))errorBlock
+                    completion:(void(^)())completionBlock
 {
+    if (!completionBlock) completionBlock = ^(){};
+    if (!successBlock) successBlock = ^(BVMServerInfo *a){};
+    if (!errorBlock) errorBlock = ^(NSError *a){};
+
     NSDictionary *credentials = [BVMServersManager credentialsForServerId:serverId];
     NSDictionary *params = @{
         @"key": credentials[kBVMServerKeyAPIKey] != nil ? credentials[kBVMServerKeyAPIKey] : @"",
@@ -44,9 +50,9 @@ static const NSTimeInterval kBVMInfoTimeoutInterval = 20.0;
         @"bw": @"true",
     };
 
-    void (^ failureBlock)(NSError *) = ^(NSError *error) {
+    void (^internalFailureBlock)(NSError *) = ^(NSError *error) {
         if (!error) error = [NSError bvm_indeterminateAPIError];
-        if (resultBlock) resultBlock(nil, error);
+        errorBlock(error);
     };
 
     [[BVMAPIClient sharedClient] getPath:kBuyVMAPIPath
@@ -55,18 +61,20 @@ static const NSTimeInterval kBVMInfoTimeoutInterval = 20.0;
                                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                      NSError __autoreleasing *error = nil;
                                      BVMAPIResponseParser *parser = [[BVMAPIResponseParser alloc] initWithAPIResponse:responseObject error:&error];
-                                     if (!parser) {
-                                         failureBlock(error); return;
+                                     if (parser) {
+                                         error = [parser apiError];
                                      }
-                                     error = [parser apiError];
                                      if (error) {
-                                         failureBlock(error); return;
+                                         internalFailureBlock(error);
                                      }
-
-                                     BVMServerInfo *info = [BVMServerInfo infoFromParser:parser];
-                                     if (resultBlock) resultBlock(info, nil);
+                                     else {
+                                         BVMServerInfo *info = [BVMServerInfo infoFromParser:parser];
+                                         successBlock(info);
+                                     }
+                                     completionBlock();
                                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                     failureBlock(error);
+                                     internalFailureBlock(error);
+                                     completionBlock();
                                  }];
 }
 

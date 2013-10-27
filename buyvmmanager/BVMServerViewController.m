@@ -118,20 +118,7 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
     [self.progressHUD show:YES];
     self.navigationItem.rightBarButtonItem = nil;
 
-    [BVMServerInfo requestInfoForServerId:self.serverId withBlock:^(BVMServerInfo *info, NSError *error) {
-        [self.progressHUD hide:YES];
-        self.navigationItem.rightBarButtonItem = self.reloadButtonItem;
-
-        if (error) {
-            self.loadErrorAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                             message:[BVMHumanValueTransformer shortErrorFromError:error]
-                                                            delegate:self
-                                                   cancelButtonTitle:@":("
-                                                   otherButtonTitles:nil];
-            [self.loadErrorAlertView show];
-            if (!self.serverInfo) self.hostnameCell.textLabel.text = @"";
-            return;
-        }
+    [BVMServerInfo requestInfoForServerId:self.serverId success:^(BVMServerInfo *info) {
         self.serverInfo = info;
 
         if (self.serverInfo.status == BVMServerStatusOnline) {
@@ -143,15 +130,24 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 
         [self.tableView beginUpdates];
         [self.tableView reloadRowsAtIndexPaths:@[
-            [NSIndexPath indexPathForRow:BVMServerTableViewInfoRowBandwidth inSection:BVMServerTableViewSectionInfo],
-            [NSIndexPath indexPathForRow:BVMServerTableViewInfoRowHDD inSection:BVMServerTableViewSectionInfo],
-            [NSIndexPath indexPathForRow:BVMServerTableViewInfoRowIP inSection:BVMServerTableViewSectionInfo],
-            [NSIndexPath indexPathForRow:BVMServerTableViewInfoRowMemory inSection:BVMServerTableViewSectionInfo],
-            [NSIndexPath indexPathForRow:BVMServerTableViewPingRow inSection:BVMServerTableViewSectionPing]
-         ] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                                 [NSIndexPath indexPathForRow:BVMServerTableViewInfoRowBandwidth inSection:BVMServerTableViewSectionInfo],
+                                                 [NSIndexPath indexPathForRow:BVMServerTableViewInfoRowHDD inSection:BVMServerTableViewSectionInfo],
+                                                 [NSIndexPath indexPathForRow:BVMServerTableViewInfoRowIP inSection:BVMServerTableViewSectionInfo],
+                                                 [NSIndexPath indexPathForRow:BVMServerTableViewInfoRowMemory inSection:BVMServerTableViewSectionInfo],
+                                                 [NSIndexPath indexPathForRow:BVMServerTableViewPingRow inSection:BVMServerTableViewSectionPing]
+                                                 ] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
-
+    } error:^(NSError *error) {
+        self.loadErrorAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                             message:[BVMHumanValueTransformer shortErrorFromError:error]
+                                                            delegate:self
+                                                   cancelButtonTitle:@"😢"
+                                                   otherButtonTitles:nil];
+        [self.loadErrorAlertView show];
+    } completion:^{
         [self refreshHostnameCell];
+        [self.progressHUD hide:YES];
+        self.navigationItem.rightBarButtonItem = self.reloadButtonItem;
     }];
 }
 
@@ -170,6 +166,11 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 
 - (void)refreshHostnameCell
 {
+    if (!self.serverInfo) {
+        self.hostnameCell.textLabel.text = @"";
+        return;
+    }
+
     self.hostnameCell.textLabel.text = self.serverInfo.hostname;
     if (self.serverInfo.status == BVMServerStatusOnline) {
         self.hostnameCell.detailTextLabel.text = NSLocalizedString(@"Online", nil);
