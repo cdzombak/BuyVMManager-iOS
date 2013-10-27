@@ -28,7 +28,7 @@ typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableSettingsRows) {
 };
 
 static NSString * BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewNumSections][2];
-static NSUInteger BVMAboutSettingsTableRowsInSection[BVMAboutSettingsTableViewNumSections];
+static NSInteger BVMAboutSettingsTableRowsInSection[BVMAboutSettingsTableViewNumSections];
 
 __attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableConstantsInit(void)
 {

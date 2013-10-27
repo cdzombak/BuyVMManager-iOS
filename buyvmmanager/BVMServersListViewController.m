@@ -240,9 +240,9 @@
     if (selectedServerId != nil) {
         [self.orderedServerIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             if ([selectedServerId isEqualToString:obj]) {
-                NSIndexPath *ip = [NSIndexPath indexPathForRow:idx inSection:0];
+                NSIndexPath *ip = [NSIndexPath indexPathForRow:(NSInteger)idx inSection:0];
                 [self.tableView selectRowAtIndexPath:ip animated:NO scrollPosition:UITableViewScrollPositionMiddle];
-                stop = YES;
+                if (stop!= NULL) *stop = YES;
             }
         }];
     }
@@ -251,7 +251,7 @@
 - (NSString *)serverIdForIndexPath:(NSIndexPath *)indexPath
 {
     NSParameterAssert(indexPath.section == 0);
-    return self.orderedServerIds[indexPath.row];
+    return self.orderedServerIds[(NSUInteger) indexPath.row];
 }
 
 - (NSString *)serverNameForIndexPath:(NSIndexPath *)indexPath
@@ -266,13 +266,14 @@
 
     NSUInteger idIndex = [self.orderedServerIds indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         if ([serverId isEqualToString:obj]) {
-            stop = YES;
+            if (stop != NULL) *stop = YES;
             return YES;
         }
         return NO;
     }];
 
-    return [NSIndexPath indexPathForItem:idIndex inSection:0];
+    NSAssert(idIndex != NSNotFound, @"Could not find index path for server ID");
+    return [NSIndexPath indexPathForItem:(NSInteger)idIndex inSection:0];
 }
 
 #pragma mark UIPopoverControllerDelegate methods
@@ -296,7 +297,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.servers.count;
+    return (NSInteger) self.servers.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

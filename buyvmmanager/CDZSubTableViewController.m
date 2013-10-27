@@ -65,4 +65,20 @@
     [self.tableView setEditing:editing animated:animated];
 }
 
+#pragma mark Abstract Methods
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSAssert(NO, @"%s is an abstract method and must be overriden\n%@",
+             __PRETTY_FUNCTION__,
+             [NSThread callStackSymbols]);
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSAssert(NO, @"%s is an abstract method and must be overriden\n%@",
+             __PRETTY_FUNCTION__,
+             [NSThread callStackSymbols]);
+    return nil;
+}
+
 @end

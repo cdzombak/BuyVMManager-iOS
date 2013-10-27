@@ -11,7 +11,7 @@
 {
     return [self indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         if ([obj isEqualToString:searchString]) {
-            stop = YES;
+            if (stop != NULL) *stop = YES;
             return YES;
         }
         return NO;

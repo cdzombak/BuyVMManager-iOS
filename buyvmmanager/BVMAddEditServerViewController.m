@@ -257,7 +257,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 - (UIView *)buildCameraViewWithHeight:(CGFloat)height tapSelector:(SEL)aSelector
 {
     UIImage *cameraImage = [UIImage imageNamed:@"119-Camera"];
-    UIView *view = [[UIView alloc] initWithFrame:(CGRect){ CGPointZero, { cameraImage.size.width * 1.6 , height } }];
+    UIView *view = [[UIView alloc] initWithFrame:(CGRect){ CGPointZero, { cameraImage.size.width * 1.6f , height } }];
 
     view.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:aSelector];
