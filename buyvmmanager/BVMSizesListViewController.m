@@ -4,7 +4,6 @@
 
 @interface BVMSizesListViewController ()
 
-@property (nonatomic, copy) NSString *statisticName;
 @property (nonatomic, assign) long long totalBytes;
 @property (nonatomic, assign) long long usedBytes;
 @property (nonatomic, assign) long long freeBytes;
@@ -23,7 +22,7 @@
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        self.statisticName = statisticName;
+        self.title = statisticName;
         self.totalBytes = totalBytes;
         self.usedBytes = usedBytes;
         self.freeBytes = freeBytes;
@@ -75,38 +74,6 @@
     }
     
     return cell;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return self.statisticName;
-}
-
-#pragma mark UITableViewDelegate methods
-
-// stolen/hacked from http://stackoverflow.com/a/3574501
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *customView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, 22.0)];
-    customView.backgroundColor = [UIColor clearColor];
-
-    CGFloat startX;
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        startX = 38.0;
-    } else {
-        startX = 16.0;
-    }
-
-    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    headerLabel.backgroundColor = [UIColor clearColor];
-    headerLabel.textColor = [UIColor colorWithWhite:0.1 alpha:1.0];
-    headerLabel.font = [UIFont boldSystemFontOfSize:18.0];
-    headerLabel.shadowOffset = CGSizeMake(0.0, 1.0);
-    headerLabel.frame = CGRectMake(startX, 6.0, customView.bounds.size.width, 18.0);
-    headerLabel.text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];
-    
-    [customView addSubview:headerLabel];
-    return customView;
 }
 
 @end
