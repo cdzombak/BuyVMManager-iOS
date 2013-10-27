@@ -1,8 +1,8 @@
 #import "BVMAddEditServerViewController.h"
+#import "CDZQRScanningViewController.h"
 #import "BVMTextFieldTableViewCell.h"
 #import "BVMServersManager.h"
 #import "UIColor+BVMColors.h"
-#import "ZBarSDK.h"
 
 typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     BVMAddServerTableViewRowName = 0,
@@ -11,7 +11,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     BVMAddServerTableViewNumRows
 };
 
-@interface BVMAddEditServerViewController () <UITextFieldDelegate, ZBarReaderDelegate>
+@interface BVMAddEditServerViewController () <UITextFieldDelegate>
 
 @property (nonatomic, copy) NSString *editingServerId;
 @property (nonatomic, assign) BOOL didLoadEditingContent;
@@ -29,7 +29,6 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 @property (nonatomic, readonly, strong) UIView *footerView;
 @property (nonatomic, readonly, weak) UILabel *footerLabel;
 
-@property (nonatomic, strong) ZBarReaderViewController *readerVc;
 @property (nonatomic, weak) UITextField *currentReadingTextField;
 
 @property (nonatomic, readonly) NSString *apiKeyHiddenText;
@@ -121,9 +120,23 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
 
 - (void)scanQRForField:(UITextField *)field
 {
-    self.currentReadingTextField = field;
     [field becomeFirstResponder];
-    [self presentViewController:self.readerVc animated:YES completion:nil];
+
+    CDZQRScanningViewController *scanningVC = [CDZQRScanningViewController new];
+    UINavigationController *scanningNavVC = [[UINavigationController alloc] initWithRootViewController:scanningVC];
+    scanningVC.resultBlock = ^(NSString *result) {
+        field.text = result;
+        [scanningNavVC dismissViewControllerAnimated:YES completion:nil];
+    };
+    scanningVC.cancelBlock = ^() {
+        [scanningNavVC dismissViewControllerAnimated:YES completion:nil];
+    };
+    scanningVC.errorBlock = ^(NSError *error) {
+        [scanningNavVC dismissViewControllerAnimated:YES completion:nil];
+    };
+
+    scanningNavVC.modalPresentationStyle = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ? UIModalPresentationCurrentContext : UIModalPresentationFormSheet;
+    [self presentViewController:scanningNavVC animated:YES completion:nil];
 }
 
 - (void)cancelButtonTouched
@@ -182,22 +195,6 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
     }
 
     if (self.dismissBlock) self.dismissBlock();
-}
-
-#pragma mark ZBarReaderDelegate methods
-
-- (void)imagePickerController:(UIImagePickerController*)reader didFinishPickingMediaWithInfo:(NSDictionary*)info
-{
-    [self.readerVc dismissModalViewControllerAnimated:YES];
-
-    id<NSFastEnumeration> results = info[ZBarReaderControllerResults];
-    ZBarSymbol *bestResult = nil;
-    for (ZBarSymbol *result in results) {
-        if (result.quality > bestResult.quality) bestResult = result;
-    }
-
-    self.readerVc = nil;
-    self.currentReadingTextField.text = bestResult.data;
 }
 
 #pragma mark UITableViewDataSource methods
@@ -348,21 +345,6 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
         [_footerView addSubview:label];
     }
     return _footerView;
-}
-
-- (ZBarReaderViewController *)readerVc
-{
-    if (!_readerVc) {
-        _readerVc = [ZBarReaderViewController new];
-        _readerVc.readerDelegate = self;
-        _readerVc.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
-
-        [_readerVc.scanner setSymbology:0 config:ZBAR_CFG_ENABLE to:0];
-        [_readerVc.scanner setSymbology:ZBAR_QRCODE config:ZBAR_CFG_ENABLE to:1];
-
-        _readerVc.readerView.zoom = 1.0;
-    }
-    return _readerVc;
 }
 
 - (NSString *)apiKeyHiddenText

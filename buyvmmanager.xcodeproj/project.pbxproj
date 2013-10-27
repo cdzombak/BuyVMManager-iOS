@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		130AAD4E603A434F8D6A27DC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5465409E48DF47418E17CBD0 /* libPods.a */; };
+		834018F2181CCDD6006E4D78 /* CDZQRScanningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 834018F1181CCDD6006E4D78 /* CDZQRScanningViewController.m */; };
 		83D310D61706154500BBE53D /* BVMBrowserSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D310D51706154500BBE53D /* BVMBrowserSelectorViewController.m */; };
 		932709BC1682353E0013DEB5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932709BB1682353E0013DEB5 /* UIKit.framework */; };
 		932709BE1682353E0013DEB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932709BD1682353E0013DEB5 /* Foundation.framework */; };
@@ -59,6 +60,8 @@
 /* Begin PBXFileReference section */
 		5465409E48DF47418E17CBD0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		80B2C269AC9B4268AAA56007 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		834018F0181CCDD6006E4D78 /* CDZQRScanningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDZQRScanningViewController.h; sourceTree = "<group>"; };
+		834018F1181CCDD6006E4D78 /* CDZQRScanningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDZQRScanningViewController.m; sourceTree = "<group>"; };
 		83D310D41706154500BBE53D /* BVMBrowserSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMBrowserSelectorViewController.h; sourceTree = "<group>"; };
 		83D310D51706154500BBE53D /* BVMBrowserSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMBrowserSelectorViewController.m; sourceTree = "<group>"; };
 		932709B71682353E0013DEB5 /* buyvmmanager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = buyvmmanager.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +153,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		834018EF181CCD6C006E4D78 /* QR Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				834018F0181CCDD6006E4D78 /* CDZQRScanningViewController.h */,
+				834018F1181CCDD6006E4D78 /* CDZQRScanningViewController.m */,
+			);
+			name = "QR Scanner";
+			sourceTree = "<group>";
+		};
 		932709AC1682353E0013DEB5 = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +259,7 @@
 		932709F0168244710013DEB5 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				834018EF181CCD6C006E4D78 /* QR Scanner */,
 				937CCC6F168533700075BD01 /* BVMAboutSettingsViewController.h */,
 				937CCC70168533700075BD01 /* BVMAboutSettingsViewController.m */,
 				935FEED51682C87300BE3892 /* BVMAddEditServerViewController.h */,
@@ -416,6 +429,7 @@
 				932709EC1682411A0013DEB5 /* BVMAPIClient.m in Sources */,
 				932709EF168243950013DEB5 /* BVMServerInfo.m in Sources */,
 				932709F3168244E20013DEB5 /* BVMServerViewController.m in Sources */,
+				834018F2181CCDD6006E4D78 /* CDZQRScanningViewController.m in Sources */,
 				93270A02168269740013DEB5 /* NSArray+BVMArrayExtensions.m in Sources */,
 				93270A051682726F0013DEB5 /* BVMHumanValueTransformer.m in Sources */,
 				935FEEC216829B4700BE3892 /* BVMIPListViewController.m in Sources */,
