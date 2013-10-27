@@ -27,7 +27,7 @@
 {
     [super layoutSubviews];
 
-    self.textField.frame = CGRectMake(6, 0, self.contentView.bounds.size.width-9, self.contentView.bounds.size.height);
+    self.textField.frame = CGRectMake(10, 0, self.contentView.bounds.size.width-9, self.contentView.bounds.size.height);
 }
 
 @end
