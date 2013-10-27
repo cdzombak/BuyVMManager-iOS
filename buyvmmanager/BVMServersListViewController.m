@@ -59,7 +59,6 @@
 
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
-    self.hidesBottomBarWhenPushed = YES;
     self.toolbarItems = @[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
                           self.settingsItem
                           ];;
@@ -75,7 +74,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    self.navigationController.toolbarHidden = NO;
+    [self.navigationController setToolbarHidden:NO animated:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+
+    [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
 -(void)viewDidAppear:(BOOL)animated
