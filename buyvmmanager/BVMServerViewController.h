@@ -1,6 +1,4 @@
-#import "CDZSubTableViewController.h"
-
-@interface BVMServerViewController : CDZSubTableViewController
+@interface BVMServerViewController : UITableViewController
 
 /**
  * Designated initializer
