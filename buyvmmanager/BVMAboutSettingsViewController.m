@@ -1,7 +1,6 @@
 #import "BVMAboutSettingsViewController.h"
-#import "CDZLinkOpenManager.h"
 #import "BVMBrowserSelectorViewController.h"
-#import "UIColor+BVMColors.h"
+#import "CDZLinkOpenManager.h"
 
 typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableViewSections) {
     BVMAboutSettingsTableViewSectionUsefulLinks = 0,
@@ -13,6 +12,7 @@ typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableViewSections) {
 typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableSupportRows) {
     BVMAboutSettingsTableSupportRowReportIssue = 0,
     BVMAboutSettingsTableSupportRowGithubProject,
+    BVMAboutSettingsTableSupportRowLicense,
     BVMAboutSettingsTableSupportNumRows
 };
 
@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, BVMAboutSettingsTableSettingsRows) {
     BVMAboutSettingsTableSettingsNumRows
 };
 
-static NSString * BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewNumSections][2];
+static NSString * BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewNumSections][3];
 static NSInteger BVMAboutSettingsTableRowsInSection[BVMAboutSettingsTableViewNumSections];
 
 __attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableConstantsInit(void)
@@ -35,6 +35,7 @@ __attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableCo
     @autoreleasepool {
         BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionSupport][BVMAboutSettingsTableSupportRowReportIssue] = NSLocalizedString(@"Report Issue", nil);
         BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionSupport][BVMAboutSettingsTableSupportRowGithubProject] = NSLocalizedString(@"Github Project", nil);
+        BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionSupport][BVMAboutSettingsTableSupportRowLicense] = NSLocalizedString(@"License", nil);
         BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionUsefulLinks][BVMAboutSettingsTableUsefulLinksRowStallion] = NSLocalizedString(@"BuyVM Manager (Stallion)", nil);
         BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionUsefulLinks][BVMAboutSettingsTableUsefulLinksRowClientArea] = NSLocalizedString(@"BuyVM Billing/Support", nil);
         BVMAboutSettingsTableRowTitles[BVMAboutSettingsTableViewSectionSettings][BVMAboutSettingsTableSettingsRowBrowser] = NSLocalizedString(@"Select Browser", nil);
@@ -45,19 +46,9 @@ __attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableCo
     }
 }
 
-@interface BVMAboutSettingsViewController ()
-
-@property (nonatomic, strong, readonly) UIView *footerView;
-@property (nonatomic, weak, readonly) UILabel *footerLabel;
-
-@end
-
 @implementation BVMAboutSettingsViewController
 
-@synthesize footerLabel = _footerLabel,
-            footerView = _footerView,
-            dismissBlock = _dismissBlock
-            ;
+@synthesize dismissBlock = _dismissBlock;
 
 - (id)init
 {
@@ -70,15 +61,11 @@ __attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableCo
 {
     [super viewDidLoad];
 
-    self.title = NSLocalizedString(@"BuyVM Manager", nil);
-
-    self.tableView.tableFooterView = self.footerView;
+    self.title = [NSString stringWithFormat:NSLocalizedString(@"BuyVM Manager v%@", nil), [BVMAboutSettingsViewController appVersion]];
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                           target:self
                                                                                           action:@selector(doneButtonTapped)];
-
-    self.contentSizeForViewInPopover = CGSizeMake(320, self.footerView.frame.origin.y + self.footerView.frame.size.height);
 }
 
 #pragma mark Interface actions
@@ -92,6 +79,12 @@ __attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableCo
 - (void)openGithubProject
 {
     NSString *url = @"https://github.com/cdzombak/BuyVMManager-iOS/";
+    [CDZLinkOpenManager openURLString:url];
+}
+
+- (void)openLicense
+{
+    NSString *url = @"https://github.com/cdzombak/BuyVMManager-iOS/blob/master/LICENSE";
     [CDZLinkOpenManager openURLString:url];
 }
 
@@ -164,6 +157,10 @@ __attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableCo
                 [self reportIssue];
             } else if (indexPath.row == BVMAboutSettingsTableSupportRowGithubProject) {
                 [self openGithubProject];
+            } else if (indexPath.row == BVMAboutSettingsTableSupportRowLicense) {
+                [self openLicense];
+            } else {
+                NSLog(@"Unrecognized row %d in %s", indexPath.row, __PRETTY_FUNCTION__);
             }
             break;
 
@@ -188,33 +185,6 @@ __attribute__((constructor)) static void __BVMAboutSettingsViewControllerTableCo
     }
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark Property Overrides
-
-- (UIView *)footerView
-{
-    if (!_footerView) {
-        NSString *notes = [NSString stringWithFormat:NSLocalizedString(@"BuyVM Manager v%@", nil), [BVMAboutSettingsViewController appVersion]];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(18, 0, self.view.bounds.size.width-36, 40)];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor darkGrayColor];
-        label.shadowOffset = CGSizeMake(0, 1.0);
-        label.text = notes;
-        label.lineBreakMode = UILineBreakModeWordWrap;
-        label.numberOfLines = 0;
-        label.font = [UIFont systemFontOfSize:15.0];
-        label.backgroundColor = [UIColor clearColor];
-        label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        _footerLabel = label;
-
-        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, label.bounds.size.height)];
-        _footerView.backgroundColor = [UIColor clearColor];
-        _footerView.autoresizesSubviews = YES;
-        _footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [_footerView addSubview:label];
-    }
-    return _footerView;
 }
 
 @end
