@@ -491,7 +491,7 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 
 -(BOOL)tableView:(UITableView*)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath*)indexPath withSender:(id)sender
 {
-    if (indexPath.section == BVMServerTableViewSectionInfo || indexPath.section == BVMServerTableViewSectionPing) {
+    if (indexPath.section == BVMServerTableViewSectionInfo) {
         if (action == @selector(copy:)) {
             return YES;
         }
@@ -501,7 +501,7 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 
 -(BOOL)tableView:(UITableView*)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    if (indexPath.section == BVMServerTableViewSectionInfo || indexPath.section == BVMServerTableViewSectionPing) {
+    if (indexPath.section == BVMServerTableViewSectionInfo) {
         return YES;
     }
     return NO;
