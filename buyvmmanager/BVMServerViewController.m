@@ -1,15 +1,19 @@
 #import "BVMServerViewController.h"
+
+#import "MBProgressHUD.h"
+#import "CDZPinger.h"
+
 #import "BVMServerInfo.h"
 #import "BVMServerActionPerform.h"
-#import "CDZPinger.h"
 #import "BVMHumanValueTransformer.h"
 #import "BVMIPListViewController.h"
 #import "BVMSizesListViewController.h"
 #import "UIColor+BVMColors.h"
-#import "MBProgressHUD.h"
+
 
 typedef NS_ENUM(NSUInteger, BVMServerTableViewSections) {
-    BVMServerTableViewSectionInfo = 0,
+    BVMServerTableViewSectionHostname = 0,
+    BVMServerTableViewSectionInfo,
     BVMServerTableViewSectionPing,
     BVMServerTableViewSectionAction,
     BVMServerTableViewNumSections
@@ -54,26 +58,24 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 @property (nonatomic, copy) NSString *pingString;
 @property (nonatomic, strong) CDZPinger *pinger;
 
-@property (nonatomic, strong) UIView *headerView;
-@property (nonatomic, strong) UILabel *headerHostnameLabel;
-@property (nonatomic, strong) UILabel *headerStatusLabel;
-
 @property (nonatomic, assign) BVMServerAction selectedAction;
-@property (nonatomic, strong) NSTimer *navBarTintTimer;
 
 @property (nonatomic, strong) UIAlertView *actionAlertView;
 @property (nonatomic, strong) UIAlertView *loadErrorAlertView;
 
-@property (nonatomic, strong, readonly) UIBarButtonItem *reloadButtonItem;
+@property (nonatomic, readonly) UIBarButtonItem *reloadButtonItem;
 
-@property (nonatomic, strong, readonly) MBProgressHUD *progressHUD;
+@property (nonatomic, readonly) MBProgressHUD *progressHUD;
+
+@property (nonatomic, readonly) UITableViewCell *hostnameCell;
 
 @end
 
 @implementation BVMServerViewController
 
 @synthesize reloadButtonItem = _reloadButtonItem,
-            progressHUD = _progressHUD
+            progressHUD = _progressHUD,
+            hostnameCell = _hostnameCell
             ;
 
 - (id)initWithServerId:(NSString *)serverId name:(NSString *)serverName
@@ -91,21 +93,9 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 {
     [super viewDidLoad];
 
-    self.tableView.tableHeaderView = self.headerView;
     self.navigationItem.rightBarButtonItem = self.reloadButtonItem;
 
     [self reloadData];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self adjustTableViewHeaderPaddingForOrientation:[[UIDevice currentDevice] orientation]];
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [self adjustTableViewHeaderPaddingForOrientation:toInterfaceOrientation];
 }
 
 #pragma mark BVM Data Management
@@ -131,7 +121,7 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
                                                    cancelButtonTitle:@":("
                                                    otherButtonTitles:nil];
             [self.loadErrorAlertView show];
-            if (!self.serverInfo) self.headerHostnameLabel.text = @"";
+            if (!self.serverInfo) self.hostnameCell.textLabel.text = @"";
             return;
         }
         self.serverInfo = info;
@@ -153,7 +143,7 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
          ] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
 
-        [self refreshHeaderView];
+        [self refreshHostnameCell];
     }];
 }
 
@@ -170,15 +160,15 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
     [self.pinger startPinging];
 }
 
-- (void)refreshHeaderView
+- (void)refreshHostnameCell
 {
-    self.headerHostnameLabel.text = self.serverInfo.hostname;
+    self.hostnameCell.textLabel.text = self.serverInfo.hostname;
     if (self.serverInfo.status == BVMServerStatusOnline) {
-        self.headerStatusLabel.text = NSLocalizedString(@"Online", nil);
-        self.headerStatusLabel.textColor = [UIColor bvm_onlineTextColor];
+        self.hostnameCell.detailTextLabel.text = NSLocalizedString(@"Online", nil);
+        self.hostnameCell.detailTextLabel.textColor = [UIColor bvm_onlineTextColor];
     } else {
-        self.headerStatusLabel.text = NSLocalizedString(@"Offline", nil);
-        self.headerStatusLabel.textColor = [UIColor redColor];
+        self.hostnameCell.detailTextLabel.text = NSLocalizedString(@"Offline", nil);
+        self.hostnameCell.detailTextLabel.textColor = [UIColor redColor];
     }
 }
 
@@ -214,6 +204,8 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 {
     NSParameterAssert(tableView == self.tableView);
     switch(section) {
+        case BVMServerTableViewSectionHostname:
+            return 1;
         case BVMServerTableViewSectionInfo:
             return BVMServerTableViewInfoNumRows;
         case BVMServerTableViewSectionPing:
@@ -228,15 +220,16 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == BVMServerTableViewSectionHostname) return self.hostnameCell;
+
     static NSString * CellIdentifiers[BVMServerTableViewNumSections] = {
+        @"HostNameCell",
         @"UITableViewCellStyleValue2",
         @"UITableViewCellStyleValue2",
         @"UITableViewCellStyleDefault"
     };
     UITableViewCellStyle style = indexPath.section == BVMServerTableViewSectionAction ? UITableViewCellStyleDefault : UITableViewCellStyleValue2;
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:style reuseIdentifier:CellIdentifiers[indexPath.section]];
-
-    cell.selectionStyle = UITableViewCellSelectionStyleGray;
 
     switch(indexPath.section) {
         case BVMServerTableViewSectionInfo:
@@ -245,8 +238,6 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
             } else {
                 cell.accessoryType = UITableViewCellAccessoryNone;
             }
-
-            cell.textLabel.textColor = [UIColor darkGrayColor];
 
             switch(indexPath.row) {
                 case BVMServerTableViewInfoRowBandwidth:
@@ -279,7 +270,6 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
         case BVMServerTableViewSectionPing:
             NSParameterAssert(indexPath.row == 0);
             cell.textLabel.text = NSLocalizedString(@"Ping", nil);
-            cell.textLabel.textColor = [UIColor darkGrayColor];
             if (self.pingString) {
                 cell.detailTextLabel.text = self.pingString;
             }
@@ -379,6 +369,8 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
         }
     }
 
+    if (indexPath.section == BVMServerTableViewSectionHostname) return nil;
+
     return indexPath;
 }
 
@@ -415,37 +407,19 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
             break;
     }
 
-    self.actionAlertView = [[UIAlertView alloc] initWithTitle:@""
+    self.actionAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"WARNING", nil)
                                                       message:message
                                                      delegate:self
                                             cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                             otherButtonTitles:@"OK", nil];
     self.actionAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     [self.actionAlertView show];
-
-    self.navBarTintTimer = [NSTimer scheduledTimerWithTimeInterval:0.6
-                                                            target:self
-                                                          selector:@selector(toggleNavBarTint)
-                                                          userInfo:nil
-                                                           repeats:YES];
-}
-
-- (void)toggleNavBarTint
-{
-    if ([self.navigationController.navigationBar.tintColor isEqual:[UIColor redColor]]) {
-        self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
-    } else {
-        self.navigationController.navigationBar.tintColor = [UIColor redColor];
-    }
 }
 
 - (void)actionAlertViewDidDismissWithButtonIndex:(NSInteger)buttonIndex enteredHostname:(NSString *)hostname
 {
     static NSInteger cancelButtonIndex = 0;
 
-    self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
-    [self.navBarTintTimer invalidate];
-    self.navBarTintTimer = nil;
     if (buttonIndex == cancelButtonIndex) return;
 
     if ([[hostname lowercaseString] isEqualToString:[self.serverInfo.hostname lowercaseString]]) {
@@ -475,23 +449,23 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 {
     switch (status) {
         case BVMServerActionStatusBooted:
-            self.headerStatusLabel.text = NSLocalizedString(@"Booting...", nil);
+            self.hostnameCell.detailTextLabel.text = NSLocalizedString(@"Booting...", nil);
             break;
         case BVMServerActionStatusRebooted:
-            self.headerStatusLabel.text = NSLocalizedString(@"Rebooting...", nil);
+            self.hostnameCell.detailTextLabel.text = NSLocalizedString(@"Rebooting...", nil);
             break;
         case BVMServerActionStatusShutdown:
-            self.headerStatusLabel.text = NSLocalizedString(@"Shutting down...", nil);
+            self.hostnameCell.detailTextLabel.text = NSLocalizedString(@"Shutting down...", nil);
             break;
         default: break;
     }
 
-    self.headerStatusLabel.textColor = [UIColor blackColor];
+    self.hostnameCell.detailTextLabel.textColor = [UIColor blackColor];
     self.pinger = nil;
     self.pingString = @"";
     self.serverInfo.status = BVMServerStatusIndeterminate;
     [self.tableView reloadData];
-    [self.tableView scrollRectToVisible:self.headerView.frame animated:YES];
+    [self.tableView setContentOffset:CGPointMake(0, -self.tableView.contentInset.top) animated:YES];
     [self.progressHUD show:YES];
 
     [self performSelector:@selector(reloadData) withObject:nil afterDelay:6.0];
@@ -525,57 +499,7 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
     return NO;
 }
 
-#pragma mark UI Adjustments
-
-- (void)adjustTableViewHeaderPaddingForOrientation:(UIDeviceOrientation)orientation
-{
-    CGFloat padding;
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        padding = 14;
-    } else { // pad
-        if (UIDeviceOrientationIsPortrait(orientation)) {
-            padding = 33;
-        } else { // landscape
-            padding = 45;
-        }
-    }
-
-    CGRect hostnameFrame = self.headerHostnameLabel.frame;
-    hostnameFrame.origin.x = padding;
-    hostnameFrame.size.width = self.tableView.bounds.size.width - 2*padding;
-    self.headerHostnameLabel.frame = hostnameFrame;
-
-    CGRect headerStatusLabelFrame = self.headerStatusLabel.frame;
-    headerStatusLabelFrame.origin.x = padding;
-    headerStatusLabelFrame.size.width = self.tableView.bounds.size.width - 2*padding;
-    self.headerStatusLabel.frame = headerStatusLabelFrame;
-}
-
 #pragma mark Property overrides
-
-- (UIView *)headerView {
-    if (!_headerView) {
-        _headerView = [[UIView alloc] initWithFrame:(CGRect){ CGPointZero, { self.view.bounds.size.width, 65 } }];
-        _headerView.autoresizesSubviews = YES;
-        _headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        _headerView.backgroundColor = [UIColor clearColor];
-
-        self.headerHostnameLabel = [[UILabel alloc] initWithFrame:(CGRect){ {0, 10} , { _headerView.bounds.size.width, 35 }}];
-        self.headerHostnameLabel.font = [UIFont boldSystemFontOfSize:22.0];
-        self.headerHostnameLabel.backgroundColor = [UIColor clearColor];
-        self.headerHostnameLabel.text = NSLocalizedString(@"Loading...", nil);
-        self.headerHostnameLabel.shadowOffset = CGSizeMake(0, 1.0);
-        [_headerView addSubview:self.headerHostnameLabel];
-
-        self.headerStatusLabel = [[UILabel alloc] initWithFrame:(CGRect){ {0, 41} , { _headerView.bounds.size.width, 20 }}];
-        self.headerStatusLabel.font = [UIFont boldSystemFontOfSize:18.0];
-        self.headerStatusLabel.backgroundColor = [UIColor clearColor];
-        self.headerStatusLabel.shadowColor = self.headerHostnameLabel.shadowColor;
-        self.headerStatusLabel.shadowOffset = self.headerHostnameLabel.shadowOffset;
-        [_headerView addSubview:self.headerStatusLabel];
-    }
-    return _headerView;
-}
 
 - (CDZPinger *)pinger
 {
@@ -601,6 +525,16 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
         [self.view addSubview:_progressHUD];
     }
     return _progressHUD;
+}
+
+- (UITableViewCell *)hostnameCell {
+    if (!_hostnameCell) {
+        _hostnameCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"HostNameCell"];
+        _hostnameCell.detailTextLabel.font = [UIFont boldSystemFontOfSize:_hostnameCell.detailTextLabel.font.pointSize];
+        _hostnameCell.textLabel.textColor = [UIColor blackColor];
+
+    }
+    return _hostnameCell;
 }
 
 @end
