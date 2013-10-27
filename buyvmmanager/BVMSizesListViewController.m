@@ -37,9 +37,6 @@
     [super viewDidLoad];
 
     self.tableView.allowsSelection = NO;
-    
-    self.tableView.backgroundColor = [UIColor bvm_tableViewBackgroundColor];
-    self.tableView.backgroundView = nil;
 }
 
 #pragma mark UITableViewDataSource methods
@@ -105,7 +102,6 @@
     headerLabel.textColor = [UIColor colorWithWhite:0.1 alpha:1.0];
     headerLabel.font = [UIFont boldSystemFontOfSize:18.0];
     headerLabel.shadowOffset = CGSizeMake(0.0, 1.0);
-    headerLabel.shadowColor = [UIColor bvm_darkGrayTextShadowColor];
     headerLabel.frame = CGRectMake(startX, 6.0, customView.bounds.size.width, 18.0);
     headerLabel.text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];
     

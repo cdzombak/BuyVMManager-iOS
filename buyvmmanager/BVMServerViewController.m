@@ -94,9 +94,6 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
     self.tableView.tableHeaderView = self.headerView;
     self.navigationItem.rightBarButtonItem = self.reloadButtonItem;
 
-    self.tableView.backgroundColor = [UIColor bvm_tableViewBackgroundColor];
-    self.tableView.backgroundView = nil;
-
     [self reloadData];
 }
 
@@ -567,7 +564,6 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
         self.headerHostnameLabel.font = [UIFont boldSystemFontOfSize:22.0];
         self.headerHostnameLabel.backgroundColor = [UIColor clearColor];
         self.headerHostnameLabel.text = NSLocalizedString(@"Loading...", nil);
-        self.headerHostnameLabel.shadowColor = [UIColor bvm_darkGrayTextShadowColor];
         self.headerHostnameLabel.shadowOffset = CGSizeMake(0, 1.0);
         [_headerView addSubview:self.headerHostnameLabel];
 

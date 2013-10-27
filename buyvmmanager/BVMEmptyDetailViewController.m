@@ -21,13 +21,11 @@
 {
     [super viewDidLoad];
 
-    self.view.backgroundColor = [UIColor bvm_tableViewBackgroundColor];
     self.textLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
 
     UIFont *font = [UIFont fontWithName:@"Jrhand" size:25];
     self.textLabel.font = font;
     self.textLabel.textColor = [UIColor darkTextColor];
-    self.textLabel.shadowColor = [UIColor bvm_darkGrayTextShadowColor];
     self.textLabel.shadowOffset = CGSizeMake(0, 1.0);
 
     if ([BVMServersManager servers].count == 0) {

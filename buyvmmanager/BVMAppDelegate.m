@@ -1,8 +1,11 @@
 #import "BVMAppDelegate.h"
-#import "UIColor+BVMColors.h"
-#import "AFNetworkActivityIndicatorManager.h"
+
 #import "BVMServersListViewController.h"
 #import "BVMEmptyDetailViewController.h"
+
+#import "AFNetworkActivityIndicatorManager.h"
+
+#import "UIColor+BVMColors.h"
 
 @interface BVMAppDelegate () <UISplitViewControllerDelegate>
 
@@ -13,10 +16,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor whiteColor];
-
-    [[UIToolbar appearance] setBarTintColor:[UIColor darkGrayColor]];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor darkGrayColor]];
+    [self applyStyles];
 
     UIViewController *rootVC;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -30,7 +30,8 @@
         vc.delegate = self;
         rootVC = vc;
     } else {
-        rootVC = [[UINavigationController alloc] initWithRootViewController:[[BVMServersListViewController alloc] initWithDetailNavigationController:nil]];
+        rootVC = [[UINavigationController alloc] initWithRootViewController:[[BVMServersListViewController alloc]
+                                                                             initWithDetailNavigationController:nil]];
     }
 
     self.window.rootViewController = rootVC;
@@ -39,6 +40,12 @@
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
 
     return YES;
+}
+
+#pragma mark - UI Management
+
+- (void)applyStyles {
+    // TBD
 }
 
 #pragma mark UISplitViewControllerDelegate methods
