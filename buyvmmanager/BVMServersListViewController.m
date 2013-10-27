@@ -6,7 +6,6 @@
 #import "BVMAboutSettingsViewController.h"
 #import "NSError+BVMErrors.h"
 #import "UIColor+BVMColors.h"
-#import "ODRefreshControl.h"
 
 @interface BVMServersListViewController () <UIPopoverControllerDelegate>
 
@@ -17,8 +16,6 @@
 
 @property (nonatomic, strong, readonly) UIBarButtonItem *addItem;
 @property (nonatomic, strong, readonly) UIBarButtonItem *settingsItem;
-
-@property (nonatomic, strong) ODRefreshControl *thirdPartyRefreshControl;
 
 @property (nonatomic, assign) BOOL showedFirstLaunchAddScreen;
 
@@ -62,13 +59,16 @@
     [super viewDidLoad];
 
     self.title = NSLocalizedString(@"My VMs", nil);
+
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
-    self.thirdPartyRefreshControl = [[ODRefreshControl alloc] initInScrollView:self.tableView];
-    self.thirdPartyRefreshControl.backgroundColor = [UIColor bvm_pullRefreshBackgroundColor];
-    [self.thirdPartyRefreshControl addTarget:self action:@selector(refreshControlActivated:) forControlEvents:UIControlEventValueChanged];
+    self.navigationController.toolbarHidden = NO;
+    self.toolbarItems = @[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                          self.settingsItem
+                          ];;
 
-    self.view.autoresizesSubviews = YES;
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:nil action:@selector(refreshControlActivated:) forControlEvents:UIControlEventValueChanged];
 
     self.tableView.allowsSelectionDuringEditing = YES;
 
@@ -222,7 +222,7 @@
                                       }
                                       [cell setNeedsLayout];
 
-                                      [self.thirdPartyRefreshControl endRefreshing];
+                                      [self.refreshControl endRefreshing];
                                   }];
 }
 
