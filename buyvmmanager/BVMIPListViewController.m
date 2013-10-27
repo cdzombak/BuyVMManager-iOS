@@ -13,6 +13,7 @@
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
         self.ips = ips;
+        self.title = NSLocalizedString(@"IPs", nil);
     }
     return self;
 }
