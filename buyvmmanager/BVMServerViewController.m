@@ -98,6 +98,14 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
     [self reloadData];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    for (NSIndexPath *ip in self.tableView.indexPathsForSelectedRows) {
+        [self.tableView deselectRowAtIndexPath:ip animated:YES];
+    }
+}
+
 #pragma mark BVM Data Management
 
 - (void)reloadData
