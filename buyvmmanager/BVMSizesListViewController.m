@@ -60,17 +60,17 @@
     switch (indexPath.row) {
         case 0:
             cell.textLabel.text = NSLocalizedString(@"Total", nil);
-            cell.detailTextLabel.text = [BVMHumanValueTransformer humanSizeValueFromBytes:self.totalBytes];
+            cell.detailTextLabel.text = [NSByteCountFormatter stringFromByteCount:self.totalBytes countStyle:NSByteCountFormatterCountStyleBinary];
             break;
         case 1:
             cell.textLabel.text = NSLocalizedString(@"Used", nil);
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%d%%)",
-                                         [BVMHumanValueTransformer humanSizeValueFromBytes:self.usedBytes],
+                                         [NSByteCountFormatter stringFromByteCount:self.usedBytes countStyle:NSByteCountFormatterCountStyleBinary],
                                          self.percentUsed];
             break;
         case 2:
             cell.textLabel.text = NSLocalizedString(@"Free", nil);
-            cell.detailTextLabel.text = [BVMHumanValueTransformer humanSizeValueFromBytes:self.freeBytes];
+            cell.detailTextLabel.text = [NSByteCountFormatter stringFromByteCount:self.freeBytes countStyle:NSByteCountFormatterCountStyleBinary];
             break;
     }
     

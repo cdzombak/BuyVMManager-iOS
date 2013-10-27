@@ -3,26 +3,6 @@
 
 @implementation BVMHumanValueTransformer
 
-+ (NSString *)humanSizeValueFromBytes:(long long)bytes
-{
-    static NSString *tokens[] = { @"bytes", @"KiB", @"MiB", @"GiB", @"TiB", @"PiB", @"EiB", @"ZiB", @"YiB", @"err" };
-
-    double currentValue = (double)bytes;
-    int multiplyFactor = 0;
-
-    while (currentValue >= 1024.0) {
-        currentValue /= 1024.0;
-        multiplyFactor++;
-    }
-
-    if (multiplyFactor > 9) multiplyFactor = 9;
-
-    NSString *formatString = @"%.0f %@";
-    if (currentValue < 10.0) formatString = @"%.1f %@";
-
-    return [NSString stringWithFormat:formatString, currentValue, tokens[multiplyFactor]];
-}
-
 + (NSString *)shortErrorFromError:(NSError *)error
 {
     // stolen from Apple SimplePing

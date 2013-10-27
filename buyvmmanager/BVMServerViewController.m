@@ -253,14 +253,14 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
                     cell.textLabel.text = NSLocalizedString(@"Bandwidth", nil);
                     if (!self.serverInfo) cell.detailTextLabel.text = nil;
                     else cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ used (%d%%)",
-                                                      [BVMHumanValueTransformer humanSizeValueFromBytes:self.serverInfo.bwUsed],
+                                                      [NSByteCountFormatter stringFromByteCount:self.serverInfo.bwUsed countStyle:NSByteCountFormatterCountStyleBinary],
                                                       self.serverInfo.bwPercentUsed];
                     break;
                 case BVMServerTableViewInfoRowHDD:
                     cell.textLabel.text = NSLocalizedString(@"HDD", nil);
                     if (self.serverInfo.status != BVMServerStatusOnline) cell.detailTextLabel.text = nil;
                     else cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ used (%d%%)",
-                                                      [BVMHumanValueTransformer humanSizeValueFromBytes:self.serverInfo.hddUsed],
+                                                      [NSByteCountFormatter stringFromByteCount:self.serverInfo.hddUsed countStyle:NSByteCountFormatterCountStyleBinary],
                                                       self.serverInfo.hddPercentUsed];
                     break;
                 case BVMServerTableViewInfoRowIP:
@@ -271,7 +271,7 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
                     cell.textLabel.text = NSLocalizedString(@"Memory", nil);
                     if (self.serverInfo.status != BVMServerStatusOnline) cell.detailTextLabel.text = nil;
                     else cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ used (%d%%)",
-                                                      [BVMHumanValueTransformer humanSizeValueFromBytes:self.serverInfo.memUsed],
+                                                      [NSByteCountFormatter stringFromByteCount:self.serverInfo.memUsed countStyle:NSByteCountFormatterCountStyleBinary],
                                                       self.serverInfo.memPercentUsed];
                     break;
             }
