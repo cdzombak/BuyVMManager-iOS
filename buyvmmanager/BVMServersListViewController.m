@@ -27,8 +27,6 @@
 
 @property (nonatomic, strong) UIPopoverController *currentEditingPopoverController;
 
-@property (nonatomic, strong, readonly) UIToolbar *bottomToolbar;
-
 @property (nonatomic, strong) NSString *serverIdSelectedBeforeEdit;
 
 @end
@@ -40,8 +38,7 @@
             addVC = _addVC,
             addVCPopoverController = _addVCPopoverController,
             settingsVC = _settingsVC,
-            settingsVCPopoverController = _settingsVCPopoverController,
-            bottomToolbar = _bottomToolbar
+            settingsVCPopoverController = _settingsVCPopoverController
             ;
 
 - (id)initWithDetailNavigationController:(UINavigationController *)navigationController
@@ -62,7 +59,7 @@
 
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
-    self.navigationController.toolbarHidden = NO;
+    self.hidesBottomBarWhenPushed = YES;
     self.toolbarItems = @[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
                           self.settingsItem
                           ];;
@@ -72,12 +69,13 @@
 
     self.tableView.allowsSelectionDuringEditing = YES;
 
-    [self.view addSubview:self.bottomToolbar];
-    static const CGFloat ToolbarHeight = 44.0; // le sigh
-    self.bottomToolbar.frame = CGRectMake(0, self.view.bounds.size.height - ToolbarHeight + 1,
-                                          self.view.bounds.size.width, ToolbarHeight);
-
     [self reloadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    self.navigationController.toolbarHidden = NO;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -425,24 +423,6 @@
         _settingsVC = [[BVMAboutSettingsViewController alloc] init];
     }
     return _settingsVC;
-}
-
-- (UIToolbar *)bottomToolbar
-{
-    if (!_bottomToolbar) {
-        _bottomToolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
-        _bottomToolbar.items = @[
-            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-            self.settingsItem
-        ];
-        _bottomToolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
-
-        if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
-            // fuck. this.
-            _bottomToolbar.autoresizingMask |= UIViewAutoresizingFlexibleHeight;
-        }
-    }
-    return _bottomToolbar;
 }
 
 @end
