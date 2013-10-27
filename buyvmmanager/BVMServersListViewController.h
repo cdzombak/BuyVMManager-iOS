@@ -1,4 +1,3 @@
-#import <UIKit/UIKit.h>
 #import "CDZSubTableViewController.h"
 
 @interface BVMServersListViewController : CDZSubTableViewController

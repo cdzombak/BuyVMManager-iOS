@@ -1,5 +1,3 @@
-#import <UIKit/UIKit.h>
-
 #import "BVMAppDelegate.h"
 
 int main(int argc, char *argv[])

@@ -1,5 +1,3 @@
-#import <UIKit/UIKit.h>
-
 /**
  * This displays the detail for a set of "sizes" - bandwidth, disk, or memory.
  *

@@ -1,5 +1,3 @@
-#import <UIKit/UIKit.h>
-
 @interface UIColor (BVMColors)
 
 + (UIColor *)bvm_onlineTextColor;

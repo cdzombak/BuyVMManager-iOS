@@ -1,5 +1,3 @@
-#import <UIKit/UIKit.h>
-
 @interface CDZSubTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
