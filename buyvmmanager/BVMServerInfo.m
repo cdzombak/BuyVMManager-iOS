@@ -70,44 +70,6 @@ static const NSTimeInterval kBVMInfoTimeoutInterval = 20.0;
                                  }];
 }
 
-+ (void)requestStatusForServerId:(NSString *)serverId
-                       withBlock:(void (^)(BVMServerStatus, NSString *hostname, NSString *ip, NSError *))resultBlock
-{
-    NSDictionary *credentials = [BVMServersManager credentialsForServerId:serverId];
-    NSDictionary *params = @{
-        @"key": credentials[kBVMServerKeyAPIKey] != nil ? credentials[kBVMServerKeyAPIKey] : @"",
-        @"hash": credentials[kBVMServerKeyAPIHash] != nil ? credentials[kBVMServerKeyAPIHash] : @"",
-        @"action": @"status"
-    };
-
-    void (^ failureBlock)(NSError *) = ^(NSError *error) {
-        if (!error) error = [NSError bvm_indeterminateAPIError];
-        if (resultBlock) resultBlock(BVMServerStatusIndeterminate, nil, nil, error);
-    };
-    
-    [[BVMAPIClient sharedClient] getPath:kBuyVMAPIPath
-                              parameters:params
-                         timeoutInterval:kBVMInfoTimeoutInterval
-                                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                     NSError __autoreleasing *error = nil;
-                                     BVMAPIResponseParser *parser = [[BVMAPIResponseParser alloc] initWithAPIResponse:responseObject error:&error];
-                                     if (!parser) {
-                                         failureBlock(error); return;
-                                     }
-                                     error = [parser apiError];
-                                     if (error) {
-                                         failureBlock(error); return;
-                                     }
-
-                                     BVMServerStatus status = [BVMAPIResponseParser serverStatusFromApiString:[parser stringForNode:@"vmstat"]];
-                                     NSString *hostname = [parser stringForNode:@"hostname"];
-                                     NSString *ip = [parser stringForNode:@"ipaddress"];
-                                     if (resultBlock) resultBlock(status, hostname, ip, nil);
-                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                     failureBlock(error);
-                                 }];
-}
-
 + (BVMServerInfo *)infoFromParser:(BVMAPIResponseParser *)parser
 {
     BVMServerInfo *info = [[BVMServerInfo alloc] init];

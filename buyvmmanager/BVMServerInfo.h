@@ -26,20 +26,6 @@ typedef NS_ENUM(NSUInteger, BVMServerStatus) {
 + (void)requestInfoForServerId:(NSString *)serverId
                      withBlock:(void (^)(BVMServerInfo * info, NSError *error))resultBlock;
 
-/**
- * Provides an asynchronous interface to query status of a server
- *
- * @param serverName
- *            name assigned to the server by the user. Used to identify
- *            the server in user defaults.
- *
- * @param resultBlock
- *            block called with results of the query. No error occurred
- *            if `error` is nil.
- */
-+ (void)requestStatusForServerId:(NSString *)serverId
-                       withBlock:(void (^)(BVMServerStatus status, NSString *hostname, NSString *ip, NSError *error))resultBlock;
-
 #pragma mark Server Info
 
 /**

@@ -207,26 +207,26 @@
     cell.textLabel.textColor = [UIColor blackColor];
     cell.detailTextLabel.text = @"";
 
-    [BVMServerInfo requestStatusForServerId:serverId
-                                  withBlock:^(BVMServerStatus status, NSString *hostname, NSString *ip, NSError *error) {
-                                      if (status == BVMServerStatusOffline) {
-                                          cell.textLabel.textColor = [UIColor redColor];
-                                          cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ [offline]", nil), cell.textLabel.text];
-                                      } else if (status == BVMServerStatusIndeterminate) {
-                                          cell.textLabel.textColor = [UIColor blueColor];
-                                          cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ [unknown]", nil), cell.textLabel.text];
-                                      }
-                                      if (ip && hostname) {
-                                          cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@)", ip, hostname];
-                                      } else if (ip) {
-                                          cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", ip];
-                                      } else if (hostname) {
-                                          cell.detailTextLabel.text = [NSString stringWithFormat:@"(%@)", hostname];
-                                      }
-                                      [cell setNeedsLayout];
+    [BVMServerInfo requestInfoForServerId:serverId withBlock:^(BVMServerInfo *info, NSError *error) {
+        BVMServerStatus status = info.status;
+        if (status == BVMServerStatusOffline) {
+            cell.textLabel.textColor = [UIColor redColor];
+            cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ [offline]", nil), cell.textLabel.text];
+        } else if (status == BVMServerStatusIndeterminate) {
+            cell.textLabel.textColor = [UIColor blueColor];
+            cell.textLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@ [unknown]", nil), cell.textLabel.text];
+        }
+        if (info.mainIpAddress && info.hostname) {
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ (%@)", info.mainIpAddress, info.hostname];
+        } else if (info.mainIpAddress) {
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", info.mainIpAddress];
+        } else if (info.hostname) {
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"(%@)", info.hostname];
+        }
+        [cell setNeedsLayout];
 
-                                      [self.refreshControl endRefreshing];
-                                  }];
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 - (void)reloadData
