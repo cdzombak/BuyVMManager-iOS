@@ -1,5 +1,6 @@
 PODS:
   - AFNetworking (1.0.1)
+  - BugSense (3.5.1)
   - CDZLinkOpenManager (1.0)
   - CDZPinger (1.0)
   - KissXML (5.0)
@@ -7,6 +8,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - BugSense
   - CDZLinkOpenManager (from `https://raw.github.com/cdzombak/CDZLinkOpenManager/master/CDZLinkOpenManager.podspec`)
   - CDZPinger (from `https://raw.github.com/cdzombak/CDZPinger/master/CDZPinger.podspec`)
   - KissXML
@@ -20,6 +22,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 0bce3ae41023e080e96b8a2e0d07c94709f72a81
+  BugSense: d6c7be4f7edef7ac0d3867a0aa83bc339587a9b2
   CDZLinkOpenManager: 3085d07c7572b2fdc80217d8a3bc350a977f19b9
   CDZPinger: 90f5eb629f26b780d08a3359ba4d504896359fbb
   KissXML: 4c66b6f39ef49c23e6bb8d335b94136f12b1b615

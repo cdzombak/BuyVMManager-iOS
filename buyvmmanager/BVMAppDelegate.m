@@ -3,9 +3,12 @@
 #import "BVMServersListViewController.h"
 #import "BVMEmptyDetailViewController.h"
 
+#import <BugSense-iOS/BugSenseController.h>
 #import "AFNetworkActivityIndicatorManager.h"
 
 #import "UIColor+BVMColors.h"
+
+static NSString * const BVMBugSenseAPIKey = @"606b894f";
 
 @interface BVMAppDelegate () <UISplitViewControllerDelegate>
 
@@ -15,6 +18,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [BugSenseController sharedControllerWithBugSenseAPIKey:BVMBugSenseAPIKey];
+    [BugSenseController setLogMessagesCount:10];
+    [BugSenseController setLogMessagesLevel:8];
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self applyStyles];
 
