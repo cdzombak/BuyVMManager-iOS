@@ -168,16 +168,17 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 {
     if (!self.serverInfo) {
         self.hostnameCell.textLabel.text = @"";
+        self.hostnameCell.detailTextLabel.text = @"";
         return;
     }
 
-    self.hostnameCell.textLabel.text = self.serverInfo.hostname;
+    self.hostnameCell.detailTextLabel.text = self.serverInfo.hostname;
     if (self.serverInfo.status == BVMServerStatusOnline) {
-        self.hostnameCell.detailTextLabel.text = NSLocalizedString(@"Online", nil);
-        self.hostnameCell.detailTextLabel.textColor = [UIColor bvm_onlineTextColor];
+        self.hostnameCell.textLabel.text = NSLocalizedString(@"Online", nil);
+        self.hostnameCell.textLabel.textColor = [UIColor bvm_onlineTextColor];
     } else {
-        self.hostnameCell.detailTextLabel.text = NSLocalizedString(@"Offline", nil);
-        self.hostnameCell.detailTextLabel.textColor = [UIColor redColor];
+        self.hostnameCell.textLabel.text = NSLocalizedString(@"Offline", nil);
+        self.hostnameCell.textLabel.textColor = [UIColor redColor];
     }
 }
 
@@ -458,18 +459,18 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 {
     switch (status) {
         case BVMServerActionStatusBooted:
-            self.hostnameCell.detailTextLabel.text = NSLocalizedString(@"Booting...", nil);
+            self.hostnameCell.textLabel.text = NSLocalizedString(@"Booting...", nil);
             break;
         case BVMServerActionStatusRebooted:
-            self.hostnameCell.detailTextLabel.text = NSLocalizedString(@"Rebooting...", nil);
+            self.hostnameCell.textLabel.text = NSLocalizedString(@"Rebooting...", nil);
             break;
         case BVMServerActionStatusShutdown:
-            self.hostnameCell.detailTextLabel.text = NSLocalizedString(@"Shutting down...", nil);
+            self.hostnameCell.textLabel.text = NSLocalizedString(@"Shutdown...", nil);
             break;
         default: break;
     }
 
-    self.hostnameCell.detailTextLabel.textColor = [UIColor blackColor];
+    self.hostnameCell.textLabel.textColor = [UIColor blackColor];
     self.pinger = nil;
     self.pingString = @"";
     self.serverInfo.status = BVMServerStatusIndeterminate;
@@ -539,8 +540,8 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 - (UITableViewCell *)hostnameCell {
     if (!_hostnameCell) {
         _hostnameCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"HostNameCell"];
-        _hostnameCell.detailTextLabel.font = [UIFont boldSystemFontOfSize:_hostnameCell.detailTextLabel.font.pointSize];
-        _hostnameCell.textLabel.textColor = [UIColor blackColor];
+        _hostnameCell.textLabel.font = [UIFont boldSystemFontOfSize:_hostnameCell.textLabel.font.pointSize];
+        _hostnameCell.detailTextLabel.textColor = [UIColor blackColor];
 
     }
     return _hostnameCell;
