@@ -476,14 +476,19 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
     [self.tableView setContentOffset:CGPointMake(0, -self.tableView.contentInset.top) animated:YES];
     [self.progressHUD show:YES];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:BVMServerStatusDidChangeNotification
-                                                        object:self
-                                                      userInfo:@{
-                                                                 BVMNotificationUserInfoKeyServerId: self.serverId
-                                                                 }
-     ];
+    double delayInSeconds = 6.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    // yes, we want to retain self for this block. else, we can't send a notification from self.
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [[NSNotificationCenter defaultCenter] postNotificationName:BVMServerStatusDidChangeNotification
+                                                            object:self
+                                                          userInfo:@{
+                                                                     BVMNotificationUserInfoKeyServerId: self.serverId
+                                                                     }
+         ];
 
-    [self performSelector:@selector(reloadData) withObject:nil afterDelay:6.0];
+        [self reloadData];
+    });
 }
 
 #pragma mark Pasteboard Copying
