@@ -62,7 +62,7 @@
 
     self.toolbarItems = @[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
                           self.settingsItem
-                          ];;
+                          ];
 
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:nil action:@selector(refreshControlActivated:) forControlEvents:UIControlEventValueChanged];
