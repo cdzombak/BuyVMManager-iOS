@@ -288,10 +288,7 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
                 if (self.serverInfo) {
                     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                     [indicator startAnimating];
-                    CGRect indicatorFrame = indicator.frame;
-                    indicatorFrame.origin.x = 85;
-                    indicatorFrame.origin.y = cell.bounds.size.height/2 - indicator.bounds.size.height/2 - 1;
-                    indicator.frame = indicatorFrame;
+                    indicator.center = cell.center;
                     [cell.contentView addSubview:indicator];
                 }
             }
