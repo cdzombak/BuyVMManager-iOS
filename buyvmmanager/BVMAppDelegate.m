@@ -52,7 +52,8 @@ static NSString * const BVMBugSenseAPIKey = @"606b894f";
 #pragma mark - UI Management
 
 - (void)applyStyles {
-    // TBD
+    [[UINavigationBar appearance] setTintColor:[UIColor bvm_tintColor]];
+    [[UIToolbar appearance] setTintColor:[UIColor bvm_tintColor]];
 }
 
 #pragma mark UISplitViewControllerDelegate methods

@@ -18,27 +18,12 @@
                            alpha:1.0];
 }
 
-+ (UIColor *)bvm_darkTableViewTextColor
++ (UIColor *)bvm_tintColor
 {
-    return [UIColor colorWithRed:76.0f/255.0f
-                           green:86.0f/255.0f
-                            blue:108.0f/255.0f
-                           alpha:1.0];
-}
-
-+ (UIColor *)bvm_pullRefreshBackgroundColor
-{
-    return [UIColor colorWithWhite:232.0f/255.0f alpha:1.0];
-}
-
-+ (UIColor *)bvm_tableViewBackgroundColor
-{
-    return [UIColor colorWithWhite:222.0f/255.0f alpha:1.0];
-}
-
-+ (UIColor *)bvm_darkGrayTextShadowColor
-{
-    return [UIColor colorWithWhite:0.95f alpha:1.0];
+    return [UIColor colorWithRed:0.039f
+                           green:0.525f
+                            blue:0.110f
+                           alpha:1.0f];
 }
 
 @end
