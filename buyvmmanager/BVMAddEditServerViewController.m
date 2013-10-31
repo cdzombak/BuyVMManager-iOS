@@ -2,6 +2,7 @@
 #import "CDZQRScanningViewController.h"
 #import "BVMTextFieldTableViewCell.h"
 #import "BVMServersManager.h"
+#import "BVMNotifications.h"
 #import "UIColor+BVMColors.h"
 
 typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
@@ -208,13 +209,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
                                 key:apiKeyToSave
                                hash:apiHashToSave];
 
-    id afterDataSaveTarget = self.afterDataSaveTarget;
-    if (afterDataSaveTarget && self.afterDataSaveAction && [afterDataSaveTarget respondsToSelector:self.afterDataSaveAction]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [afterDataSaveTarget performSelector:self.afterDataSaveAction];
-#pragma clang diagnostic pop
-    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:BVMServersListDidChangeNotification object:self];
 
     for (UITextField *field in fields) {
         field.text = nil;

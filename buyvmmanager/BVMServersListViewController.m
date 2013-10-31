@@ -4,6 +4,7 @@
 #import "BVMAddEditServerViewController.h"
 #import "BVMServerViewController.h"
 #import "BVMAboutSettingsViewController.h"
+#import "BVMNotifications.h"
 #import "NSError+BVMErrors.h"
 #import "UIColor+BVMColors.h"
 
@@ -68,7 +69,13 @@
 
     self.tableView.allowsSelectionDuringEditing = YES;
 
+    [self subscribeToNotifications];
     [self reloadData];
+}
+
+- (void)viewDidUnload
+{
+    [self unsubscribeFromNotifications];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -158,8 +165,6 @@
     UIView *presentingCell = [self.tableView cellForRowAtIndexPath:indexPath];
 
     BVMAddEditServerViewController *editVc = [[BVMAddEditServerViewController alloc] initForServerId:serverId];
-    editVc.afterDataSaveTarget = self;
-    editVc.afterDataSaveAction = @selector(reloadData);
     UIViewController *vc = [[UINavigationController alloc] initWithRootViewController:editVc];
 
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -254,6 +259,11 @@
     }
 }
 
+- (void)reloadDataFromNotification:(NSNotification *)notification
+{
+    [self reloadData];
+}
+
 - (NSString *)serverIdForIndexPath:(NSIndexPath *)indexPath
 {
     NSParameterAssert(indexPath.section == 0);
@@ -280,6 +290,24 @@
 
     NSAssert(idIndex != NSNotFound, @"Could not find index path for server ID");
     return [NSIndexPath indexPathForItem:(NSInteger)idIndex inSection:0];
+}
+
+- (void)subscribeToNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadDataFromNotification:)
+                                                 name:BVMServerStatusDidChangeNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadDataFromNotification:)
+                                                 name:BVMServersListDidChangeNotification
+                                               object:nil];
+}
+
+- (void)unsubscribeFromNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark UIPopoverControllerDelegate methods
@@ -410,8 +438,6 @@
 {
     if (!_addVC) {
         _addVC = [[BVMAddEditServerViewController alloc] initForServerId:nil];
-        _addVC.afterDataSaveTarget = self;
-        _addVC.afterDataSaveAction = @selector(reloadData);
     }
     return _addVC;
 }

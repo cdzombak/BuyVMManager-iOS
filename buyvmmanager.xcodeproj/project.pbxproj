@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		130AAD4E603A434F8D6A27DC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5465409E48DF47418E17CBD0 /* libPods.a */; };
+		834019C61821FA85006E4D78 /* BVMNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = 834019C51821FA85006E4D78 /* BVMNotifications.m */; };
 		83D310D61706154500BBE53D /* BVMBrowserSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83D310D51706154500BBE53D /* BVMBrowserSelectorViewController.m */; };
 		932709BC1682353E0013DEB5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932709BB1682353E0013DEB5 /* UIKit.framework */; };
 		932709BE1682353E0013DEB5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932709BD1682353E0013DEB5 /* Foundation.framework */; };
@@ -59,6 +60,8 @@
 /* Begin PBXFileReference section */
 		5465409E48DF47418E17CBD0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		80B2C269AC9B4268AAA56007 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		834019C41821FA85006E4D78 /* BVMNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMNotifications.h; sourceTree = "<group>"; };
+		834019C51821FA85006E4D78 /* BVMNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMNotifications.m; sourceTree = "<group>"; };
 		83D310D41706154500BBE53D /* BVMBrowserSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMBrowserSelectorViewController.h; sourceTree = "<group>"; };
 		83D310D51706154500BBE53D /* BVMBrowserSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMBrowserSelectorViewController.m; sourceTree = "<group>"; };
 		932709B71682353E0013DEB5 /* buyvmmanager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = buyvmmanager.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,6 +198,8 @@
 				937CCC441684F5B70075BD01 /* BVMErrorDomain.m */,
 				93270A031682726F0013DEB5 /* BVMHumanValueTransformer.h */,
 				93270A041682726F0013DEB5 /* BVMHumanValueTransformer.m */,
+				834019C41821FA85006E4D78 /* BVMNotifications.h */,
+				834019C51821FA85006E4D78 /* BVMNotifications.m */,
 				935FEECF1682BC3700BE3892 /* BVMServersManager.h */,
 				935FEED01682BC3700BE3892 /* BVMServersManager.m */,
 				938662D81691F7F60049D6A1 /* CDZViewControllerModalDismissal.h */,
@@ -421,6 +426,7 @@
 				935FEEC216829B4700BE3892 /* BVMIPListViewController.m in Sources */,
 				935FEEC61682A0FA00BE3892 /* BVMSizesListViewController.m in Sources */,
 				935FEED11682BC3700BE3892 /* BVMServersManager.m in Sources */,
+				834019C61821FA85006E4D78 /* BVMNotifications.m in Sources */,
 				935FEED41682C06900BE3892 /* BVMServersListViewController.m in Sources */,
 				935FEEDA1682CC2600BE3892 /* BVMTextFieldTableViewCell.m in Sources */,
 				93BADD411683C19900B0CD6F /* UIColor+BVMColors.m in Sources */,

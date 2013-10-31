@@ -54,6 +54,7 @@ static NSString * const BVMBugSenseAPIKey = @"606b894f";
 - (void)applyStyles {
     [[UINavigationBar appearance] setTintColor:[UIColor bvm_tintColor]];
     [[UIToolbar appearance] setTintColor:[UIColor bvm_tintColor]];
+    [[UIRefreshControl appearance] setTintColor:[UIColor bvm_tintColor]];
 }
 
 #pragma mark UISplitViewControllerDelegate methods

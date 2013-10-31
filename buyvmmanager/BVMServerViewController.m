@@ -8,6 +8,7 @@
 #import "BVMHumanValueTransformer.h"
 #import "BVMIPListViewController.h"
 #import "BVMSizesListViewController.h"
+#import "BVMNotifications.h"
 #import "UIColor+BVMColors.h"
 
 
@@ -474,6 +475,13 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
     [self.tableView reloadData];
     [self.tableView setContentOffset:CGPointMake(0, -self.tableView.contentInset.top) animated:YES];
     [self.progressHUD show:YES];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:BVMServerStatusDidChangeNotification
+                                                        object:self
+                                                      userInfo:@{
+                                                                 BVMNotificationUserInfoKeyServerId: self.serverId
+                                                                 }
+     ];
 
     [self performSelector:@selector(reloadData) withObject:nil afterDelay:6.0];
 }
