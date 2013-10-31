@@ -309,6 +309,11 @@
 				CLASSPREFIX = BVM;
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Chris Dzombak";
+				TargetAttributes = {
+					932709B61682353E0013DEB5 = {
+						DevelopmentTeam = 4QNZ8566GP;
+					};
+				};
 			};
 			buildConfigurationList = 932709B11682353E0013DEB5 /* Build configuration list for PBXProject "buyvmmanager" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -501,11 +506,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "buyvmmanager/buyvmmanager-Prefix.pch";
 				INFOPLIST_FILE = "buyvmmanager/buyvmmanager-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -516,7 +524,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "buyvmmanager/buyvmmanager-Prefix.pch";
 				INFOPLIST_FILE = "buyvmmanager/buyvmmanager-Info.plist";
