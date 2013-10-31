@@ -4,9 +4,9 @@
 
 + (UIColor *)bvm_onlineTextColor
 {
-    return [UIColor colorWithRed:80.0f/255.0f
-                           green:136.0f/255.0f
-                            blue:80.0f/255.0f
+    return [UIColor colorWithRed:0.039f
+                           green:0.525f
+                            blue:0.110f
                            alpha:1.0];
 }
 
@@ -23,7 +23,7 @@
     return [UIColor colorWithRed:0.039f
                            green:0.525f
                             blue:0.110f
-                           alpha:1.0f];
+                           alpha:1.0];
 }
 
 @end
