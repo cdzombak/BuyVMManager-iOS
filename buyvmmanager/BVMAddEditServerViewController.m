@@ -296,7 +296,7 @@ typedef NS_ENUM(NSUInteger, BVMAddServerTableViewRow) {
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor darkGrayColor];
         label.text = notes;
-        label.lineBreakMode = UILineBreakModeWordWrap;
+        label.lineBreakMode = NSLineBreakByWordWrapping;
         label.numberOfLines = 0;
         label.font = [UIFont systemFontOfSize:15.0];
         label.backgroundColor = [UIColor clearColor];
