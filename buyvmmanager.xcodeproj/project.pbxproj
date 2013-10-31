@@ -17,9 +17,6 @@
 		932709C61682353E0013DEB5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 932709C41682353E0013DEB5 /* InfoPlist.strings */; };
 		932709C81682353E0013DEB5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709C71682353E0013DEB5 /* main.m */; };
 		932709CC1682353E0013DEB5 /* BVMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709CB1682353E0013DEB5 /* BVMAppDelegate.m */; };
-		932709CE1682353E0013DEB5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 932709CD1682353E0013DEB5 /* Default.png */; };
-		932709D01682353E0013DEB5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 932709CF1682353E0013DEB5 /* Default@2x.png */; };
-		932709D21682353E0013DEB5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 932709D11682353E0013DEB5 /* Default-568h@2x.png */; };
 		932709E916823FB80013DEB5 /* BVMServerActionPerform.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709E816823FB80013DEB5 /* BVMServerActionPerform.m */; };
 		932709EC1682411A0013DEB5 /* BVMAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709EB1682411A0013DEB5 /* BVMAPIClient.m */; };
 		932709EF168243950013DEB5 /* BVMServerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 932709EE168243950013DEB5 /* BVMServerInfo.m */; };
@@ -39,10 +36,6 @@
 		9382C97216E3F36B00191302 /* BVMEmptyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9382C97016E3F36B00191302 /* BVMEmptyDetailViewController.m */; };
 		9382C97316E3F36B00191302 /* BVMEmptyDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9382C97116E3F36B00191302 /* BVMEmptyDetailViewController.xib */; };
 		9382EEAB1684F0200032E864 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9382EEAA1684F0200032E864 /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		93ADFEC4168E6F5600F8256C /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 93ADFEC0168E6F5600F8256C /* Default-Landscape.png */; };
-		93ADFEC5168E6F5600F8256C /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93ADFEC1168E6F5600F8256C /* Default-Landscape@2x.png */; };
-		93ADFEC6168E6F5600F8256C /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 93ADFEC2168E6F5600F8256C /* Default-Portrait.png */; };
-		93ADFEC7168E6F5600F8256C /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93ADFEC3168E6F5600F8256C /* Default-Portrait@2x.png */; };
 		93ADFEDD168EB82C00F8256C /* KCMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 93ADFEDC168EB82C00F8256C /* KCMutableDictionary.m */; };
 		93ADFEDF168EBC8E00F8256C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93ADFEDE168EBC8E00F8256C /* Security.framework */; };
 		93ADFEE1168F487F00F8256C /* BVMAddEditServerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93ADFEE0168F487F00F8256C /* BVMAddEditServerViewController.m */; };
@@ -70,9 +63,6 @@
 		932709C91682353E0013DEB5 /* buyvmmanager-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "buyvmmanager-Prefix.pch"; sourceTree = "<group>"; };
 		932709CA1682353E0013DEB5 /* BVMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BVMAppDelegate.h; sourceTree = "<group>"; };
 		932709CB1682353E0013DEB5 /* BVMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BVMAppDelegate.m; sourceTree = "<group>"; };
-		932709CD1682353E0013DEB5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		932709CF1682353E0013DEB5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		932709D11682353E0013DEB5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		932709E716823FB80013DEB5 /* BVMServerActionPerform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMServerActionPerform.h; sourceTree = "<group>"; };
 		932709E816823FB80013DEB5 /* BVMServerActionPerform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BVMServerActionPerform.m; sourceTree = "<group>"; };
 		932709EA1682411A0013DEB5 /* BVMAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVMAPIClient.h; sourceTree = "<group>"; };
@@ -107,10 +97,6 @@
 		9382C97116E3F36B00191302 /* BVMEmptyDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BVMEmptyDetailViewController.xib; sourceTree = "<group>"; };
 		9382EEAA1684F0200032E864 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		938662D81691F7F60049D6A1 /* CDZViewControllerModalDismissal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CDZViewControllerModalDismissal.h; sourceTree = "<group>"; };
-		93ADFEC0168E6F5600F8256C /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
-		93ADFEC1168E6F5600F8256C /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x.png"; sourceTree = "<group>"; };
-		93ADFEC2168E6F5600F8256C /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
-		93ADFEC3168E6F5600F8256C /* Default-Portrait@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x.png"; sourceTree = "<group>"; };
 		93ADFEDB168EB82C00F8256C /* KCMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCMutableDictionary.h; sourceTree = "<group>"; };
 		93ADFEDC168EB82C00F8256C /* KCMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCMutableDictionary.m; sourceTree = "<group>"; };
 		93ADFEDE168EBC8E00F8256C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -207,13 +193,6 @@
 				932709C41682353E0013DEB5 /* InfoPlist.strings */,
 				932709C71682353E0013DEB5 /* main.m */,
 				932709C91682353E0013DEB5 /* buyvmmanager-Prefix.pch */,
-				932709CD1682353E0013DEB5 /* Default.png */,
-				932709CF1682353E0013DEB5 /* Default@2x.png */,
-				932709D11682353E0013DEB5 /* Default-568h@2x.png */,
-				93ADFEC0168E6F5600F8256C /* Default-Landscape.png */,
-				93ADFEC1168E6F5600F8256C /* Default-Landscape@2x.png */,
-				93ADFEC2168E6F5600F8256C /* Default-Portrait.png */,
-				93ADFEC3168E6F5600F8256C /* Default-Portrait@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -354,16 +333,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				932709C61682353E0013DEB5 /* InfoPlist.strings in Resources */,
-				932709CE1682353E0013DEB5 /* Default.png in Resources */,
-				932709D01682353E0013DEB5 /* Default@2x.png in Resources */,
-				932709D21682353E0013DEB5 /* Default-568h@2x.png in Resources */,
 				937CCC6C168528100075BD01 /* 119-Camera.png in Resources */,
 				937CCC6E168528240075BD01 /* 119-Camera@2x.png in Resources */,
-				93ADFEC4168E6F5600F8256C /* Default-Landscape.png in Resources */,
-				93ADFEC5168E6F5600F8256C /* Default-Landscape@2x.png in Resources */,
-				93ADFEC6168E6F5600F8256C /* Default-Portrait.png in Resources */,
 				834019C81821FF53006E4D78 /* Images.xcassets in Resources */,
-				93ADFEC7168E6F5600F8256C /* Default-Portrait@2x.png in Resources */,
 				9382C97316E3F36B00191302 /* BVMEmptyDetailViewController.xib in Resources */,
 				93E5D84916EE83EA00C57111 /* 072-Settings@2x.png in Resources */,
 				93E5D84B16EE83FE00C57111 /* 072-Settings.png in Resources */,
