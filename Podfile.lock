@@ -3,7 +3,7 @@ PODS:
   - BugSense (3.5.1)
   - CDZLinkOpenManager (1.0)
   - CDZPinger (1.0)
-  - CDZQRScanningViewController (1.0.1)
+  - CDZQRScanningViewController (1.0.5)
   - KissXML (5.0)
   - MBProgressHUD (0.5)
 
@@ -12,7 +12,7 @@ DEPENDENCIES:
   - BugSense
   - CDZLinkOpenManager (from `https://raw.github.com/cdzombak/CDZLinkOpenManager/master/CDZLinkOpenManager.podspec`)
   - CDZPinger (from `https://raw.github.com/cdzombak/CDZPinger/master/CDZPinger.podspec`)
-  - CDZQRScanningViewController (from `https://raw.github.com/cdzombak/CDZQRScanningViewController/master/CDZQRScanningViewController.podspec`)
+  - CDZQRScanningViewController (from `https://raw.github.com/cdzombak/CDZQRScanningViewController/e57291449f56a50e7280bab12c5a9f77372e31bc/CDZQRScanningViewController.podspec`)
   - KissXML
   - MBProgressHUD
 
@@ -22,14 +22,14 @@ EXTERNAL SOURCES:
   CDZPinger:
     :podspec: https://raw.github.com/cdzombak/CDZPinger/master/CDZPinger.podspec
   CDZQRScanningViewController:
-    :podspec: https://raw.github.com/cdzombak/CDZQRScanningViewController/master/CDZQRScanningViewController.podspec
+    :podspec: https://raw.github.com/cdzombak/CDZQRScanningViewController/e57291449f56a50e7280bab12c5a9f77372e31bc/CDZQRScanningViewController.podspec
 
 SPEC CHECKSUMS:
   AFNetworking: 0bce3ae41023e080e96b8a2e0d07c94709f72a81
   BugSense: d6c7be4f7edef7ac0d3867a0aa83bc339587a9b2
   CDZLinkOpenManager: 3085d07c7572b2fdc80217d8a3bc350a977f19b9
   CDZPinger: 90f5eb629f26b780d08a3359ba4d504896359fbb
-  CDZQRScanningViewController: 6983d9f3ebb0386f76e5a5b49dc3f8deb8cda318
+  CDZQRScanningViewController: c865af0a123db97356ed61079633aa838970ab5f
   KissXML: 4c66b6f39ef49c23e6bb8d335b94136f12b1b615
   MBProgressHUD: b23ee11c42253d6d804e8e0bfabdc334e8b2571f
 
