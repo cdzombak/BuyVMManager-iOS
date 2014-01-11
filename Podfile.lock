@@ -5,7 +5,7 @@ PODS:
   - CDZPinger (1.0.1)
   - CDZQRScanningViewController (1.0.6)
   - KissXML (5.0)
-  - MBProgressHUD (0.5)
+  - MBProgressHUD (0.8)
 
 DEPENDENCIES:
   - AFNetworking
@@ -14,7 +14,7 @@ DEPENDENCIES:
   - CDZPinger (from `https://raw.github.com/cdzombak/CDZPinger/master/CDZPinger.podspec`)
   - CDZQRScanningViewController (from `https://raw.github.com/cdzombak/CDZQRScanningViewController/ae676282eab951cb002cf5da41c6302f5558b26f/CDZQRScanningViewController.podspec`)
   - KissXML
-  - MBProgressHUD
+  - MBProgressHUD (~> 0.8)
 
 EXTERNAL SOURCES:
   CDZLinkOpenManager:
@@ -31,6 +31,6 @@ SPEC CHECKSUMS:
   CDZPinger: 0f2065066e00107f9425cebb3b151e2f2d9f627c
   CDZQRScanningViewController: e175e24edf26ecf707e7de0dd7b6fa38a6e10cb4
   KissXML: 4c66b6f39ef49c23e6bb8d335b94136f12b1b615
-  MBProgressHUD: b23ee11c42253d6d804e8e0bfabdc334e8b2571f
+  MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
 
 COCOAPODS: 0.27.1
