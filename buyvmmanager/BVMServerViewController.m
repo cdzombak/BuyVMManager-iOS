@@ -244,6 +244,8 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
 
     switch(indexPath.section) {
         case BVMServerTableViewSectionInfo:
+            cell.textLabel.textColor = [UIColor darkGrayColor];
+            
             if (self.serverInfo && self.serverInfo.status == BVMServerStatusOnline) {
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             } else {
@@ -281,6 +283,7 @@ __attribute__((constructor)) static void __BVMServerTableViewConstantsInit(void)
         case BVMServerTableViewSectionPing:
             NSParameterAssert(indexPath.row == 0);
             cell.textLabel.text = NSLocalizedString(@"Ping", nil);
+            cell.textLabel.textColor = [UIColor darkGrayColor];
             if (self.pingString) {
                 cell.detailTextLabel.text = self.pingString;
             }
