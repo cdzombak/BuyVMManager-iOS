@@ -82,6 +82,11 @@
     [super viewWillAppear:animated];
 
     [self.navigationController setToolbarHidden:NO animated:NO];
+    
+    NSIndexPath *selectedRowIndexPath = [self.tableView indexPathForSelectedRow];
+    if (selectedRowIndexPath) {
+        [self.tableView deselectRowAtIndexPath:selectedRowIndexPath animated:YES];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
